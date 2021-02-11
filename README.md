@@ -10,7 +10,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/app-projec
 
 # Notes that includes what people have done, what they plan to do, etc for each individual in the group
 Sprint Planning Doc: https://docs.google.com/document/d/1_hG1_c2fYbwMwrdXgW3NZJpi7WRrdsyeZ0Q8aiWiN2U/edit?usp=sharing
-
+Meet 3-4pm PT every Monday
 Consolidate app design and layout before Milestone 1 Meeting using Figma.
 Split up pages and finish up UI design. Meet to confirm, start UI Implementation in Swift.
 Research API /Libraries for location/distance implementation, ISBN library. 
