@@ -1,5 +1,5 @@
-# project-w21-steve-give-us-jobs
-project-w21-steve-give-us-jobs created by GitHub Classroom
+# Bookworm
+Steve Give Us Jobs
 
 # Project Summary
 Bookworm - the app that pairs people based on books not looks.
