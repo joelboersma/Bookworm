@@ -25,10 +25,15 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 18
         newAccountButton.layer.cornerRadius = 18
         
+        self.navigationController?.isNavigationBarHidden = true
     }
     
+    @IBAction func loginButtonPressed() {
+        // Temporarily going to matched view controller to test location output.
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "matchedViewController") as? MatchedViewController  else { assertionFailure("Couldn't find matched view controller."); return }
+        let matchedViewController = [vc]
+        self.navigationController?.setViewControllers(matchedViewController, animated: true)    }
     
-
-
 }
 

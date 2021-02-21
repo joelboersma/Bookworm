@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DCAEAC625E24AA1000C9047 /* MatchedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCAEAC525E24AA1000C9047 /* MatchedViewController.swift */; };
 		25190E5125DF9BCD007573D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */; };
 		282404F0BF436D017F4BA1AC /* Pods_Bookworm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */; };
 		4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		1050B7713DFAF70D23EA793C /* Pods-Bookworm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.debug.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.debug.xcconfig"; sourceTree = "<group>"; };
+		1DCAEAC525E24AA1000C9047 /* MatchedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedViewController.swift; sourceTree = "<group>"; };
 		25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3C77E61063F7FA02A8DD8A7D /* Pods-Bookworm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.release.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.release.xcconfig"; sourceTree = "<group>"; };
 		4B2FB1CA25DF596A00661D51 /* Bookworm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookworm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +74,7 @@
 				25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */,
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
 				4B2FB1D125DF596A00661D51 /* LoginViewController.swift */,
+				1DCAEAC525E24AA1000C9047 /* MatchedViewController.swift */,
 				4B2FB1D325DF596A00661D51 /* Main.storyboard */,
 				4B2FB1D625DF596B00661D51 /* Assets.xcassets */,
 				4B2FB1D825DF596B00661D51 /* LaunchScreen.storyboard */,
@@ -214,6 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */,
+				1DCAEAC625E24AA1000C9047 /* MatchedViewController.swift in Sources */,
 				4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */,
 				4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */,
 			);
@@ -364,7 +368,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				INFOPLIST_FILE = Bookworm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -383,7 +389,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				INFOPLIST_FILE = Bookworm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
