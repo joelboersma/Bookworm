@@ -11,7 +11,7 @@
 		282404F0BF436D017F4BA1AC /* Pods_Bookworm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */; };
 		4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */; };
 		4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */; };
-		4B2FB1D225DF596A00661D51 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1D125DF596A00661D51 /* ViewController.swift */; };
+		4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1D125DF596A00661D51 /* LoginViewController.swift */; };
 		4B2FB1D525DF596A00661D51 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2FB1D325DF596A00661D51 /* Main.storyboard */; };
 		4B2FB1D725DF596B00661D51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B2FB1D625DF596B00661D51 /* Assets.xcassets */; };
 		4B2FB1DA25DF596B00661D51 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2FB1D825DF596B00661D51 /* LaunchScreen.storyboard */; };
@@ -25,7 +25,7 @@
 		4B2FB1CA25DF596A00661D51 /* Bookworm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookworm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4B2FB1D125DF596A00661D51 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4B2FB1D125DF596A00661D51 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4B2FB1D425DF596A00661D51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B2FB1D625DF596B00661D51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B2FB1D925DF596B00661D51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 				4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */,
 				25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */,
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
-				4B2FB1D125DF596A00661D51 /* ViewController.swift */,
+				4B2FB1D125DF596A00661D51 /* LoginViewController.swift */,
 				4B2FB1D325DF596A00661D51 /* Main.storyboard */,
 				4B2FB1D625DF596B00661D51 /* Assets.xcassets */,
 				4B2FB1D825DF596B00661D51 /* LaunchScreen.storyboard */,
@@ -213,7 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B2FB1D225DF596A00661D51 /* ViewController.swift in Sources */,
+				4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */,
 				4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */,
 				4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */,
 			);
