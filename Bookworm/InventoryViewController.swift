@@ -19,11 +19,15 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {
+            assertionFailure("Cell dequeue error")
+            return UITableViewCell.init()
+        }
+        return cell
     }
 
 }
