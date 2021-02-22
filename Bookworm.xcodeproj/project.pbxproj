@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		1DCAEAC625E24AA1000C9047 /* MatchedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCAEAC525E24AA1000C9047 /* MatchedViewController.swift */; };
 		25190E5125DF9BCD007573D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */; };
+		25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7825E39CDA007573D6 /* ProfileViewController.swift */; };
+		25190E7C25E41BFC007573D6 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7B25E41BFC007573D6 /* WishListViewController.swift */; };
+		25190E7F25E41C3F007573D6 /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7E25E41C3F007573D6 /* InventoryViewController.swift */; };
+		25190E8225E41C88007573D6 /* WishListListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8125E41C88007573D6 /* WishListListingViewController.swift */; };
+		25190E8525E41CAF007573D6 /* InventoryListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */; };
+		25190E8825E42136007573D6 /* ListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8725E42136007573D6 /* ListingsViewController.swift */; };
 		282404F0BF436D017F4BA1AC /* Pods_Bookworm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */; };
 		4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */; };
 		4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */; };
@@ -24,6 +30,12 @@
 		1050B7713DFAF70D23EA793C /* Pods-Bookworm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.debug.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.debug.xcconfig"; sourceTree = "<group>"; };
 		1DCAEAC525E24AA1000C9047 /* MatchedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedViewController.swift; sourceTree = "<group>"; };
 		25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		25190E7825E39CDA007573D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		25190E7B25E41BFC007573D6 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
+		25190E7E25E41C3F007573D6 /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
+		25190E8125E41C88007573D6 /* WishListListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListListingViewController.swift; sourceTree = "<group>"; };
+		25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryListingViewController.swift; sourceTree = "<group>"; };
+		25190E8725E42136007573D6 /* ListingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsViewController.swift; sourceTree = "<group>"; };
 		3C77E61063F7FA02A8DD8A7D /* Pods-Bookworm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.release.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.release.xcconfig"; sourceTree = "<group>"; };
 		4B2FB1CA25DF596A00661D51 /* Bookworm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookworm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +85,12 @@
 			isa = PBXGroup;
 			children = (
 				4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */,
+				25190E7B25E41BFC007573D6 /* WishListViewController.swift */,
+				25190E8125E41C88007573D6 /* WishListListingViewController.swift */,
+				25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */,
+				25190E7E25E41C3F007573D6 /* InventoryViewController.swift */,
+				25190E8725E42136007573D6 /* ListingsViewController.swift */,
+				25190E7825E39CDA007573D6 /* ProfileViewController.swift */,
 				25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */,
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
 				4B2FB1D125DF596A00661D51 /* LoginViewController.swift */,
@@ -219,9 +237,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */,
+				25190E7C25E41BFC007573D6 /* WishListViewController.swift in Sources */,
+				25190E8825E42136007573D6 /* ListingsViewController.swift in Sources */,
+				25190E8525E41CAF007573D6 /* InventoryListingViewController.swift in Sources */,
 				4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */,
 				1DCAEAC625E24AA1000C9047 /* MatchedViewController.swift in Sources */,
+				25190E8225E41C88007573D6 /* WishListListingViewController.swift in Sources */,
 				4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */,
+				25190E7F25E41C3F007573D6 /* InventoryViewController.swift in Sources */,
 				A6D94B5B25E2632D004DE869 /* NewAccountViewController.swift in Sources */,
 				4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */,
 			);
@@ -372,7 +396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WSM4GMUTKD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -393,7 +417,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WSM4GMUTKD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (

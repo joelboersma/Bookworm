@@ -38,4 +38,5 @@ class MatchedViewController: UIViewController, CLLocationManagerDelegate {
         tempLongitudeLabel.text = "longitude: \(location.longitude)"
     }
     
+
 }

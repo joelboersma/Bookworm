@@ -76,10 +76,19 @@ class NewAccountViewController: UIViewController {
                     self.errorLabel.text = "Account created successfully"
                     self.errorLabel.textColor = UIColor.systemGreen
                     
+//TODO: Erase commented section below if the updated tab bar implentation is correct
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    guard let vc = storyboard.instantiateViewController(withIdentifier: "matchedViewController") as? MatchedViewController  else { assertionFailure("Couldn't find matched view controller."); return }
+//                    let matchedViewController = [vc]
+//                    self.navigationController?.setViewControllers(matchedViewController, animated: true)
+  
+                    //swich to tab bar controller which will, by default, go to match view
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    guard let vc = storyboard.instantiateViewController(withIdentifier: "matchedViewController") as? MatchedViewController  else { assertionFailure("Couldn't find matched view controller."); return }
-                    let matchedViewController = [vc]
-                    self.navigationController?.setViewControllers(matchedViewController, animated: true)
+                    guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
+                    let tabBarController = [vc]
+                    self.navigationController?.setViewControllers(tabBarController, animated: true)
+
+                    
                     
                 } else if let error = error {
                     print(error)

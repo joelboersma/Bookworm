@@ -50,11 +50,19 @@ class LoginViewController: UIViewController {
             if let error = error {
                 print(error)
             } else {
-                // Temporarily going to matched view controller to test location output.
+                
+// TODO: Erase commented section below if the updated tab bar implentation is correct
+//                // Temporarily going to matched view controller to test location output.
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                guard let vc = storyboard.instantiateViewController(withIdentifier: "matchedViewController") as? MatchedViewController  else { assertionFailure("Couldn't find matched view controller."); return }
+//                let matchedViewController = [vc]
+//                self.navigationController?.setViewControllers(matchedViewController, animated: true)
+                
+                //switch to tab bar controller which will, by default, go to match view
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                guard let vc = storyboard.instantiateViewController(withIdentifier: "matchedViewController") as? MatchedViewController  else { assertionFailure("Couldn't find matched view controller."); return }
-                let matchedViewController = [vc]
-                self.navigationController?.setViewControllers(matchedViewController, animated: true)
+                guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
+                let tabBarController = [vc]
+                self.navigationController?.setViewControllers(tabBarController, animated: true)
             }
         }
         
