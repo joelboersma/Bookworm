@@ -2,21 +2,79 @@
 Steve Give Us Jobs
 
 # Project Summary
-Bookworm - the app that pairs people based on books not looks.
-Each person has a wish list and an inventory (a list of books they have but no longer want). Books can be added to either list by entering ISBN number, the variation (ebook, paperback, hardcover), book condition (new, used, poor) and optionally, pictures and additional comments. The app notifies and matches people if an item on one person’s inventory is on someone else’s wish list. Each person is added to the other’s messaging tab and the matched item is listed at the top of their chatbox. The chatboxes will also have a “received” and “transferred” button based on whether the book was on your wish list or on your inventory. If pressed, the pair will automatically unmatch and each party will be asked to confirm the removal of that item from the respective list. This gives them the option to keep the book on their list if they want to acquire/sell another copy. Additionally, users always have the option to manually remove/add books from their list(s). Any matches that depended on the presence of certain books on certain lists will be automatically unmatched upon their removal from said lists. Users also always have the option to unmatch with others for any reason (ex. hostility, unresponsiveness, etc.)
+Bookworm
 
-# A link to your up-to-date trello board
-https://trello.com/invite/b/YcSdVfA2/400e882179e1567e2ebccd6e30499e09/bookworm
+This platform facilitates a “yard sale”- for books. Each user will have a wish list that contains books they are searching for, and an inventory list that contains books they have but no longer want. Books can be added to either list by entering ISBN number, book condition (new, used, poor) and, optionally, a picture. The items on each user’s wish list/inventory list will be featured as listings on a general database, which will be able for all users to view. The app will also have a “matches” page, which displays all listings that correspond to the user’s personal wish list and inventory. Filters will be added to allow user to filter these listings by distance, condition, etc. Upon selecting a listing, users will be able to get into contact and arrange the book transaction!
 
-# Notes that includes what people have done, what they plan to do, etc for each individual in the group
-Sprint Planning Doc: https://docs.google.com/document/d/1_hG1_c2fYbwMwrdXgW3NZJpi7WRrdsyeZ0Q8aiWiN2U/edit?usp=sharing
-Meet 3-4pm PT every Monday
-Consolidate app design and layout before Milestone 1 Meeting using Figma.
-Split up pages and finish up UI design. Meet to confirm, start UI Implementation in Swift.
-Research API /Libraries for location/distance implementation, ISBN library. 
+# Designs for all Planned Views
 
-# Links to all commits that correspond to the tasks that people have done
-WIP
+Figma Link: https://www.figma.com/file/5MVhFopjyrgpRBxOYQlR8y/Bookworm-UI?node-id=0%3A1
 
-# If you did a task that didn't require any code (e.g., test out API foo to see if it works), put a description of the task instead of a link to a commit
-WIP
+# Third Party Libraries for Potential Use
+  * Core Location - For user locations
+  * Firebase - Authentication, database storage
+  * Open Library - For ISBN/book info
+  * OCR (need to look into)
+ 
+# Server support for Our App
+  * Firebase
+  * 
+# A listing of all of the models you plan to include in your app
+  * User 
+    * WishList 
+      * Book Titles
+        * Condition
+        * Location
+        * User selling it
+  * Inventory 
+    * Book Titles
+      * Condition
+      * Location
+      * User buying it
+  * Name
+  * Phone number
+  * Radius Preference
+
+# Listing of View Controllers 
+Three Main View Controllers (Can navigate between each of these views through tab bar)
+  * Listings View Controller: Database of all current book listings (books for “sale”, books “in need”)
+    * Shows how many miles away the book is from user
+    * Search function of book
+    * Filter by book being sold or book being looked for
+    * Filter by radius
+    * Scan to add a book listing
+      * Type in ISBN number or scan barcode
+      * Show user the book we found, and ask to confirm. Otherwise go back to reenter
+  * Matched View Controller: Lists all of the user’s “matches”
+    * Table view of history and current listings that correspond to user's wish list or inventory
+    * If user’s want to get in contact, it facilitates phone number exchanges/ transfers to imessaging
+  * Profile View Controller
+    * Settings Functionalities
+    * Change user information 
+    * Delete your account
+    * Wish List
+    * Inventory
+      * See all of your own listings
+    * Logout button
+
+# This Week's Tasks
+  * By Thursday (2/25):
+    * Finish user interface
+    * Add Matches View + its related views 
+    * Add Scanner/Camera View + its related views
+    * Update Create Account view
+      * Add text field for user to enter a username and phone number 
+  * By Sunday (2/28):
+    * Begin setting up database 
+    * Allow user to add items to wish list, inventory
+    * Begin implementing OCR, location, ISBN
+
+# Link to Trello Board
+https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
+
+# Github Classroom Project
+https://github.com/ECS189E/project-w21-steve-give-us-jobs
+
+# Testing Plan
+  * Test app on family aAnd friends.
+  * Perhaps a google form for different functionalities to add
