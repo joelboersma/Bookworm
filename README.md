@@ -30,7 +30,7 @@ Christina Luong
 
 (handler: cyluong)
 
-<img src="" width="100">
+<img src="https://avatars.githubusercontent.com/u/50270872?s=400&u=e1524778cdcdd603a5a6ebd5bf620da6bbf8a976&v=4" width="100">
 
 Urvashi Mahto 
 
