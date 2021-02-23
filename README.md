@@ -109,5 +109,5 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 https://github.com/ECS189E/project-w21-steve-give-us-jobs
 
 # Testing Plan
-  * Test app on family aAnd friends.
+  * Test app on family and friends.
   * Perhaps a google form for different functionalities to add
