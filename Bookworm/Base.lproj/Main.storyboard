@@ -459,45 +459,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search for a book" translatesAutoresizingMaskIntoConstraints="NO" id="gFB-mA-i2N">
-                                <rect key="frame" x="16" y="18" width="343" height="56"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dij-uP-Tha">
-                                <rect key="frame" x="16" y="73" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" name="AccentColor"/>
-                                <state key="normal" title="+ Add Listing">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TyD-f5-9Rs">
-                                <rect key="frame" x="137" y="73" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" name="AccentColor"/>
-                                <state key="normal" title="+ Add Request">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgW-wo-6cA">
-                                <rect key="frame" x="324" y="74" width="35" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" name="AccentColor"/>
-                                <state key="normal" title="Filter">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YMT-7f-uBg">
-                                <rect key="frame" x="16" y="111" width="343" height="497"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kKX-Du-TxU">
+                                <rect key="frame" x="30" y="10" width="315" height="86"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" placeholder="Search for a book" translatesAutoresizingMaskIntoConstraints="NO" id="gFB-mA-i2N">
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="56"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bW4-on-njK">
+                                        <rect key="frame" x="0.0" y="56" width="315" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="179" placeholderIntrinsicHeight="30" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dij-uP-Tha">
+                                                <rect key="frame" x="0.0" y="0.0" width="179" height="30"/>
+                                                <color key="backgroundColor" name="AccentColor"/>
+                                                <state key="normal" title="+ Add Listing">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TyD-f5-9Rs">
+                                                <rect key="frame" x="179" y="0.0" width="101" height="30"/>
+                                                <color key="backgroundColor" name="AccentColor"/>
+                                                <state key="normal" title="+ Add Request">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgW-wo-6cA">
+                                                <rect key="frame" x="280" y="0.0" width="35" height="30"/>
+                                                <color key="backgroundColor" name="AccentColor"/>
+                                                <state key="normal" title="Filter">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mB4-Ug-MHJ">
+                                <rect key="frame" x="30" y="96" width="315" height="572"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gDY-Qn-6Ll"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="kKX-Du-TxU" firstAttribute="centerX" secondItem="SfU-iT-YS1" secondAttribute="centerX" id="66K-VN-0bz"/>
+                            <constraint firstItem="gDY-Qn-6Ll" firstAttribute="trailing" secondItem="mB4-Ug-MHJ" secondAttribute="trailing" constant="30" id="DsM-s7-O2Y"/>
+                            <constraint firstItem="kKX-Du-TxU" firstAttribute="leading" secondItem="gDY-Qn-6Ll" secondAttribute="leading" constant="30" id="HXN-wK-av8"/>
+                            <constraint firstItem="mB4-Ug-MHJ" firstAttribute="leading" secondItem="gDY-Qn-6Ll" secondAttribute="leading" constant="30" id="IOA-iZ-ZEa"/>
+                            <constraint firstItem="gDY-Qn-6Ll" firstAttribute="trailing" secondItem="kKX-Du-TxU" secondAttribute="trailing" constant="30" id="J9T-Cu-ilW"/>
+                            <constraint firstItem="mB4-Ug-MHJ" firstAttribute="bottom" secondItem="gDY-Qn-6Ll" secondAttribute="bottom" constant="50" id="X11-VN-Csp"/>
+                            <constraint firstItem="mB4-Ug-MHJ" firstAttribute="centerX" secondItem="SfU-iT-YS1" secondAttribute="centerX" id="cyb-Es-lU2"/>
+                            <constraint firstItem="kKX-Du-TxU" firstAttribute="top" secondItem="gDY-Qn-6Ll" secondAttribute="top" constant="10" id="f3w-DW-osH"/>
+                            <constraint firstItem="mB4-Ug-MHJ" firstAttribute="top" secondItem="kKX-Du-TxU" secondAttribute="bottom" id="f8v-9l-iPJ"/>
+                            <constraint firstItem="mB4-Ug-MHJ" firstAttribute="centerX" secondItem="SfU-iT-YS1" secondAttribute="centerX" id="xPn-qx-ToA"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Listings" image="list.dash" catalog="system" id="zoB-cY-Ke4"/>
+                    <connections>
+                        <outlet property="listingsTableView" destination="mB4-Ug-MHJ" id="95h-iD-5Us"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
