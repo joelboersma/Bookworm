@@ -706,10 +706,10 @@
             </objects>
             <point key="canvasLocation" x="2733.5999999999999" y="778.56071964017997"/>
         </scene>
-        <!--Database Listing Present-->
+        <!--Database Listing View Controller-->
         <scene sceneID="HSy-qk-1x3">
             <objects>
-                <viewController id="vxg-MN-hWP" customClass="DatabaseListingPresent" sceneMemberID="viewController">
+                <viewController id="vxg-MN-hWP" customClass="DatabaseListingViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YXb-g8-Lkk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
