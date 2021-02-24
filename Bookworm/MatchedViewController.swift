@@ -12,12 +12,12 @@ import UIKit
 class MatchedViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
-    @IBOutlet weak var tempLatitudeLabel: UILabel!
-    @IBOutlet weak var tempLongitudeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        self.navigationController?.isNavigationBarHidden = true
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
@@ -34,8 +34,7 @@ class MatchedViewController: UIViewController, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        tempLatitudeLabel.text = "latitude: \(location.latitude)"
-        tempLongitudeLabel.text = "longitude: \(location.longitude)"
+//        print("latitude: \(location.latitude) longitude: \(location.longitude)")
     }
     
 
