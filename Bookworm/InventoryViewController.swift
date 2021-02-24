@@ -30,4 +30,8 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
 
+    @IBAction func didPressBack(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

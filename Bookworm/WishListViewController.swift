@@ -27,8 +27,8 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-
-
+    @IBAction func didPressBack(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     
-
 }
