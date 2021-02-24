@@ -550,7 +550,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3596.9230769230767" y="104.50236966824644"/>
+            <point key="canvasLocation" x="4261" y="104"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pJ2-JD-MVP">
@@ -850,7 +850,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ke5-E2-1ro" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3589" y="802"/>
+            <point key="canvasLocation" x="4014" y="802"/>
+        </scene>
+        <!--Filter View Controller-->
+        <scene sceneID="i49-g9-fjV">
+            <objects>
+                <viewController id="3H6-0t-fi6" customClass="FilterViewController" customModule="Bookworm" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HLz-cM-blp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Ekx-Sz-Mx1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ExB-x8-faQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4712" y="802"/>
         </scene>
         <!--Inventory Listing View Controller-->
         <scene sceneID="52t-Ke-jVz">

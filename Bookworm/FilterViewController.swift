@@ -1,15 +1,15 @@
 //
-//  DatabaseListingViewController.swift
+//  FilterViewController.swift
 //  Bookworm
 //
-//  Created by Urvashi Mahto on 2/23/21.
+//  Created by Urvashi Mahto on 2/24/21.
 //
 
 import Foundation
 import UIKit
 import Firebase
 
-class DatabaseListingViewController: UIViewController {
+class FilterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
