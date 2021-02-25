@@ -535,7 +535,7 @@
         <!--Listings-->
         <scene sceneID="PwS-Qx-5fT">
             <objects>
-                <viewController storyboardIdentifier="listingsViewController" id="xnZ-Bt-MIs" customClass="ListingsViewController" customModule="Bookworm" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="listingsViewController" id="xnZ-Bt-MIs" customClass="ListingsViewController" customModule="Bookworm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SfU-iT-YS1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -556,6 +556,9 @@
                                                 <state key="normal" title="+ Add Listing">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addListingButtonClicked:" destination="xnZ-Bt-MIs" eventType="touchUpInside" id="WCL-bp-KIA"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TyD-f5-9Rs">
                                                 <rect key="frame" x="106.5" y="0.0" width="102" height="30"/>
@@ -563,6 +566,9 @@
                                                 <state key="normal" title="+ Add Request">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addRequestButtonClicked:" destination="xnZ-Bt-MIs" eventType="touchUpInside" id="xDT-pj-IzZ"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgW-wo-6cA">
                                                 <rect key="frame" x="212.5" y="0.0" width="102.5" height="30"/>
@@ -600,6 +606,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Listings" image="list.dash" catalog="system" id="zoB-cY-Ke4"/>
                     <connections>
+                        <outlet property="addListingButton" destination="Dij-uP-Tha" id="uI4-5v-2Ua"/>
+                        <outlet property="addRequestButton" destination="TyD-f5-9Rs" id="Z2d-DM-ExJ"/>
                         <outlet property="filterButton" destination="rgW-wo-6cA" id="Tpw-l5-zhS"/>
                         <outlet property="listingsTableView" destination="mB4-Ug-MHJ" id="95h-iD-5Us"/>
                         <outlet property="searchBar" destination="gFB-mA-i2N" id="ngy-kB-yTU"/>
@@ -817,47 +825,50 @@
         <!--Database Listing View Controller-->
         <scene sceneID="HSy-qk-1x3">
             <objects>
-                <viewController id="vxg-MN-hWP" customClass="DatabaseListingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="dblistingVC" id="vxg-MN-hWP" customClass="DatabaseListingViewController" customModule="Bookworm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YXb-g8-Lkk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XeY-9C-rg7">
-                                <rect key="frame" x="20" y="174.5" width="374" height="547"/>
+                                <rect key="frame" x="20" y="60" width="335" height="547"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="&lt;BOOK_TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="15" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Yb-fy-cbq">
-                                        <rect key="frame" x="83" y="38" width="209.5" height="36"/>
+                                        <rect key="frame" x="63" y="26" width="209.5" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iby-fZ-Ppt">
-                                        <rect key="frame" x="10" y="294" width="354" height="30"/>
+                                        <rect key="frame" x="10" y="294" width="315" height="30"/>
                                         <color key="backgroundColor" name="AccentColor"/>
                                         <state key="normal" title="Contact Seller">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
+                                        <connections>
+                                            <action selector="contactSellerButtonClicked:" destination="vxg-MN-hWP" eventType="touchUpInside" id="aID-PB-Y8C"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="60d-Qq-VTk">
-                                        <rect key="frame" x="10" y="329" width="354" height="160"/>
+                                        <rect key="frame" x="10" y="329" width="315" height="160"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="&lt;AUTHOR&gt;" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2W6-qf-sCd">
-                                                <rect key="frame" x="0.0" y="0.0" width="354" height="34"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="315" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="&lt;PUBLISHING_DATE&gt;" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DQo-mJ-g3t">
-                                                <rect key="frame" x="0.0" y="42" width="354" height="34"/>
+                                                <rect key="frame" x="0.0" y="42" width="315" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="&lt;EDITION&gt;" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zk5-s2-p2i">
-                                                <rect key="frame" x="0.0" y="84" width="354" height="34"/>
+                                                <rect key="frame" x="0.0" y="84" width="315" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="&lt;ISBN_NUMBER&gt;" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a6H-yg-xej">
-                                                <rect key="frame" x="0.0" y="126" width="354" height="34"/>
+                                                <rect key="frame" x="0.0" y="126" width="315" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
@@ -871,16 +882,23 @@
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXy-bt-dzu">
-                                        <rect key="frame" x="10" y="509" width="354" height="30"/>
+                                        <rect key="frame" x="10" y="509" width="315" height="30"/>
                                         <color key="backgroundColor" name="AccentColor"/>
                                         <state key="normal" title="Add to Wishlist">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lWe-zm-4Hk">
-                                        <rect key="frame" x="67" y="108" width="240" height="128"/>
+                                        <rect key="frame" x="47" y="107" width="240" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTj-EH-OXH">
+                                        <rect key="frame" x="307" y="8" width="20" height="22"/>
+                                        <state key="normal" image="xmark.circle.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="xButtonPressed:" destination="vxg-MN-hWP" eventType="touchUpInside" id="NFT-aI-QuH"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -889,9 +907,11 @@
                                     <constraint firstItem="sXy-bt-dzu" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="8Lr-Gn-4hf"/>
                                     <constraint firstItem="Iby-fZ-Ppt" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="D9H-Qr-eq6"/>
                                     <constraint firstItem="60d-Qq-VTk" firstAttribute="top" secondItem="Iby-fZ-Ppt" secondAttribute="bottom" constant="5" id="FOo-Nm-quK"/>
+                                    <constraint firstItem="eTj-EH-OXH" firstAttribute="top" secondItem="XeY-9C-rg7" secondAttribute="top" constant="8" id="Rss-dv-YGE"/>
                                     <constraint firstAttribute="bottom" secondItem="sXy-bt-dzu" secondAttribute="bottom" constant="8" id="Scf-KH-ZOu"/>
                                     <constraint firstAttribute="trailing" secondItem="sXy-bt-dzu" secondAttribute="trailing" constant="10" id="W0S-z0-2Dz"/>
                                     <constraint firstAttribute="trailing" secondItem="60d-Qq-VTk" secondAttribute="trailing" constant="10" id="W7L-Um-tB7"/>
+                                    <constraint firstAttribute="trailing" secondItem="eTj-EH-OXH" secondAttribute="trailing" constant="8" id="ZYl-4n-WVN"/>
                                     <constraint firstAttribute="height" constant="547" id="eGs-Q2-c6q"/>
                                     <constraint firstItem="7Yb-fy-cbq" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="kCe-X5-K0F"/>
                                     <constraint firstItem="60d-Qq-VTk" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="m0g-3J-yG0"/>
@@ -910,6 +930,10 @@
                             <constraint firstItem="XeY-9C-rg7" firstAttribute="centerY" secondItem="YXb-g8-Lkk" secondAttribute="centerY" id="rnG-ax-RWJ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="contactSellerButton" destination="Iby-fZ-Ppt" id="QrI-zQ-T4d"/>
+                        <outlet property="xButton" destination="eTj-EH-OXH" id="IpS-Bi-BKR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ke5-E2-1ro" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -927,7 +951,7 @@
                                 <rect key="frame" x="20" y="244" width="374" height="182"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="K0C-RH-HNJ">
-                                        <rect key="frame" x="10" y="20" width="354" height="32"/>
+                                        <rect key="frame" x="10" y="20" width="315" height="32"/>
                                         <segments>
                                             <segment title="Listings"/>
                                             <segment title="Requests"/>
@@ -935,7 +959,7 @@
                                         </segments>
                                     </segmentedControl>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GHI-kq-kw5">
-                                        <rect key="frame" x="10" y="61" width="354" height="30"/>
+                                        <rect key="frame" x="10" y="61" width="315" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="within" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBI-RO-M2A">
                                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
@@ -944,10 +968,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="314.5" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="309" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="320.5" y="0.0" width="33.5" height="30"/>
+                                                <rect key="frame" x="315" y="0.0" width="0.0" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -955,13 +979,13 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="other filters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kj5-3h-o2B">
-                                        <rect key="frame" x="10" y="101" width="354" height="20.5"/>
+                                        <rect key="frame" x="10" y="101" width="315" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H4O-W8-qwQ">
-                                        <rect key="frame" x="152.5" y="131.5" width="69" height="30"/>
+                                        <rect key="frame" x="133" y="131.5" width="69" height="30"/>
                                         <color key="backgroundColor" name="AccentColor"/>
                                         <state key="normal" title="Set Filters">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1120,6 +1144,7 @@
         <image name="lock" catalog="system" width="128" height="128"/>
         <image name="mail" catalog="system" width="128" height="93"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

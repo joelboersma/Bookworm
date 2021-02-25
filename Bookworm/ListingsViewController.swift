@@ -9,7 +9,9 @@ import UIKit
 import Firebase
 
 class ListingsViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
-
+    
+    @IBOutlet weak var addListingButton: UIButton!
+    @IBOutlet weak var addRequestButton: UIButton!
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var filterButton: UIButton!
@@ -35,6 +37,25 @@ class ListingsViewController: UIViewController, UISearchBarDelegate, UITableView
         //filterVC.delegate = self
         
         present(filterVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func addRequestButtonClicked(_ sender: Any) {
+        //add request
+        
+        // dblistingVC for now
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "dblistingVC")
+        guard let dblistingVC = vc as? DatabaseListingViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        //dblistingVC.delegate = self
+        
+        present(dblistingVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func addListingButtonClicked(_ sender: Any) {
+        //add listing
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
