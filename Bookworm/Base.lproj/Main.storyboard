@@ -546,6 +546,7 @@
                     <tabBarItem key="tabBarItem" title="Listings" image="list.dash" catalog="system" id="zoB-cY-Ke4"/>
                     <connections>
                         <outlet property="listingsTableView" destination="mB4-Ug-MHJ" id="95h-iD-5Us"/>
+                        <outlet property="searchBar" destination="gFB-mA-i2N" id="ngy-kB-yTU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -885,13 +886,13 @@
                                 <rect key="frame" x="50" y="288" width="314" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="within" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBI-RO-M2A">
-                                        <rect key="frame" x="0.0" y="0.0" width="29.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="21.5" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                        <rect key="frame" x="27.5" y="0.0" width="248.5" height="31"/>
+                                        <rect key="frame" x="19.5" y="0.0" width="256.5" height="31"/>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
                                         <rect key="frame" x="274" y="0.0" width="40" height="30"/>

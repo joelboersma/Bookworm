@@ -8,13 +8,25 @@
 import UIKit
 import Firebase
 
-class ListingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class ListingsViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
 
     @IBOutlet weak var listingsTableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.searchBar.delegate = self
+        
+        // Create tap gesture object for dismissing keyboard.
+        let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        
+        // Add tap gesture to view.
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // hides the keyboard.
+        // do Things For Searching
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
