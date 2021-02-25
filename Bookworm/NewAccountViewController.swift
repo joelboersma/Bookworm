@@ -11,6 +11,11 @@ import FirebaseAuth
 
 class NewAccountViewController: UIViewController {
     
+    
+    
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
@@ -18,7 +23,7 @@ class NewAccountViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     
     @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var facebookButton: UIButton!
+    
     
     
     override func viewDidLoad() {
@@ -33,36 +38,32 @@ class NewAccountViewController: UIViewController {
         self.errorLabel.text = ""
         
         self.signUpButton.layer.cornerRadius = 18
-        self.facebookButton.layer.cornerRadius = 18
         
         // For dot inputs for passwords
         self.passwordTextField.isSecureTextEntry = true
         self.confirmPasswordTextField.isSecureTextEntry = true
         
-        // Change email textField to email keyboard
+        // Change keyboard type for respective text fields
         self.emailTextField.keyboardType = UIKeyboardType.emailAddress
+        self.phoneNumberTextField.keyboardType = UIKeyboardType.phonePad
         
         
     }
+    
     
     
     @IBAction func signUpButtonPressed(_ sender: Any) {
         
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
+        let firstName = firstNameTextField.text ?? ""
+        let lastName = lastNameTextField.text ?? ""
+        let phoneNumber = phoneNumberTextField.text ?? ""
         let confirmPassword = confirmPasswordTextField.text ?? ""
         
-        if (email == "" || password == "") {
-            errorLabel.text = "Please fill in email and password."
-            errorLabel.textColor = UIColor.systemRed
-        } else if (email == "") {
-            errorLabel.text = "Email cannot be empty"
-            errorLabel.textColor = UIColor.systemRed
-        } else if (password == "") {
-            errorLabel.text = "Password cannot be empty"
-            errorLabel.textColor = UIColor.systemRed
-        } else if (confirmPassword == "") {
-            errorLabel.text = "Confirm Password cannot be empty"
+        // If any text field is empty
+        if (email == "" || password == "" || firstName == "" || lastName == "" || phoneNumber == "") {
+            errorLabel.text = "Missing field(s), please try again"
             errorLabel.textColor = UIColor.systemRed
         } else if (confirmPassword != password) {
             errorLabel.text = "Password does not match"
@@ -76,25 +77,31 @@ class NewAccountViewController: UIViewController {
                     self.errorLabel.text = "Account created successfully"
                     self.errorLabel.textColor = UIColor.systemGreen
                     
-//TODO: Erase commented section below if the updated tab bar implentation is correct
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    guard let vc = storyboard.instantiateViewController(withIdentifier: "matchedViewController") as? MatchedViewController  else { assertionFailure("Couldn't find matched view controller."); return }
-//                    let matchedViewController = [vc]
-//                    self.navigationController?.setViewControllers(matchedViewController, animated: true)
-  
-                    //swich to tab bar controller which will, by default, go to match view
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
                     let tabBarController = [vc]
                     self.navigationController?.setViewControllers(tabBarController, animated: true)
-
+                    
                     
                     
                 } else if let error = error {
                     print(error)
                     
-                    self.errorLabel.text = "\(error)"
-                    self.errorLabel.textColor = UIColor.systemRed
+                    if let errCodeMessage = AuthErrorCode(rawValue: error._code) {
+                        self.errorLabel.textColor = UIColor.systemRed
+                        
+                        switch errCodeMessage {
+                        case .invalidEmail:
+                            self.errorLabel.text = "Please enter a valid email"
+                        case .weakPassword:
+                            self.errorLabel.text = "Weak Password; Password must be over 6 characters"
+                        case .networkError:
+                            self.errorLabel.text = "Network Error, please try again"
+                        default:
+                            print("Unknown error occurred")
+                            self.errorLabel.text = "Unknown error has occurred, please try again later"
+                        }
+                    }
                 }
                 
             }
