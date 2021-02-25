@@ -45,29 +45,46 @@ class LoginViewController: UIViewController {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         
-        // Check for errors, else sign in successful
-        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-            if let error = error {
-                print(error)
-            } else {
-                
-// TODO: Erase commented section below if the updated tab bar implentation is correct
-//                // Temporarily going to matched view controller to test location output.
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                guard let vc = storyboard.instantiateViewController(withIdentifier: "matchedViewController") as? MatchedViewController  else { assertionFailure("Couldn't find matched view controller."); return }
-//                let matchedViewController = [vc]
-//                self.navigationController?.setViewControllers(matchedViewController, animated: true)
-                
-                //switch to tab bar controller which will, by default, go to match view
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
-                let tabBarController = [vc]
-                self.navigationController?.setViewControllers(tabBarController, animated: true)
+        // Check for errors, else try authentication
+        if (email == "" || password == ""){
+            errorLabel.text = "Missing field(s), please try again"
+            errorLabel.textColor = UIColor.systemRed
+        } else {
+            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+                if let error = error {
+                    print(error)
+                    
+                    // API error checking, can add more as neeeded
+                    if let errCodeMessage = AuthErrorCode(rawValue: error._code) {
+                        switch errCodeMessage {
+                        case .userNotFound:
+                            self.errorLabel.text = "Invalid user"
+                            self.errorLabel.textColor = UIColor.systemRed
+                        case .wrongPassword:
+                            self.errorLabel.text = "Invalid password"
+                            self.errorLabel.textColor = UIColor.systemRed
+                        case .networkError:
+                            self.errorLabel.text = "Network Error, please try again"
+                            self.errorLabel.textColor = UIColor.systemRed
+                        default:
+                            print("Unknown error occurred")
+                            self.errorLabel.text = "Unknown error has occurred, please try again later"
+                            self.errorLabel.textColor = UIColor.systemRed
+                        }
+                    }
+                    
+                } else {
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
+                    let tabBarController = [vc]
+                    self.navigationController?.setViewControllers(tabBarController, animated: true)
+                }
             }
         }
-        
-        
     }
+    
+    
     
     @IBAction func newAccountButtonPressed(_ sender: Any) {
         
@@ -79,7 +96,7 @@ class LoginViewController: UIViewController {
         }
         self.navigationController?.pushViewController(newAccountVC, animated: true)
     }
-    
-    
 }
+
+
 
