@@ -12,6 +12,7 @@ class ListingsViewController: UIViewController, UISearchBarDelegate, UITableView
 
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var filterButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,18 @@ class ListingsViewController: UIViewController, UISearchBarDelegate, UITableView
         
         // Add tap gesture to view.
         view.addGestureRecognizer(tapGesture)
+    }
+    
+    @IBAction func filterButtonClicked(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "filterVC")
+        guard let filterVC = vc as? FilterViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        //filterVC.delegate = self
+        
+        present(filterVC, animated: true, completion: nil)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

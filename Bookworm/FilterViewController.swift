@@ -10,10 +10,13 @@ import UIKit
 import Firebase
 
 class FilterViewController: UIViewController {
-
+    @IBOutlet weak var setFiltersButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func setFiltersButtonPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
