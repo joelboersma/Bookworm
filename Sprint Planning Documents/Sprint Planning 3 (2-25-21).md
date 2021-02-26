@@ -14,10 +14,10 @@ Upon selecting a listing, users will be able to get into contact and arrange the
 https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Completed Tasks
-  * Christina
-    * Created profile view and its related views (commit: 0f5a81b)
-    * Implemented account deletion, logout (commit: 0f5a81b)
-    * Added tab bar to three main views (matches view, listings view, and profile view) (commit: 0f5a81b)
+  * Christina 
+    * Created profile view and its related views (commit: [0f5a81b](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/0f5a81b94f646eb82ff564098d36143a09b5b09d))
+    * Implemented account deletion, logout (commit: [0f5a81b](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/0f5a81b94f646eb82ff564098d36143a09b5b09d))
+    * Added tab bar to three main views (matches view, listings view, and profile view) (commit: [0f5a81b](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/0f5a81b94f646eb82ff564098d36143a09b5b09d))
   * Joel
   * Peter
     * Created login and new account views
