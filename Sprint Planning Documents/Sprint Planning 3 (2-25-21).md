@@ -39,7 +39,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Finish matched view's branches and logic
 ## Issues
   * Christina - None
-  * Joel - None
-  * Peter
+  * Joel
+  * Peter - None
   * Urvashi
   * Mohammed - None
