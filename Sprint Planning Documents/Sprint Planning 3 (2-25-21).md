@@ -20,6 +20,9 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Added tab bar to three main views (matches view, listings view, and profile view)
   * Joel
   * Peter
+    * Created login and new account views
+    * Integrated email authentication and login
+    * Account / Login conditional validation checks
   * Urvashi
   * Mohammed
     * Created matched view
@@ -29,12 +32,14 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Implement profile view button functions 
   * Joel
   * Peter
+    * Add user data fields like zip code and phone number
+    * Create a continued account create view
   * Urvashi
   * Mohammed
     * Finish matched view's branches and logic
 ## Issues
   * Christina - None
-  * Joel
+  * Joel - None
   * Peter
   * Urvashi
   * Mohammed - None
