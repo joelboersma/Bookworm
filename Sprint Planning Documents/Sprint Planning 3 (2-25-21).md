@@ -15,9 +15,9 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Completed Tasks
   * Christina
-    * Created profile view and its related views
-    * Implemented account deletion, logout
-    * Added tab bar to three main views (matches view, listings view, and profile view)
+    * Created profile view and its related views (commit: 0f5a81b)
+    * Implemented account deletion, logout (commit: 0f5a81b)
+    * Added tab bar to three main views (matches view, listings view, and profile view) (commit: 0f5a81b)
   * Joel
   * Peter
     * Created login and new account views
