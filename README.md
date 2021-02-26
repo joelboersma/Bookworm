@@ -43,64 +43,6 @@ Urvashi Mahto
 
 Figma Link: https://www.figma.com/file/5MVhFopjyrgpRBxOYQlR8y/Bookworm-UI?node-id=0%3A1
 
-# Third Party Libraries for Potential Use
-  * Core Location - For user locations
-  * Firebase - Authentication, database storage
-  * Open Library - For ISBN/book info
-  * OCR (need to look into)
- 
-# Server support for Our App
-  * Firebase
-  
-# A listing of all of the models you plan to include in your app
-  * User 
-    * WishList 
-      * Book Titles
-        * Condition
-        * Location
-        * User selling it
-  * Inventory 
-    * Book Titles
-      * Condition
-      * Location
-      * User buying it
-  * Name
-  * Phone number
-  * Radius Preference
-
-# Listing of View Controllers 
-Three Main View Controllers (Can navigate between each of these views through tab bar)
-  * Listings View Controller: Database of all current book listings (books for “sale”, books “in need”)
-    * Shows how many miles away the book is from user
-    * Search function of book
-    * Filter by book being sold or book being looked for
-    * Filter by radius
-    * Scan to add a book listing
-      * Type in ISBN number or scan barcode
-      * Show user the book we found, and ask to confirm. Otherwise go back to reenter
-  * Matched View Controller: Lists all of the user’s “matches”
-    * Table view of history and current listings that correspond to user's wish list or inventory
-    * If user’s want to get in contact, it facilitates phone number exchanges/ transfers to imessaging
-  * Profile View Controller
-    * Settings Functionalities
-    * Change user information 
-    * Delete your account
-    * Wish List
-    * Inventory
-      * See all of your own listings
-    * Logout button
-
-# This Week's Tasks
-  * By Thursday (2/25):
-    * Finish user interface
-    * Add Matches View + its related views 
-    * Add Scanner/Camera View + its related views
-    * Update Create Account view
-      * Add text field for user to enter a username and phone number 
-  * By Sunday (2/28):
-    * Begin setting up database 
-    * Allow user to add items to wish list, inventory
-    * Begin implementing OCR, location, ISBN
 
 # Link to Trello Board
 https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
@@ -108,6 +50,3 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 # Github Classroom Project
 https://github.com/ECS189E/project-w21-steve-give-us-jobs
 
-# Testing Plan
-  * Test app on family and friends.
-  * Perhaps a google form for different functionalities to add
