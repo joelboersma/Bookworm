@@ -21,16 +21,20 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
   * Joel
   * Peter
   * Urvashi
-
+  * Mohammed
+    * Created matched view
+    * Implemented core location functionality
 ## Planned Tasks
   * Christina
     * Implement profile view button functions 
   * Joel
   * Peter
   * Urvashi
-
+  * Mohammed
+    * Finish matched view's branches and logic
 ## Issues
   * Christina - None at the moment
   * Joel
   * Peter
   * Urvashi
+  * Mohammed - None
