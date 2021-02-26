@@ -58,10 +58,10 @@ class LoginViewController: UIViewController {
                     if let errCodeMessage = AuthErrorCode(rawValue: error._code) {
                         switch errCodeMessage {
                         case .userNotFound:
-                            self.errorLabel.text = "Invalid user"
+                            self.errorLabel.text = "Invalid user, please try again"
                             self.errorLabel.textColor = UIColor.systemRed
                         case .wrongPassword:
-                            self.errorLabel.text = "Invalid password"
+                            self.errorLabel.text = "Invalid password, please try again"
                             self.errorLabel.textColor = UIColor.systemRed
                         case .networkError:
                             self.errorLabel.text = "Network Error, please try again"
@@ -85,16 +85,16 @@ class LoginViewController: UIViewController {
     }
     
     
-    
+    // If pressed, push initialNewAccount VC. This is where preliminary info like name, phone number, zip code is taken and will be pushed to database.
     @IBAction func newAccountButtonPressed(_ sender: Any) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "createAccountViewController")
-        guard let newAccountVC = vc as? NewAccountViewController else {
+        let vc = storyboard.instantiateViewController(identifier: "initialNewAccountView")
+        guard let initialNewAccountVC = vc as? InitialNewAccountViewController else {
             assertionFailure("couldn't find vc")
             return
         }
-        self.navigationController?.pushViewController(newAccountVC, animated: true)
+        self.navigationController?.pushViewController(initialNewAccountVC, animated: true)
     }
 }
 

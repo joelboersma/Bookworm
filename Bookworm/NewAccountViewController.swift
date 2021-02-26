@@ -11,11 +11,6 @@ import FirebaseAuth
 
 class NewAccountViewController: UIViewController {
     
-    
-    
-    @IBOutlet weak var firstNameTextField: UITextField!
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
@@ -45,7 +40,6 @@ class NewAccountViewController: UIViewController {
         
         // Change keyboard type for respective text fields
         self.emailTextField.keyboardType = UIKeyboardType.emailAddress
-        self.phoneNumberTextField.keyboardType = UIKeyboardType.phonePad
         
         
     }
@@ -56,13 +50,10 @@ class NewAccountViewController: UIViewController {
         
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
-        let firstName = firstNameTextField.text ?? ""
-        let lastName = lastNameTextField.text ?? ""
-        let phoneNumber = phoneNumberTextField.text ?? ""
         let confirmPassword = confirmPasswordTextField.text ?? ""
         
         // If any text field is empty
-        if (email == "" || password == "" || firstName == "" || lastName == "" || phoneNumber == "") {
+        if (email == "" || password == "" || confirmPassword == "") {
             errorLabel.text = "Missing field(s), please try again"
             errorLabel.textColor = UIColor.systemRed
         } else if (confirmPassword != password) {

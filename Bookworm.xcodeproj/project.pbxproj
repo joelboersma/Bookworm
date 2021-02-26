@@ -26,6 +26,7 @@
 		8461B29225E6E5260076C299 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461B29125E6E5260076C299 /* FilterViewController.swift */; };
 		846E4BFA25E62E5A0058AB54 /* DatabaseListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */; };
 		A6D94B5B25E2632D004DE869 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */; };
+		A6D94BBD25E8C718004DE869 /* InitialNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		8461B29125E6E5260076C299 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListingViewController.swift; sourceTree = "<group>"; };
 		A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
+		A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNewAccountViewController.swift; sourceTree = "<group>"; };
 		AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookworm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 				25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */,
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
 				4B2FB1D125DF596A00661D51 /* LoginViewController.swift */,
+				A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */,
 				A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */,
 				1DCAEAC525E24AA1000C9047 /* MatchedViewController.swift */,
 				4B2FB1D325DF596A00661D51 /* Main.storyboard */,
@@ -247,6 +250,7 @@
 				25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */,
 				25190E7C25E41BFC007573D6 /* WishListViewController.swift in Sources */,
 				25190E8825E42136007573D6 /* ListingsViewController.swift in Sources */,
+				A6D94BBD25E8C718004DE869 /* InitialNewAccountViewController.swift in Sources */,
 				25190E8525E41CAF007573D6 /* InventoryListingViewController.swift in Sources */,
 				4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */,
 				1DCAEAC625E24AA1000C9047 /* MatchedViewController.swift in Sources */,
