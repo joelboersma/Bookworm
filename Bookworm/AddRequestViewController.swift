@@ -7,12 +7,13 @@
 
 import UIKit
 
-class AddRequestViewController: UIViewController, UISearchBarDelegate {
+class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
     // Search API
     // https://openlibrary.org/dev/docs/api/search
     
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var resultsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,18 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate {
         view.endEditing(true)
         
         // Do search functions here
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {
+            assertionFailure("Cell dequeue error")
+            return UITableViewCell.init()
+        }
+        return cell
     }
     
     @IBAction func didPressBack(_ sender: Any) {

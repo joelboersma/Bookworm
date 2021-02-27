@@ -1402,6 +1402,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="resultsTableView" destination="MfN-7K-KiK" id="zYK-5O-cBF"/>
                         <outlet property="searchBar" destination="wxv-yA-sR6" id="ThJ-39-u1W"/>
                     </connections>
                 </viewController>
