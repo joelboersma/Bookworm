@@ -17,9 +17,13 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        searchBar.becomeFirstResponder()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // Hide keyboard
+        view.endEditing(true)
+        
         // Do search functions here
     }
     
@@ -27,4 +31,10 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate {
         self.navigationController?.popViewController(animated: true)
     }
 
+    @IBAction func didTap(_ sender: UITapGestureRecognizer) {
+        // Hide keyboard
+        if sender.state == .ended {
+            view.endEditing(true)
+        }
+    }
 }

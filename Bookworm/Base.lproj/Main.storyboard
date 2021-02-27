@@ -1382,6 +1382,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1Tr-JM-0Ex"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="7Lz-Vo-4cS" firstAttribute="top" secondItem="1Tr-JM-0Ex" secondAttribute="top" constant="50" id="7Fz-v0-i9U"/>
                             <constraint firstItem="MHz-Yk-Hvz" firstAttribute="top" secondItem="1Tr-JM-0Ex" secondAttribute="top" constant="20" id="CN1-YO-ybk"/>
@@ -1396,12 +1397,20 @@
                             <constraint firstItem="wxv-yA-sR6" firstAttribute="leading" secondItem="1Tr-JM-0Ex" secondAttribute="leading" constant="30" id="tne-Ce-lcz"/>
                             <constraint firstItem="MfN-7K-KiK" firstAttribute="leading" secondItem="1Tr-JM-0Ex" secondAttribute="leading" constant="30" id="z6E-7j-t2r"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="N2x-Je-olq" appends="YES" id="9r6-W9-2ZA"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="searchBar" destination="wxv-yA-sR6" id="ThJ-39-u1W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RPt-sM-gy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="N2x-Je-olq">
+                    <connections>
+                        <action selector="didTap:" destination="LM6-G5-vru" id="fmD-NI-z2g"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4260.8695652173919" y="777.45535714285711"/>
         </scene>
