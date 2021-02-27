@@ -1374,6 +1374,10 @@
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Term" translatesAutoresizingMaskIntoConstraints="NO" id="wxv-yA-sR6">
                                 <rect key="frame" x="30" y="150" width="354" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
                             </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1Tr-JM-0Ex"/>
@@ -1393,6 +1397,9 @@
                             <constraint firstItem="MfN-7K-KiK" firstAttribute="leading" secondItem="1Tr-JM-0Ex" secondAttribute="leading" constant="30" id="z6E-7j-t2r"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchBar" destination="wxv-yA-sR6" id="ThJ-39-u1W"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RPt-sM-gy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
