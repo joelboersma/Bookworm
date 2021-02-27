@@ -42,7 +42,15 @@ class ListingsViewController: UIViewController, UISearchBarDelegate, UITableView
     }
     
     @IBAction func addRequestButtonClicked(_ sender: Any) {
-        //add request
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "addRequestViewController")
+        guard let addRequestVC = vc as? AddRequestViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        //filterVC.delegate = self
+        
+        self.navigationController?.pushViewController(addRequestVC, animated: true)
     }
     
     @IBAction func addListingButtonClicked(_ sender: Any) {
