@@ -12,7 +12,7 @@ import Firebase
 
 class MatchedViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet var matchesTableView: UITableView!
+    @IBOutlet weak var matchesTableView: UITableView!
     let locationManager = CLLocationManager()
     var placeholderTitles: [String] = []
     
