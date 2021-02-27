@@ -1300,9 +1300,8 @@
                                             <action selector="xButtonPressed" destination="tnP-8t-gAf" eventType="touchUpInside" id="SeJ-wU-nyG"/>
                                         </connections>
                                     </button>
-                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sold to/Bought by label if history" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QlG-xY-IVD">
-                                        <rect key="frame" x="10" y="507" width="330" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sold to/Bought by label if history" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QlG-xY-IVD">
+                                        <rect key="frame" x="10" y="507" width="354" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -1311,16 +1310,20 @@
                                 <constraints>
                                     <constraint firstItem="gFp-de-IAf" firstAttribute="centerX" secondItem="OTY-4b-FgS" secondAttribute="centerX" constant="-7" id="0vY-im-93R"/>
                                     <constraint firstItem="5M2-iJ-NNE" firstAttribute="top" secondItem="3xD-yW-Eit" secondAttribute="bottom" constant="20" id="8pI-zl-64C"/>
+                                    <constraint firstAttribute="trailing" secondItem="QlG-xY-IVD" secondAttribute="trailing" constant="10" id="9Mk-55-u7I"/>
                                     <constraint firstAttribute="trailing" secondItem="gFp-de-IAf" secondAttribute="trailing" constant="77" id="BWW-iE-yOP"/>
                                     <constraint firstAttribute="trailing" secondItem="Kk1-fH-aRe" secondAttribute="trailing" constant="8" id="E75-I4-q13"/>
                                     <constraint firstAttribute="height" constant="547" id="Jmw-XB-VH7"/>
+                                    <constraint firstItem="QlG-xY-IVD" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="KL4-5W-ZH1"/>
                                     <constraint firstItem="vAX-yd-f2E" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="M0H-eD-2EM"/>
                                     <constraint firstItem="5M2-iJ-NNE" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="NEn-Lv-dRE"/>
                                     <constraint firstItem="gFp-de-IAf" firstAttribute="top" secondItem="OTY-4b-FgS" secondAttribute="top" constant="26" id="Oet-us-68V"/>
                                     <constraint firstAttribute="trailing" secondItem="vAX-yd-f2E" secondAttribute="trailing" constant="10" id="QII-VW-JE6"/>
                                     <constraint firstAttribute="trailing" secondItem="3xD-yW-Eit" secondAttribute="trailing" constant="10" id="cBa-iq-Evd"/>
+                                    <constraint firstAttribute="bottom" secondItem="QlG-xY-IVD" secondAttribute="bottom" constant="6" id="cbj-Rp-Xpn"/>
                                     <constraint firstItem="3xD-yW-Eit" firstAttribute="top" secondItem="vAX-yd-f2E" secondAttribute="bottom" constant="5" id="kPV-5f-caN"/>
                                     <constraint firstItem="3xD-yW-Eit" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="rYO-3O-pmG"/>
+                                    <constraint firstItem="QlG-xY-IVD" firstAttribute="top" secondItem="3xD-yW-Eit" secondAttribute="bottom" constant="18" id="rmF-4N-BME"/>
                                     <constraint firstAttribute="bottom" secondItem="5M2-iJ-NNE" secondAttribute="bottom" constant="8" id="x8l-FV-gvX"/>
                                     <constraint firstAttribute="trailing" secondItem="5M2-iJ-NNE" secondAttribute="trailing" constant="10" id="y0z-Ef-Ns3"/>
                                     <constraint firstItem="Kk1-fH-aRe" firstAttribute="top" secondItem="OTY-4b-FgS" secondAttribute="top" constant="8" id="z5H-i4-9Pa"/>
@@ -1328,7 +1331,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="meI-Sl-e9k"/>
-                        <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="meI-Sl-e9k" firstAttribute="trailing" secondItem="OTY-4b-FgS" secondAttribute="trailing" constant="20" id="7qC-yJ-bUJ"/>
                             <constraint firstItem="OTY-4b-FgS" firstAttribute="leading" secondItem="meI-Sl-e9k" secondAttribute="leading" constant="20" id="D5t-Fl-dMm"/>
@@ -1339,7 +1342,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jJJ-Yr-YG0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1020" y="802"/>
+            <point key="canvasLocation" x="1018.840579710145" y="801.5625"/>
         </scene>
         <!--Add Request View Controller-->
         <scene sceneID="4bJ-4w-f3A">
@@ -1436,9 +1439,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
