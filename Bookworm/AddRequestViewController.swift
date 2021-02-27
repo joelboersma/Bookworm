@@ -26,6 +26,19 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
         view.endEditing(true)
         
         // Do search functions here
+        if let searchText = searchBar.text {
+            OpenLibraryAPI.search(searchText) { response, error in
+                if let unwrappedError = error {
+                    print(unwrappedError)
+                }
+                else if let unwrappedResponse = response {
+                    print(unwrappedResponse["num_found"] ?? "nope") 
+                }
+                else {
+                    print("this shouldn't happen")
+                }
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
