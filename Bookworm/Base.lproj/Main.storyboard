@@ -1004,7 +1004,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JvZ-rI-Oj7"/>
-                        <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="XeY-9C-rg7" firstAttribute="leading" secondItem="JvZ-rI-Oj7" secondAttribute="leading" constant="20" id="Ysa-VS-LuK"/>
                             <constraint firstItem="JvZ-rI-Oj7" firstAttribute="trailing" secondItem="XeY-9C-rg7" secondAttribute="trailing" constant="20" id="bsJ-nG-vaX"/>
@@ -1050,10 +1050,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="321" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="329" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="327" y="0.0" width="27" height="30"/>
+                                                <rect key="frame" x="335" y="0.0" width="19" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1097,7 +1097,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ekx-Sz-Mx1"/>
-                        <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="2up-ip-rpm" firstAttribute="centerY" secondItem="HLz-cM-blp" secondAttribute="centerY" id="0eF-h2-AzV"/>
                             <constraint firstItem="2up-ip-rpm" firstAttribute="leading" secondItem="Ekx-Sz-Mx1" secondAttribute="leading" constant="20" id="BLR-pS-L4t"/>
@@ -1238,9 +1238,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
