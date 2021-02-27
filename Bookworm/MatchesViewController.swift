@@ -10,9 +10,17 @@ import CoreLocation
 import UIKit
 import Firebase
 
-class MatchedViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class MatchesTableViewCell: UITableViewCell {
+    @IBOutlet weak var bookCoverImage: UIImageView!
+    @IBOutlet weak var bookTitleLabel: UILabel!
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var transactionLabel: UILabel!
+}
+
+class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet var matchesTableView: UITableView!
+    @IBOutlet weak var matchesTableView: UITableView!
     let locationManager = CLLocationManager()
     var placeholderTitles: [String] = []
     
@@ -52,23 +60,22 @@ class MatchedViewController: UIViewController, CLLocationManagerDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "listingCell") ?? UITableViewCell(style: .default, reuseIdentifier: "listingCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "matchesCell", for: indexPath) as? MatchesTableViewCell
         
         assert(indexPath.section == 0)
-        cell.textLabel?.text = placeholderTitles[indexPath.row]
-        return cell
+        cell?.bookTitleLabel.text = placeholderTitles[indexPath.row]
+        return cell ?? UITableViewCell(style: .default, reuseIdentifier: "matchesCell")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
         // empty dblistingVC for now
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "matchedEntryVC")
-        guard let matchedEntryVC = vc as? MatchedEntryViewController else {
+        let vc = storyboard.instantiateViewController(identifier: "matchesEntryVC")
+        guard let matchedEntryVC = vc as? MatchesEntryViewController else {
             assertionFailure("couldn't find vc")
             return
         }
-        //dblistingVC.delegate = self
 
         present(matchedEntryVC, animated: true, completion: nil)
     }

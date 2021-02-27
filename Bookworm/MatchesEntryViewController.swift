@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import MessageUI
 
-class MatchedEntryViewController: UIViewController, MFMessageComposeViewControllerDelegate {
+class MatchesEntryViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
