@@ -333,7 +333,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
-                                            <action selector="zipCodeChanged" destination="doY-wp-8OF" eventType="editingDidEnd" id="BDo-q6-lcH"/>
+                                            <action selector="zipCodeChanged" destination="doY-wp-8OF" eventType="editingChanged" id="hx3-fu-54u"/>
                                         </connections>
                                     </textField>
                                 </subviews>

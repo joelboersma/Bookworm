@@ -7,9 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 
 class NewAccountViewController: UIViewController {
+    
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -19,7 +21,13 @@ class NewAccountViewController: UIViewController {
     
     @IBOutlet weak var signUpButton: UIButton!
     
+    var ref = Database.database().reference()
     
+    // Values passed from InitialNewAccountViewController
+    var userFirstName: String = ""
+    var userLastName: String = ""
+    var userPhoneNumber: String = ""
+    var userZipCode: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +48,6 @@ class NewAccountViewController: UIViewController {
         
         // Change keyboard type for respective text fields
         self.emailTextField.keyboardType = UIKeyboardType.emailAddress
-        
         
     }
     
@@ -68,6 +75,10 @@ class NewAccountViewController: UIViewController {
                     self.errorLabel.text = "Account created successfully"
                     self.errorLabel.textColor = UIColor.systemGreen
                     
+                    // Handle data pushing here
+                    self.ref.child("Users").child(authResult.user.uid).setValue(["FirstName": self.userFirstName, "LastName": self.userLastName, "PhoneNumber": self.userPhoneNumber, "ZipCode": self.userZipCode])
+
+                    
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
                     let tabBarController = [vc]
@@ -94,10 +105,12 @@ class NewAccountViewController: UIViewController {
                         }
                     }
                 }
-                
             }
         }
-        
     }
+    
+    
+    
+    
 }
 
