@@ -11,6 +11,9 @@ target 'Bookworm' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'Firebase/Analytics'
+  
+  # PhoneNumberKit Pod
+  pod 'PhoneNumberKit'
 
 
 end

@@ -6,21 +6,31 @@
 //
 
 import UIKit
+import PhoneNumberKit
+import CoreLocation
 
 class InitialNewAccountViewController: UIViewController {
     
     
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var phoneNumberTextField: PhoneNumberTextField!
     @IBOutlet weak var zipCodeTextField: UITextField!
     
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
     
+    // phone number implementation taken from ECS189E HW Solution
+    // variables to track status of phone number
+    let phoneNumberKit = PhoneNumberKit()
+    var isValidNumber = false
+    var isForeignNumber = false
+    var phoneNumber_e164 = ""
+    var zipCode = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Create tap gesture object for dismissing keyboard.
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         
@@ -32,15 +42,27 @@ class InitialNewAccountViewController: UIViewController {
         self.continueButton.layer.cornerRadius = 18
     }
     
-    
+    // Continiue Button Validation Checks
     @IBAction func continueButtonPressed(_ sender: Any) {
         let firstName = firstNameTextField.text ?? ""
         let lastName = lastNameTextField.text ?? ""
         let phoneNumber = phoneNumberTextField.text ?? ""
-        let zipCode = zipCodeTextField.text ?? ""
+        let zipCodeNumber = zipCodeTextField.text ?? ""
         
-        if (firstName == "" || lastName == "" || phoneNumber == "" || zipCode == "") {
+        if (firstName == "" || lastName == "" || phoneNumber == "" || zipCodeNumber == "") {
             errorLabel.text = "Missing field(s), please try again"
+            errorLabel.textColor = UIColor.systemRed
+        } else if(isForeignNumber) {
+            errorLabel.text = "Please enter a US phone number"
+            errorLabel.textColor = UIColor.systemRed
+        } else if(!isValidNumber) {
+            errorLabel.text = "Please enter a valid phone number"
+            errorLabel.textColor = UIColor.systemRed
+        }
+        
+        // Checks to see if global var zipCode matches regex for zip codes
+        else if(zipCode.range(of: "^[0-9]{5}(-[0-9]{4})?$", options: .regularExpression) == nil){
+            errorLabel.text = "Please enter a valid zip code"
             errorLabel.textColor = UIColor.systemRed
         } else {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -55,5 +77,64 @@ class InitialNewAccountViewController: UIViewController {
         
         
     }
+    
+    
+    // Phone Number Validation (taken from ECS189E HW Solution)
+    @IBAction func phoneNumberChanged() {
+        self.errorLabel.text = ""
+        let phoneNumber = phoneNumberTextField.text ?? ""
+        
+        do {
+            let ph = try phoneNumberKit.parse(phoneNumber)
+            self.isValidNumber = true
+            let regId = ph.regionID ?? ""
+            print(regId)
+            if(regId == "US") {
+                self.isForeignNumber = false
+                self.phoneNumber_e164 = phoneNumberKit.format(ph, toType: .e164)
+                
+            } else {
+                self.isForeignNumber = true
+            }
+        } catch {
+            self.isValidNumber = false
+            self.isForeignNumber = false
+        }
+    }
+    
+    
+    // Zip Code Validation
+    @IBAction func zipCodeChanged() {
+        self.errorLabel.text = ""
+        zipCode = zipCodeTextField.text ?? ""
+
+        getCityFromPostalCode(postalCode: zipCode)
+    }
+    
+    
+    func getCityFromPostalCode(postalCode : String){
+        let geocoder = CLGeocoder()
+        
+        geocoder.geocodeAddressString(postalCode) { results, error in 
+            
+            // Placemark gives an array of best/closest results. First value of array most accurate.
+            if let placemark = results?[0] {
+                
+                if placemark.postalCode == postalCode{
+                    let locality = placemark.locality ?? ""
+                    let state = placemark.administrativeArea ?? ""
+                    
+                    self.zipCodeTextField.text = "\(locality), \(state)"
+                    
+                }
+                else{
+                    print("Please enter valid zipcode")
+                }
+            }
+        }
+    }
+    
+    
+    
     
 }
