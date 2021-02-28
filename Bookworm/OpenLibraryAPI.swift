@@ -73,10 +73,53 @@ struct OpenLibraryAPI {
         }.resume()
     }
     
+    
+    /// Makes an API call at endpoint and calls completion when finished
+    static func generic(_ endpoint: String, completion: @escaping ApiCompletion) {
+        ApiCall(endpoint: endpoint, completion: completion)
+    }
+    
     static func search(_ searchText: String, completion: @escaping ApiCompletion) {
         let query: String = searchText.replacingOccurrences(of: " ", with: "+")
         print(query)
         ApiCall(endpoint: "/search.json?q=\(query)", completion: completion)
+    }
+    
+    static func author(_ key: String, completion: @escaping ApiCompletion) {
+        if (key.lowercased().hasPrefix("/authors/ol")) {
+            ApiCall(endpoint: key, completion: completion)
+        }
+        else {
+            print("Error: Invalid path for author")
+        }
+    }
+    
+    // may not need this
+    static func works(_ key: String, completion: @escaping ApiCompletion) {
+        if (key.lowercased().hasPrefix("/works/ol")) {
+            ApiCall(endpoint: key, completion: completion)
+        }
+        else {
+            print("Error: Invalid path for works")
+        }
+    }
+    
+    // may not need this
+    static func editions(_ key: String, completion: @escaping ApiCompletion) {
+        if (key.lowercased().hasPrefix("/books/ol")) {
+            ApiCall(endpoint: key, completion: completion)
+        }
+        else {
+            print("Error: Invalid path for editions")
+        }
+    }
+    
+    // Should work with both ISBN-10 and ISBN-13
+    static func ISBN(_ isbn: String, completion: @escaping ApiCompletion) {
+        ApiCall(endpoint: "/isbn/\(isbn).json", completion: completion)
+    }
+    static func ISBN(_ isbn: Int, completion: @escaping ApiCompletion) {
+        ApiCall(endpoint: "/isbn/\(isbn).json", completion: completion)
     }
 }
 
