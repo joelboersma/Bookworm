@@ -76,7 +76,8 @@ struct OpenLibraryAPI {
     
     /// Makes an API call at endpoint and calls completion when finished
     static func generic(_ endpoint: String, completion: @escaping ApiCompletion) {
-        ApiCall(endpoint: endpoint, completion: completion)
+        let jsonEndpoint = endpoint + ".json"
+        ApiCall(endpoint: jsonEndpoint, completion: completion)
     }
     
     static func search(_ searchText: String, completion: @escaping ApiCompletion) {
@@ -87,7 +88,8 @@ struct OpenLibraryAPI {
     
     static func author(_ key: String, completion: @escaping ApiCompletion) {
         if (key.lowercased().hasPrefix("/authors/ol")) {
-            ApiCall(endpoint: key, completion: completion)
+            let jsonKey = key + ".json"
+            ApiCall(endpoint: jsonKey, completion: completion)
         }
         else {
             print("Error: Invalid path for author")
@@ -97,7 +99,8 @@ struct OpenLibraryAPI {
     // may not need this
     static func works(_ key: String, completion: @escaping ApiCompletion) {
         if (key.lowercased().hasPrefix("/works/ol")) {
-            ApiCall(endpoint: key, completion: completion)
+            let jsonKey = key + ".json"
+            ApiCall(endpoint: jsonKey, completion: completion)
         }
         else {
             print("Error: Invalid path for works")
@@ -107,7 +110,8 @@ struct OpenLibraryAPI {
     // may not need this
     static func editions(_ key: String, completion: @escaping ApiCompletion) {
         if (key.lowercased().hasPrefix("/books/ol")) {
-            ApiCall(endpoint: key, completion: completion)
+            let jsonKey = key + ".json"
+            ApiCall(endpoint: jsonKey, completion: completion)
         }
         else {
             print("Error: Invalid path for editions")
