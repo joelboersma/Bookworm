@@ -16,7 +16,6 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var inventoryButton: UIButton!
     @IBOutlet weak var wishListButton: UIButton!
-    @IBOutlet weak var updateRadiusLimitButton: UIButton!
     @IBOutlet weak var editUsernameButton: UIButton!
     @IBOutlet weak var deleteAccountButton: UIButton!
     
@@ -28,8 +27,6 @@ class ProfileViewController: UIViewController {
         formatButton(logoutButton)
         formatButton(inventoryButton)
         formatButton(wishListButton)
-        formatButton(updateRadiusLimitButton)
-        formatButton(updateRadiusLimitButton)
         formatButton(editUsernameButton)
         formatButton(deleteAccountButton)
 
@@ -63,8 +60,6 @@ class ProfileViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @IBAction func didPressUpdateRadiusLimit(_ sender: Any) {
-    }
     
     @IBAction func didPressEditUsername(_ sender: Any) {
     }
