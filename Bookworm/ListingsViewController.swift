@@ -54,7 +54,14 @@ class ListingsViewController: UIViewController, UISearchBarDelegate, UITableView
     }
     
     @IBAction func addListingButtonClicked(_ sender: Any) {
-        //add listing
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "scannerVC")
+        guard let scannerVC = vc as? ScannerViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        
+        self.navigationController?.pushViewController(scannerVC, animated: true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

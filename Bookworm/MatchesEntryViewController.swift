@@ -12,9 +12,23 @@ import MessageUI
 
 class MatchesEntryViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
+    @IBOutlet weak var contactButton: UIButton!
+    @IBOutlet weak var transactionButton: UIButton!
+    @IBOutlet weak var transactionLabel: UITextField!
+    
+    var isCurrentTable = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after lsoading the view.
+        if isCurrentTable {
+            transactionLabel.isHidden = true
+            transactionButton.isHidden = false
+        }
+        else {
+            transactionLabel.isHidden = false
+            transactionButton.isHidden = true
+        }
     }
     
     @IBAction func contactButtonPressed() {

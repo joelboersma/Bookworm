@@ -20,9 +20,12 @@ class MatchesTableViewCell: UITableViewCell {
 
 class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var matchesTableView: UITableView!
+    var changeTableID = 1
     let locationManager = CLLocationManager()
-    var placeholderTitles: [String] = []
+    var placeholderCurrentTitles: [String] = []
+    var placeholderHistoryTitles: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +45,14 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
             locationManager.startUpdatingLocation()
         }
         
-        placeholderTitles.append("ECS 171 Textbook")
-        placeholderTitles.append("ECS 150 Textbook")
-        placeholderTitles.append("FMS 001 Textbook")
+        placeholderCurrentTitles.append("ECS 171 Textbook")
+        placeholderCurrentTitles.append("ECS 150 Textbook")
+        placeholderCurrentTitles.append("FMS 001 Textbook")
+        
+        placeholderHistoryTitles.append("ECS 251 Textbook")
+        placeholderHistoryTitles.append("EEC 270 Textbook")
+        placeholderHistoryTitles.append("EEC 7 Textbook")
+        
         matchesTableView.dataSource = self
         matchesTableView.delegate = self
         matchesTableView.reloadData()
@@ -55,15 +63,59 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
 //        print("latitude: \(location.latitude) longitude: \(location.longitude)")
     }
     
+    @IBAction func changeTableButtonPressed(_ sender: UIButton) {
+        switch changeTableID {
+        case 0:
+            sender.setTitle("History", for: .normal)
+            titleLabel.text = "Current"
+            changeTableID += 1
+        case 1:
+            sender.setTitle("Current", for: .normal)
+            titleLabel.text = "History"
+            changeTableID -= 1
+        default:
+            print("Can't change button title")
+        }
+        matchesTableView.reloadData()
+    }
+    
+    @IBAction func filterButtonPressed() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "filterVC")
+        guard let filterVC = vc as? FilterViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        filterVC.categorySegment0 = "Inventory"
+        filterVC.categorySegment1 = "Wishlist"
+        present(filterVC, animated: true, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return placeholderTitles.count
+        switch changeTableID {
+        case 0:
+            return placeholderHistoryTitles.count
+        case 1:
+            return placeholderCurrentTitles.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "matchesCell", for: indexPath) as? MatchesTableViewCell
         
         assert(indexPath.section == 0)
-        cell?.bookTitleLabel.text = placeholderTitles[indexPath.row]
+        
+        switch changeTableID {
+        case 0:
+            cell?.bookTitleLabel.text = placeholderHistoryTitles[indexPath.row]
+        case 1:
+            cell?.bookTitleLabel.text = placeholderCurrentTitles[indexPath.row]
+        default:
+            print("Can't load table data")
+        }
+        
         return cell ?? UITableViewCell(style: .default, reuseIdentifier: "matchesCell")
     }
     
@@ -72,11 +124,20 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         // empty dblistingVC for now
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "matchesEntryVC")
-        guard let matchedEntryVC = vc as? MatchesEntryViewController else {
+        guard let matchesEntryVC = vc as? MatchesEntryViewController else {
             assertionFailure("couldn't find vc")
             return
         }
-
-        present(matchedEntryVC, animated: true, completion: nil)
+        
+        switch changeTableID {
+        case 0:
+            matchesEntryVC.isCurrentTable = false
+        case 1:
+            matchesEntryVC.isCurrentTable = true
+        default:
+            print("Can't load table entry")
+        }
+        
+        present(matchesEntryVC, animated: true, completion: nil)
     }
 }

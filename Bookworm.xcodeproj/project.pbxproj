@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1D7474B525E9BFE700946263 /* MatchesEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */; };
+		1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */; };
+		1D8E88ED25ECE5B2004D3AC1 /* AddListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */; };
 		1DCAEAC625E24AA1000C9047 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */; };
 		25190E5125DF9BCD007573D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */; };
 		25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7825E39CDA007573D6 /* ProfileViewController.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		1050B7713DFAF70D23EA793C /* Pods-Bookworm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.debug.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.debug.xcconfig"; sourceTree = "<group>"; };
 		1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesEntryViewController.swift; sourceTree = "<group>"; };
+		1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListingViewController.swift; sourceTree = "<group>"; };
 		1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
 		25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		25190E7825E39CDA007573D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 				846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */,
 				8461B29125E6E5260076C299 /* FilterViewController.swift */,
 				4BDCA8BB25E9D32B00EB8BAA /* AddRequestViewController.swift */,
+				1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */,
+				1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */,
 				4B60AC7A25E9E4BE0081458A /* OpenLibraryAPI.swift */,
 			);
 			path = Bookworm;
@@ -258,6 +264,7 @@
 				4B60AC7B25E9E4BE0081458A /* OpenLibraryAPI.swift in Sources */,
 				846E4BFA25E62E5A0058AB54 /* DatabaseListingViewController.swift in Sources */,
 				25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */,
+				1D8E88ED25ECE5B2004D3AC1 /* AddListingViewController.swift in Sources */,
 				25190E7C25E41BFC007573D6 /* WishListViewController.swift in Sources */,
 				4BDCA8BC25E9D32B00EB8BAA /* AddRequestViewController.swift in Sources */,
 				25190E8825E42136007573D6 /* ListingsViewController.swift in Sources */,
@@ -266,6 +273,7 @@
 				4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */,
 				1DCAEAC625E24AA1000C9047 /* MatchesViewController.swift in Sources */,
 				8461B29225E6E5260076C299 /* FilterViewController.swift in Sources */,
+				1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */,
 				25190E8225E41C88007573D6 /* WishListListingViewController.swift in Sources */,
 				4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */,
 				1D7474B525E9BFE700946263 /* MatchesEntryViewController.swift in Sources */,
@@ -421,14 +429,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V6R66L3HPD;
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.w21.Bookwormc;
+				PRODUCT_BUNDLE_IDENTIFIER = "syam-haque";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -443,14 +451,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V6R66L3HPD;
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.w21.Bookwormc;
+				PRODUCT_BUNDLE_IDENTIFIER = syam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
