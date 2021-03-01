@@ -9,6 +9,7 @@ import UIKit
 import PhoneNumberKit
 import CoreLocation
 
+
 class InitialNewAccountViewController: UIViewController {
     
     
@@ -20,8 +21,8 @@ class InitialNewAccountViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
     
-    // phone number implementation taken from ECS189E HW Solution
-    // variables to track status of phone number
+    
+    // Phone number implementation taken from ECS189E HW Solution
     let phoneNumberKit = PhoneNumberKit()
     var isValidNumber = false
     var isForeignNumber = false
@@ -44,12 +45,12 @@ class InitialNewAccountViewController: UIViewController {
     
     // Continiue Button Validation Checks
     @IBAction func continueButtonPressed(_ sender: Any) {
-        let firstName = firstNameTextField.text ?? ""
-        let lastName = lastNameTextField.text ?? ""
-        let phoneNumber = phoneNumberTextField.text ?? ""
-        let zipCodeNumber = zipCodeTextField.text ?? ""
+        let firstNameTF = firstNameTextField.text ?? ""
+        let lastNameTF = lastNameTextField.text ?? ""
+        let phoneNumberTF = phoneNumberTextField.text ?? ""
+        let zipCodeNumberTF = zipCodeTextField.text ?? ""
         
-        if (firstName == "" || lastName == "" || phoneNumber == "" || zipCodeNumber == "") {
+        if (firstNameTF == "" || lastNameTF == "" || phoneNumberTF == "" || zipCodeNumberTF == "") {
             errorLabel.text = "Missing field(s), please try again"
             errorLabel.textColor = UIColor.systemRed
         } else if(isForeignNumber) {
@@ -65,12 +66,19 @@ class InitialNewAccountViewController: UIViewController {
             errorLabel.text = "Please enter a valid zip code"
             errorLabel.textColor = UIColor.systemRed
         } else {
+            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(identifier: "createAccountViewController")
             guard let newAccountVC = vc as? NewAccountViewController else {
                 assertionFailure("couldn't find vc")
                 return
             }
+            
+            newAccountVC.userFirstName = firstNameTF
+            newAccountVC.userLastName = lastNameTF
+            newAccountVC.userPhoneNumber = phoneNumber_e164
+            newAccountVC.userZipCode = zipCode
+
             self.navigationController?.pushViewController(newAccountVC, animated: true)
             
         }
@@ -79,7 +87,7 @@ class InitialNewAccountViewController: UIViewController {
     }
     
     
-    // Phone Number Validation (taken from ECS189E HW Solution)
+    // MARK: Phone Number Validation (taken from ECS189E HW Solution)
     @IBAction func phoneNumberChanged() {
         self.errorLabel.text = ""
         let phoneNumber = phoneNumberTextField.text ?? ""
@@ -103,15 +111,16 @@ class InitialNewAccountViewController: UIViewController {
     }
     
     
-    // Zip Code Validation
+    // MARK: Zip Code Validation
     @IBAction func zipCodeChanged() {
         self.errorLabel.text = ""
         zipCode = zipCodeTextField.text ?? ""
-
+        
         getCityFromPostalCode(postalCode: zipCode)
     }
     
     
+    // MARK: Changes zip code number to city, country if a valid zip code
     func getCityFromPostalCode(postalCode : String){
         let geocoder = CLGeocoder()
         
