@@ -627,20 +627,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="f6C-gJ-rPZ">
-                                <rect key="frame" x="50" y="477" width="290" height="68"/>
+                                <rect key="frame" x="50" y="477" width="290" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fn9-an-J96">
-                                        <rect key="frame" x="0.0" y="0.0" width="290" height="30"/>
-                                        <color key="backgroundColor" name="AccentColor"/>
-                                        <state key="normal" title="Edit Username">
-                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="didPressEditUsername:" destination="QaU-9y-8zE" eventType="touchUpInside" id="cW7-qC-jTK"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KoR-jc-3Y6">
-                                        <rect key="frame" x="0.0" y="38" width="290" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="290" height="30"/>
                                         <color key="backgroundColor" name="AccentColor"/>
                                         <state key="normal" title="Delete Account">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
@@ -671,7 +661,6 @@
                     <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="j04-GW-xGG"/>
                     <connections>
                         <outlet property="deleteAccountButton" destination="KoR-jc-3Y6" id="9a4-pW-LDd"/>
-                        <outlet property="editUsernameButton" destination="fn9-an-J96" id="PVK-to-X7f"/>
                         <outlet property="greetingLabel" destination="xMm-GU-6gU" id="T71-iC-jdw"/>
                         <outlet property="inventoryButton" destination="jYW-rp-kES" id="ZHO-Wz-y7G"/>
                         <outlet property="logoutButton" destination="buA-yk-yte" id="wLs-v8-gqG"/>
@@ -1554,15 +1543,6 @@
                                 <rect key="frame" x="30" y="206" width="330" height="505"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHz-Yk-Hvz">
-                                <rect key="frame" x="30" y="64" width="53" height="22"/>
-                                <state key="normal" title="Back" image="chevron.backward" catalog="system">
-                                    <color key="titleColor" systemColor="linkColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="didPressBack:" destination="LM6-G5-vru" eventType="touchUpInside" id="ocG-fi-PdV"/>
-                                </connections>
-                            </button>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Term" translatesAutoresizingMaskIntoConstraints="NO" id="wxv-yA-sR6">
                                 <rect key="frame" x="30" y="150" width="330" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -1577,10 +1557,8 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="7Lz-Vo-4cS" firstAttribute="top" secondItem="1Tr-JM-0Ex" secondAttribute="top" constant="50" id="7Fz-v0-i9U"/>
-                            <constraint firstItem="MHz-Yk-Hvz" firstAttribute="top" secondItem="1Tr-JM-0Ex" secondAttribute="top" constant="20" id="CN1-YO-ybk"/>
                             <constraint firstItem="MfN-7K-KiK" firstAttribute="top" secondItem="wxv-yA-sR6" secondAttribute="bottom" symbolic="YES" id="Ner-JU-ulz"/>
                             <constraint firstItem="7Lz-Vo-4cS" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="TxE-H1-gnA"/>
-                            <constraint firstItem="MHz-Yk-Hvz" firstAttribute="leading" secondItem="1Tr-JM-0Ex" secondAttribute="leading" constant="30" id="XI0-mY-ADv"/>
                             <constraint firstItem="wxv-yA-sR6" firstAttribute="top" secondItem="7Lz-Vo-4cS" secondAttribute="bottom" constant="20" id="dMQ-wx-QmS"/>
                             <constraint firstItem="1Tr-JM-0Ex" firstAttribute="bottom" secondItem="MfN-7K-KiK" secondAttribute="bottom" constant="50" id="p2U-bF-riU"/>
                             <constraint firstItem="1Tr-JM-0Ex" firstAttribute="trailing" secondItem="wxv-yA-sR6" secondAttribute="trailing" constant="30" id="ph3-EA-lwc"/>

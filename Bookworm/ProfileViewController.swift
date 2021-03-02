@@ -16,7 +16,6 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var inventoryButton: UIButton!
     @IBOutlet weak var wishListButton: UIButton!
-    @IBOutlet weak var editUsernameButton: UIButton!
     @IBOutlet weak var deleteAccountButton: UIButton!
     
     
@@ -49,9 +48,6 @@ class ProfileViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    
-    @IBAction func didPressEditUsername(_ sender: Any) {
-    }
     
     @IBAction func didPressDeleteAccount(_ sender: Any) {
         let user = Auth.auth().currentUser

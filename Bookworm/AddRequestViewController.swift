@@ -53,9 +53,6 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
         return cell
     }
     
-    @IBAction func didPressBack(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
-    }
 
     @IBAction func didTap(_ sender: UITapGestureRecognizer) {
         // Hide keyboard
