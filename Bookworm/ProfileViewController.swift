@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 
 class ProfileViewController: UIViewController {
-
+    
     @IBOutlet weak var greetingLabel: UITextField!
     
     //get references to all buttons (for formatting)
@@ -18,10 +18,21 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var wishListButton: UIButton!
     @IBOutlet weak var deleteAccountButton: UIButton!
     
+    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // set greeting label to first name
+        let user = Auth.auth().currentUser
+        ref.child("Users").child(user?.uid ?? "").child("FirstName").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let firstName = snapshot.value as? String{
+                self.greetingLabel.text = "Hello, \(firstName)"
+            }
+        })
+    
+        
     }
     
     func returnToLoginView(){
@@ -51,6 +62,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func didPressDeleteAccount(_ sender: Any) {
         let user = Auth.auth().currentUser
+        let userDatabaseRef = ref.child("Users").child(user?.uid ?? "")
         
         //user must confirm deletion before account is actually deleted
         let confirmDeleteAlert = UIAlertController(title: "Delete", message: "Are you sure you want to delete this account?", preferredStyle: .alert)
@@ -60,6 +72,12 @@ class ProfileViewController: UIViewController {
             user?.delete {error in
                 if let err = error{ print(err)}
             }
+            
+            // delete user from database
+            userDatabaseRef.removeValue() { error, _ in
+                if let err = error{ print(err)}
+            }
+            
             self.returnToLoginView()
         }))
         
