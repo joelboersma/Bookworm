@@ -813,15 +813,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBt-Gc-2eX">
-                                <rect key="frame" x="30" y="64" width="53" height="22"/>
-                                <state key="normal" title="Back" image="chevron.backward" catalog="system">
-                                    <color key="titleColor" systemColor="linkColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="didPressBack:" destination="Wrf-w7-xhi" eventType="touchUpInside" id="7DK-lu-2iJ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="doo-Aq-1F5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -829,11 +820,9 @@
                             <constraint firstItem="doo-Aq-1F5" firstAttribute="bottom" secondItem="IK7-mm-M2l" secondAttribute="bottom" constant="50" id="Whi-Qz-mJh"/>
                             <constraint firstItem="IK7-mm-M2l" firstAttribute="top" secondItem="oZH-HW-j55" secondAttribute="bottom" constant="20" id="Xj9-jc-hgD"/>
                             <constraint firstItem="IK7-mm-M2l" firstAttribute="leading" secondItem="doo-Aq-1F5" secondAttribute="leading" constant="30" id="aoo-an-RKc"/>
-                            <constraint firstItem="KBt-Gc-2eX" firstAttribute="leading" secondItem="doo-Aq-1F5" secondAttribute="leading" constant="30" id="bU8-yS-suS"/>
                             <constraint firstItem="oZH-HW-j55" firstAttribute="centerX" secondItem="vng-ek-YaJ" secondAttribute="centerX" id="ozf-hE-LSq"/>
                             <constraint firstItem="doo-Aq-1F5" firstAttribute="trailing" secondItem="IK7-mm-M2l" secondAttribute="trailing" constant="30" id="p9w-gB-Q1r"/>
                             <constraint firstItem="oZH-HW-j55" firstAttribute="top" secondItem="doo-Aq-1F5" secondAttribute="top" constant="50" id="x1l-Ar-A0h"/>
-                            <constraint firstItem="KBt-Gc-2eX" firstAttribute="top" secondItem="doo-Aq-1F5" secondAttribute="top" constant="20" id="yxh-rO-JjF"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1006,27 +995,16 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNd-9X-I2c">
-                                <rect key="frame" x="30" y="64" width="53" height="22"/>
-                                <state key="normal" title="Back" image="chevron.backward" catalog="system">
-                                    <color key="titleColor" systemColor="linkColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="didPressBack:" destination="ht0-Ss-gIP" eventType="touchUpInside" id="gDD-C4-Xml"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xq5-J9-ssL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="0V6-Ex-huc" firstAttribute="leading" secondItem="xq5-J9-ssL" secondAttribute="leading" constant="30" id="6Fo-WH-nVn"/>
                             <constraint firstItem="xq5-J9-ssL" firstAttribute="bottom" secondItem="0V6-Ex-huc" secondAttribute="bottom" constant="50" id="7IK-qa-gII"/>
-                            <constraint firstItem="YNd-9X-I2c" firstAttribute="top" secondItem="xq5-J9-ssL" secondAttribute="top" constant="20" id="IFC-3C-TQf"/>
                             <constraint firstItem="WOs-T9-9AT" firstAttribute="top" secondItem="xq5-J9-ssL" secondAttribute="top" constant="50" id="Iig-Ec-lr7"/>
                             <constraint firstItem="WOs-T9-9AT" firstAttribute="centerX" secondItem="Cxt-4i-Gdk" secondAttribute="centerX" id="U6S-og-bEs"/>
                             <constraint firstItem="xq5-J9-ssL" firstAttribute="trailing" secondItem="0V6-Ex-huc" secondAttribute="trailing" constant="30" id="UNK-B2-xHg"/>
                             <constraint firstItem="0V6-Ex-huc" firstAttribute="top" secondItem="WOs-T9-9AT" secondAttribute="bottom" constant="20" id="Y8z-Qi-Duo"/>
-                            <constraint firstItem="YNd-9X-I2c" firstAttribute="leading" secondItem="xq5-J9-ssL" secondAttribute="leading" constant="30" id="hIb-iZ-IIQ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1727,7 +1705,6 @@
     <resources>
         <image name="books.vertical.fill" catalog="system" width="128" height="100"/>
         <image name="camera" catalog="system" width="128" height="94"/>
-        <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="link" catalog="system" width="128" height="122"/>
         <image name="lock" catalog="system" width="128" height="128"/>
@@ -1738,9 +1715,6 @@
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
