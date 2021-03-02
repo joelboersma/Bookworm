@@ -30,6 +30,9 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         placeholderCells.append("FRE 21 Textbook")
     }
     
+    @IBAction func didPressBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return placeholderCells.count
     }

@@ -23,6 +23,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.isNavigationBarHidden = true
+        
         // set greeting label to first name
         let user = Auth.auth().currentUser
         ref.child("Users").child(user?.uid ?? "").child("FirstName").observeSingleEvent(of: .value, with: { (snapshot) in

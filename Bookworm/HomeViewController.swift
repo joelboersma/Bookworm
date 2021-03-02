@@ -18,6 +18,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.isNavigationBarHidden = true
+        
         placeholderTitles.append("ECS 171 Textbook")
         placeholderTitles.append("ECS 150 Textbook")
         placeholderTitles.append("FMS 001 Textbook")
@@ -25,6 +28,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         listingsTableView.dataSource = self
         listingsTableView.delegate = self
         listingsTableView.reloadData()
+        
     }
     
     @IBAction func filterButtonClicked(_ sender: Any) {
