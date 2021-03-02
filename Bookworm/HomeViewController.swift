@@ -1,14 +1,14 @@
 //
-//  ListingsViewController.swift
+//  HomeViewController.swift
 //  Bookworm
 //
-//  Created by Christina Luong on 2/22/21.
-//  Update by Urvashi Mahto on 2/22/21.
+//  Created by Christina Luong on 3/1/21.
+//
 
 import UIKit
 import Firebase
 
-class ListingsViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!

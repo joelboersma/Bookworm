@@ -17,7 +17,7 @@
 		25190E7F25E41C3F007573D6 /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7E25E41C3F007573D6 /* InventoryViewController.swift */; };
 		25190E8225E41C88007573D6 /* WishListListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8125E41C88007573D6 /* WishListListingViewController.swift */; };
 		25190E8525E41CAF007573D6 /* InventoryListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */; };
-		25190E8825E42136007573D6 /* ListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8725E42136007573D6 /* ListingsViewController.swift */; };
+		25F3D9E525EDC4FD008D4463 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */; };
 		282404F0BF436D017F4BA1AC /* Pods_Bookworm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */; };
 		4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */; };
 		4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */; };
@@ -46,7 +46,7 @@
 		25190E7E25E41C3F007573D6 /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		25190E8125E41C88007573D6 /* WishListListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListListingViewController.swift; sourceTree = "<group>"; };
 		25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryListingViewController.swift; sourceTree = "<group>"; };
-		25190E8725E42136007573D6 /* ListingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsViewController.swift; sourceTree = "<group>"; };
+		25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3C77E61063F7FA02A8DD8A7D /* Pods-Bookworm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.release.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.release.xcconfig"; sourceTree = "<group>"; };
 		4B2FB1CA25DF596A00661D51 /* Bookworm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookworm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,9 +103,9 @@
 				4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */,
 				25190E7B25E41BFC007573D6 /* WishListViewController.swift */,
 				25190E8125E41C88007573D6 /* WishListListingViewController.swift */,
+				25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */,
 				25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */,
 				25190E7E25E41C3F007573D6 /* InventoryViewController.swift */,
-				25190E8725E42136007573D6 /* ListingsViewController.swift */,
 				25190E7825E39CDA007573D6 /* ProfileViewController.swift */,
 				25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */,
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
@@ -267,7 +267,6 @@
 				1D8E88ED25ECE5B2004D3AC1 /* AddListingViewController.swift in Sources */,
 				25190E7C25E41BFC007573D6 /* WishListViewController.swift in Sources */,
 				4BDCA8BC25E9D32B00EB8BAA /* AddRequestViewController.swift in Sources */,
-				25190E8825E42136007573D6 /* ListingsViewController.swift in Sources */,
 				A6D94BBD25E8C718004DE869 /* InitialNewAccountViewController.swift in Sources */,
 				25190E8525E41CAF007573D6 /* InventoryListingViewController.swift in Sources */,
 				4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */,
@@ -276,6 +275,7 @@
 				1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */,
 				25190E8225E41C88007573D6 /* WishListListingViewController.swift in Sources */,
 				4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */,
+				25F3D9E525EDC4FD008D4463 /* HomeViewController.swift in Sources */,
 				1D7474B525E9BFE700946263 /* MatchesEntryViewController.swift in Sources */,
 				25190E7F25E41C3F007573D6 /* InventoryViewController.swift in Sources */,
 				A6D94B5B25E2632D004DE869 /* NewAccountViewController.swift in Sources */,
