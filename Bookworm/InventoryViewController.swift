@@ -58,9 +58,5 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
         
         present(inventoryListingVC, animated: true, completion: nil)
     }
-
-    @IBAction func didPressBack(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-    }
     
 }

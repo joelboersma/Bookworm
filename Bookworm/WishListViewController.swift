@@ -55,12 +55,6 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         
         present(wishListListingVC, animated: true, completion: nil)
     }
-
-    
-    @IBAction func didPressBack(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     
     
 }
