@@ -10,8 +10,6 @@ import Firebase
 
 class ListingsViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
     
-    @IBOutlet weak var addListingButton: UIButton!
-    @IBOutlet weak var addRequestButton: UIButton!
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var filterButton: UIButton!
@@ -40,30 +38,7 @@ class ListingsViewController: UIViewController, UISearchBarDelegate, UITableView
         
         present(filterVC, animated: true, completion: nil)
     }
-    
-    @IBAction func addRequestButtonClicked(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "addRequestViewController")
-        guard let addRequestVC = vc as? AddRequestViewController else {
-            assertionFailure("couldn't find vc")
-            return
-        }
-        //filterVC.delegate = self
         
-        self.navigationController?.pushViewController(addRequestVC, animated: true)
-    }
-    
-    @IBAction func addListingButtonClicked(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "scannerVC")
-        guard let scannerVC = vc as? ScannerViewController else {
-            assertionFailure("couldn't find vc")
-            return
-        }
-        
-        self.navigationController?.pushViewController(scannerVC, animated: true)
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // hides the keyboard.
         // do Things For Searching

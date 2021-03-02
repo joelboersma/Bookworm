@@ -22,18 +22,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //make all buttons rounded
-        formatButton(logoutButton)
-        formatButton(inventoryButton)
-        formatButton(wishListButton)
-        formatButton(editUsernameButton)
-        formatButton(deleteAccountButton)
 
-    }
-    
-    func formatButton(_ button: UIButton) {
-        button.layer.cornerRadius = 18
     }
     
     func returnToLoginView(){

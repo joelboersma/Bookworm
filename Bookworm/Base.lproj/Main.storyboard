@@ -24,7 +24,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R1S-32-84O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-846" y="105"/>
+            <point key="canvasLocation" x="-1034" y="86"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -156,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138.40000000000001" y="104.7976011994003"/>
+            <point key="canvasLocation" x="-51" y="86"/>
         </scene>
         <!--Create Account-->
         <scene sceneID="Pjp-mb-2N4">
@@ -273,7 +273,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S58-aZ-cJx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="1485.6071964017992"/>
+            <point key="canvasLocation" x="-51" y="1485"/>
         </scene>
         <!--New Account-->
         <scene sceneID="RDQ-gY-mJO">
@@ -415,7 +415,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="heQ-Zf-hEk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="800.14992503748135"/>
+            <point key="canvasLocation" x="-51" y="800"/>
         </scene>
         <!--Matches-->
         <scene sceneID="QgZ-wY-wyI">
@@ -554,7 +554,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APb-bs-zGg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1021.5384615384615" y="104.50236966824644"/>
+            <point key="canvasLocation" x="3197" y="104"/>
         </scene>
         <!--Profile-->
         <scene sceneID="SpG-sO-V0Z">
@@ -668,7 +668,7 @@
                             <constraint firstItem="f6C-gJ-rPZ" firstAttribute="leading" secondItem="YXA-VJ-Z5B" secondAttribute="leading" constant="50" id="ylH-Hc-UFx"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="j04-GW-xGG"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="j04-GW-xGG"/>
                     <connections>
                         <outlet property="deleteAccountButton" destination="KoR-jc-3Y6" id="9a4-pW-LDd"/>
                         <outlet property="editUsernameButton" destination="fn9-an-J96" id="PVK-to-X7f"/>
@@ -680,9 +680,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ogZ-6g-xbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2343" y="105"/>
+            <point key="canvasLocation" x="7122" y="103"/>
         </scene>
-        <!--Listings-->
+        <!--Home-->
         <scene sceneID="PwS-Qx-5fT">
             <objects>
                 <viewController storyboardIdentifier="listingsViewController" id="xnZ-Bt-MIs" customClass="ListingsViewController" customModule="Bookworm" customModuleProvider="target" sceneMemberID="viewController">
@@ -700,28 +700,8 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="bW4-on-njK">
                                         <rect key="frame" x="0.0" y="56" width="330" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="179" placeholderIntrinsicHeight="30" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dij-uP-Tha">
-                                                <rect key="frame" x="0.0" y="0.0" width="107.33333333333333" height="30"/>
-                                                <color key="backgroundColor" name="AccentColor"/>
-                                                <state key="normal" title="+ Add Listing">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="addListingButtonClicked:" destination="xnZ-Bt-MIs" eventType="touchUpInside" id="WCL-bp-KIA"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TyD-f5-9Rs">
-                                                <rect key="frame" x="111.33333333333334" y="0.0" width="107.33333333333334" height="30"/>
-                                                <color key="backgroundColor" name="AccentColor"/>
-                                                <state key="normal" title="+ Add Request">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="addRequestButtonClicked:" destination="xnZ-Bt-MIs" eventType="touchUpInside" id="xDT-pj-IzZ"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgW-wo-6cA">
-                                                <rect key="frame" x="222.66666666666666" y="0.0" width="107.33333333333334" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="330" height="30"/>
                                                 <color key="backgroundColor" name="AccentColor"/>
                                                 <state key="normal" title="Filter">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -754,10 +734,8 @@
                             <constraint firstItem="mB4-Ug-MHJ" firstAttribute="centerX" secondItem="SfU-iT-YS1" secondAttribute="centerX" id="xPn-qx-ToA"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Listings" image="list.dash" catalog="system" id="zoB-cY-Ke4"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="zoB-cY-Ke4"/>
                     <connections>
-                        <outlet property="addListingButton" destination="Dij-uP-Tha" id="uI4-5v-2Ua"/>
-                        <outlet property="addRequestButton" destination="TyD-f5-9Rs" id="Z2d-DM-ExJ"/>
                         <outlet property="filterButton" destination="rgW-wo-6cA" id="Tpw-l5-zhS"/>
                         <outlet property="listingsTableView" destination="mB4-Ug-MHJ" id="95h-iD-5Us"/>
                         <outlet property="searchBar" destination="gFB-mA-i2N" id="ngy-kB-yTU"/>
@@ -765,7 +743,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4261" y="104"/>
+            <point key="canvasLocation" x="1429" y="105"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pJ2-JD-MVP">
@@ -777,14 +755,16 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="yjg-uV-lp3" kind="relationship" relationship="viewControllers" id="9cU-1w-3U1"/>
-                        <segue destination="xnZ-Bt-MIs" kind="relationship" relationship="viewControllers" id="EfJ-cM-2X3"/>
-                        <segue destination="QaU-9y-8zE" kind="relationship" relationship="viewControllers" id="ss6-qH-4JE"/>
+                        <segue destination="xnZ-Bt-MIs" kind="relationship" relationship="viewControllers" id="xtJ-CW-u2F"/>
+                        <segue destination="yjg-uV-lp3" kind="relationship" relationship="viewControllers" id="ejt-WG-J0Z"/>
+                        <segue destination="DdA-Ga-HUn" kind="relationship" relationship="viewControllers" id="wYa-ms-07y"/>
+                        <segue destination="LM6-G5-vru" kind="relationship" relationship="viewControllers" id="yVj-Ir-x3R"/>
+                        <segue destination="QaU-9y-8zE" kind="relationship" relationship="viewControllers" id="XFF-SI-Zb5"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8te-m9-7MY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2342" y="-722"/>
+            <point key="canvasLocation" x="4343" y="-815"/>
         </scene>
         <!--Wish List View Controller-->
         <scene sceneID="QTs-ru-L5J">
@@ -873,7 +853,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AUJ-zd-hkb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1924.6153846153845" y="778.43601895734594"/>
+            <point key="canvasLocation" x="6717" y="800"/>
         </scene>
         <!--Wish List Listing View Controller-->
         <scene sceneID="XsE-F5-Eck">
@@ -977,7 +957,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v08-hY-dX0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1924.6153846153845" y="1498.5781990521327"/>
+            <point key="canvasLocation" x="6717" y="1521"/>
         </scene>
         <!--Inventory View Controller-->
         <scene sceneID="Zyz-kB-Wg5">
@@ -1066,7 +1046,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qjI-mn-hi8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2733.5999999999999" y="778.56071964017997"/>
+            <point key="canvasLocation" x="7525" y="800"/>
         </scene>
         <!--Database Listing View Controller-->
         <scene sceneID="HSy-qk-1x3">
@@ -1183,7 +1163,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ke5-E2-1ro" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5190" y="104"/>
+            <point key="canvasLocation" x="1945" y="800"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="i49-g9-fjV">
@@ -1277,7 +1257,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ExB-x8-faQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5943" y="104"/>
+            <point key="canvasLocation" x="1046" y="800"/>
         </scene>
         <!--Inventory Listing View Controller-->
         <scene sceneID="52t-Ke-jVz">
@@ -1418,7 +1398,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kV3-BF-dGJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2734" y="1499"/>
+            <point key="canvasLocation" x="7526" y="1520"/>
         </scene>
         <!--Matches Entry View Controller-->
         <scene sceneID="UdU-Nr-8yh">
@@ -1551,9 +1531,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jJJ-Yr-YG0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1018.840579710145" y="801.5625"/>
+            <point key="canvasLocation" x="3194" y="800"/>
         </scene>
-        <!--Add Request View Controller-->
+        <!--Request-->
         <scene sceneID="4bJ-4w-f3A">
             <objects>
                 <viewController storyboardIdentifier="addRequestViewController" id="LM6-G5-vru" customClass="AddRequestViewController" customModule="Bookworm" customModuleProvider="target" sceneMemberID="viewController">
@@ -1571,7 +1551,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MfN-7K-KiK">
-                                <rect key="frame" x="30" y="206" width="330" height="554"/>
+                                <rect key="frame" x="30" y="206" width="330" height="505"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHz-Yk-Hvz">
@@ -1613,6 +1593,7 @@
                             <outletCollection property="gestureRecognizers" destination="N2x-Je-olq" appends="YES" id="9r6-W9-2ZA"/>
                         </connections>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Request" image="rectangle.and.pencil.and.ellipsis.rtl" catalog="system" id="Vw4-sd-D4o"/>
                     <connections>
                         <outlet property="resultsTableView" destination="MfN-7K-KiK" id="zYK-5O-cBF"/>
                         <outlet property="searchBar" destination="wxv-yA-sR6" id="ThJ-39-u1W"/>
@@ -1625,9 +1606,9 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4260.8695652173919" y="777.45535714285711"/>
+            <point key="canvasLocation" x="5545" y="105"/>
         </scene>
-        <!--Scanner View Controller-->
+        <!--Post-->
         <scene sceneID="UsI-KJ-2ZV">
             <objects>
                 <viewController storyboardIdentifier="scannerVC" id="DdA-Ga-HUn" customClass="ScannerViewController" customModule="Bookworm" customModuleProvider="target" sceneMemberID="viewController">
@@ -1637,10 +1618,11 @@
                         <viewLayoutGuide key="safeArea" id="3zk-nf-Fvt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Post" image="camera" catalog="system" id="bK8-oD-8S5"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bD-KK-BOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4260" y="1499"/>
+            <point key="canvasLocation" x="4391" y="104"/>
         </scene>
         <!--Add Listing View Controller-->
         <scene sceneID="S64-Wg-ueC">
@@ -1761,17 +1743,19 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ce8-Y9-8ja" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5189" y="1499"/>
+            <point key="canvasLocation" x="4391" y="800"/>
         </scene>
     </scenes>
     <resources>
         <image name="books.vertical.fill" catalog="system" width="128" height="100"/>
+        <image name="camera" catalog="system" width="128" height="94"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="house" catalog="system" width="128" height="106"/>
         <image name="link" catalog="system" width="128" height="122"/>
-        <image name="list.dash" catalog="system" width="128" height="85"/>
         <image name="lock" catalog="system" width="128" height="128"/>
         <image name="mail" catalog="system" width="128" height="93"/>
-        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="person" catalog="system" width="128" height="117"/>
+        <image name="rectangle.and.pencil.and.ellipsis.rtl" catalog="system" width="128" height="92"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
