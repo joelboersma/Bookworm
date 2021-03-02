@@ -14,6 +14,28 @@ import Foundation
  Covers: https://openlibrary.org/dev/docs/api/covers
  */
 
+
+/*
+ if we want all info...
+ title
+ author
+ cover
+ publishing date
+ edition
+ isbn13
+ */
+
+
+enum BookCoverSize : String {
+    case S, M, L
+}
+
+enum BookCoverKey : String {
+    case ISBN
+    case OLID   // Open Library ID for edition
+    case ID     // Cover ID
+}
+
 struct OpenLibraryAPI {
     
     struct ApiError: Error {
@@ -28,7 +50,6 @@ struct OpenLibraryAPI {
     
     typealias ApiCompletion = ((_ response: [String: Any]?, _ error: ApiError?) -> Void)
     
-    static var baseUrl = "https://openlibrary.org"
     static let defaultError = ApiError(response: [:])
     
     static func configuration() -> URLSessionConfiguration {
@@ -39,6 +60,8 @@ struct OpenLibraryAPI {
     }
     
     static func ApiCall(endpoint: String, completion: @escaping ApiCompletion) {
+        let baseUrl = "https://openlibrary.org"
+        
         guard let url = URL(string: baseUrl + endpoint) else {
             print("Wrong url")
             return
@@ -66,10 +89,45 @@ struct OpenLibraryAPI {
                 if error == nil {
                     completion(responseData, nil)
                 } else {
-                    print(error)
+                    print(error ?? "unknown error")
                     completion(nil, ApiError(response: responseData))
                 }
             }
+            
+        }.resume()
+    }
+    
+    static func CoverApiCall(endpoint: String, completion: @escaping ApiCompletion) {
+        let baseUrl = "https://covers.openlibrary.org"
+        
+        guard let url = URL(string: baseUrl + endpoint) else {
+            print("Wrong url")
+            return
+        }
+        
+        let session = URLSession(configuration: configuration())
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        session.dataTask(with: request) { data, response, error in
+            guard let rawData = data else {
+                print("no raw data")
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            
+            // JPEG data will need to be converted to UIImage within VC
+            let responseData: [String: Any] = ["imageData": rawData]
+            
+            DispatchQueue.main.async {
+                if error == nil {
+                    completion(responseData, nil)
+                } else {
+                    print(error ?? "unknown error")
+                    completion(nil, ApiError(response: responseData))
+                }
+            }
+            
         }.resume()
     }
     
@@ -84,6 +142,24 @@ struct OpenLibraryAPI {
         let query: String = searchText.replacingOccurrences(of: " ", with: "+")
         print(query)
         ApiCall(endpoint: "/search.json?q=\(query)", completion: completion)
+    }
+    
+    /**
+    Use an IBSN, Open Library ID, or a cover ID with book cover size S, M, or L.
+    response["imageData"] contains JPEG image data, needs to be converted to a UIImage.
+     
+    Sample code for using image data:
+     
+         guard let imageData: Data = response["imageData"] as? Data else {
+             print("bad image data")
+             return
+         }
+         let image = UIImage(data: imageData)
+         let imageView = UIImageView(image: image)
+         self.view.addSubview(imageView)
+     */
+    static func cover(key: BookCoverKey, value: String, size: BookCoverSize, completion: @escaping ApiCompletion) {
+        CoverApiCall(endpoint: "/b/\(key.rawValue)/\(value)-\(size.rawValue).jpg", completion: completion)
     }
     
     static func author(_ key: String, completion: @escaping ApiCompletion) {
