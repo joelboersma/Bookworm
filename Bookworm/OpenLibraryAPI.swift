@@ -14,18 +14,6 @@ import Foundation
  Covers: https://openlibrary.org/dev/docs/api/covers
  */
 
-
-/*
- if we want all info...
- title
- author
- cover
- publishing date
- edition
- isbn13
- */
-
-
 enum BookCoverSize : String {
     case S, M, L
 }
@@ -131,6 +119,18 @@ struct OpenLibraryAPI {
         }.resume()
     }
     
+    static func unwrapInnerKey(fromDictionary dic: [String: Any], forOuterKey key: String) -> String? {
+        guard let objects = dic[key] as? [[String: Any]] else {
+            print("couldn't find object array: " + key)
+            return nil
+        }
+        guard let firstObject = objects.first else {
+            print("couldn't find first object: " + key)
+            return nil
+        }
+        return firstObject["key"] as? String
+    }
+    
     
     /// Makes an API call at endpoint and calls completion when finished
     static func generic(_ endpoint: String, completion: @escaping ApiCompletion) {
@@ -200,6 +200,87 @@ struct OpenLibraryAPI {
     }
     static func ISBN(_ isbn: Int, completion: @escaping ApiCompletion) {
         ApiCall(endpoint: "/isbn/\(isbn).json", completion: completion)
+    }
+    
+    /*
+     if we want all info...
+     - title
+     - author
+     - cover
+     - publishing date
+     - edition
+     - isbn13
+     */
+    
+    
+    static func getAllInfoForISBN(_ isbn: String, bookCoverSize: BookCoverSize, completion: @escaping ApiCompletion) {
+        var bookInfo: [String: Any] = [:]
+        bookInfo["isbn"] = isbn
+        
+        ISBN(isbn) { isbnResponse, error in
+            // title, publish date, isbn13
+            if let unwrappedError = error {
+                print(unwrappedError)
+                return
+            }
+            
+            guard let isbnResponse = isbnResponse else {
+                print("bad response ISBN")
+                return
+            }
+            
+            bookInfo["title"] = isbnResponse["title"]
+            bookInfo["publishDate"] = isbnResponse["publish_date"]
+            
+            guard let authorKey = unwrapInnerKey(fromDictionary: isbnResponse, forOuterKey: "authors") else {
+                print("couldn't get key for author")
+                return
+            }
+            
+            author(authorKey) { authorResponse, error in
+                // author
+                if let unwrappedError = error {
+                    print(unwrappedError)
+                    return
+                }
+                guard let authorResponse = authorResponse else {
+                    print("bad response author")
+                    return
+                }
+                
+                guard let authorName = authorResponse["name"] else {
+                    print("no author")
+                    return
+                }
+                bookInfo["author"] = authorName
+                
+                cover(key: .ISBN, value: isbn, size: bookCoverSize) { coverResponse, error in
+                    // cover
+                    if let unwrappedError = error {
+                        print(unwrappedError)
+                        return
+                    }
+                    guard let coverResponse = coverResponse else {
+                        print("bad response cover")
+                        return
+                    }
+                    print(coverResponse)
+                    
+                    guard let imageData = coverResponse["imageData"] as? Data else {
+                        print("bad cover image data")
+                        return
+                    }
+                    
+                    bookInfo["imageData"] = imageData
+                    
+                    completion(bookInfo, nil)
+                }
+            }
+        }
+    }
+    
+    static func getAllInfoForISBN(_ isbn: Int, bookCoverSize: BookCoverSize, completion: @escaping ApiCompletion) {
+        getAllInfoForISBN("\(isbn)", bookCoverSize: bookCoverSize, completion: completion)
     }
 }
 
