@@ -8,6 +8,15 @@
 import UIKit
 import Firebase
 
+class ListingsTableViewCell: UITableViewCell {
+    @IBOutlet weak var bookCoverImage: UIImageView!
+    @IBOutlet weak var bookTitleLabel: UILabel!
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var postDataLabel: UILabel!
+}
+
+
 class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
     
     @IBOutlet weak var listingsTableView: UITableView!
@@ -53,11 +62,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "listingCell") ?? UITableViewCell(style: .default, reuseIdentifier: "listingCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "listingsCell", for: indexPath) as? ListingsTableViewCell
         
         assert(indexPath.section == 0)
-        cell.textLabel?.text = placeholderTitles[indexPath.row]
-        return cell
+        cell?.bookTitleLabel.text = placeholderTitles[indexPath.row]
+        return cell ?? UITableViewCell(style: .default, reuseIdentifier: "listingsCell")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
