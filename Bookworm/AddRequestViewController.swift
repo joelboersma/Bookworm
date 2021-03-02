@@ -130,6 +130,8 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                                     let coverS = coverResponse["imageData"] as? Data
                                     book.coverImageS = coverS
                                 }
+                                self.resultsTableView.reloadData()
+
                             }
                             
                             //get medium sized cover for the add request listing view
@@ -142,6 +144,8 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                                     let coverM = coverResponse["imageData"] as? Data
                                     book.coverImageM = coverM
                                 }
+                                self.resultsTableView.reloadData()
+
                             }
 // NOTE: not sure if it's necessary to get large image
 //                            OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .L) { response, error in
@@ -184,7 +188,6 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected")
         let book = books[indexPath.row]
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
