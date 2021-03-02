@@ -7,6 +7,41 @@
 
 import UIKit
 
+class AddRequestBookCell: UITableViewCell {
+    @IBOutlet weak var bookCoverImage: UIImageView!
+    @IBOutlet weak var bookTitleLabel: UILabel!
+    @IBOutlet weak var bookAuthorsLabel: UILabel!
+    @IBOutlet weak var bookPublishDateLabel: UILabel!
+
+    func fillInBookCell (book: Book){
+        
+        //fill in book cover if available
+        if let coverImageDataS = book.coverImageS, let coverImageS = UIImage(data: coverImageDataS) {
+            self.bookCoverImage.image = coverImageS
+        } else if let coverImageDataM = book.coverImageM, let coverImageM = UIImage(data: coverImageDataM) {
+            self.bookCoverImage.image = coverImageM
+        } else if let coverImageDataL = book.coverImageL, let coverImageL = UIImage(data: coverImageDataL) {
+            self.bookCoverImage.image = coverImageL
+        } else {
+            self.bookCoverImage.image = UIImage(systemName: "book")
+        }
+        
+        //fill in book title
+        self.bookTitleLabel.text = book.title
+        
+        //fill in book publish date if available
+        if let bookPublishDate = book.publishDate {
+            self.bookPublishDateLabel.text = "Publish Date: " + bookPublishDate
+        } else {
+            self.bookPublishDateLabel.text = ""
+        }
+
+        //fill in book author
+        self.bookAuthorsLabel.text = book.authors.reduce("Authors: "){$0 + $1}
+    }
+}
+
+
 class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
     // Search API
@@ -16,12 +51,27 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var resultsTableView: UITableView!
+    @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         resultsTableView.dataSource = self
+        resultsTableView.delegate = self
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
+        
+        self.activityIndicator.stopAnimating()
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        self.tapGestureRecognizer.isEnabled = true
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        self.tapGestureRecognizer.isEnabled = false
+        return true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -34,6 +84,8 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
         
         // Search for new books
         if let searchText = searchBar.text {
+            //display activity indicator
+            self.wait()
             OpenLibraryAPI.search(searchText) { response, error in
                 if let unwrappedError = error {
                     print("search error")
@@ -66,6 +118,8 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                                 break
                             }
                             let book = Book(title: title, isbn: isbn, authors: authors, publishDate: nil)
+                            
+                            
                             self.books.append(book)
                             OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .S) { response, error in
                                 if let unwrappedError = error {
@@ -77,10 +131,34 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                                     book.coverImageS = coverS
                                 }
                             }
+                            
+                            //get medium sized cover for the add request listing view
+                            OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .M) { response, error in
+                                if let unwrappedError = error {
+                                    print("error finding cover")
+                                    print(unwrappedError)
+                                }
+                                else if let coverResponse = response {
+                                    let coverM = coverResponse["imageData"] as? Data
+                                    book.coverImageM = coverM
+                                }
+                            }
+// NOTE: not sure if it's necessary to get large image
+//                            OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .L) { response, error in
+//                                if let unwrappedError = error {
+//                                    print("error finding cover")
+//                                    print(unwrappedError)
+//                                }
+//                                else if let coverResponse = response {
+//                                    let coverL = coverResponse["imageData"] as? Data
+//                                    book.coverImageL = coverL
+//                                }
+//                            }
                         }
                     }
                 }
                 self.resultsTableView.reloadData()
+                self.start()
             }
         }
     }
@@ -94,10 +172,37 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
 //            assertionFailure("Cell dequeue error")
 //            return UITableViewCell.init()
 //        }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .default, reuseIdentifier: "lapCell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "addRequestBookCell") as? AddRequestBookCell else {
+            assertionFailure("Cell dequeue error")
+            return UITableViewCell.init()
+        }
+        
         let book = books[indexPath.row]
-        cell.textLabel?.text = book.title
+        cell.fillInBookCell(book: book)
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected")
+        let book = books[indexPath.row]
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "addRequestListingViewController")
+        guard let addRequestListingVC = vc as? AddRequestListingViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        
+        addRequestListingVC.bookAuthors = book.authors
+        addRequestListingVC.bookTitle = book.title
+        addRequestListingVC.bookISBN = book.isbn
+        addRequestListingVC.bookCoverImageS = book.coverImageS
+        addRequestListingVC.bookCoverImageM = book.coverImageM
+        addRequestListingVC.bookCoverImageL = book.coverImageL
+    
+        present(addRequestListingVC,animated: true)
+
     }
     
 
@@ -107,4 +212,17 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
             view.endEditing(true)
         }
     }
+    
+    func wait() {
+        self.activityIndicator.startAnimating()
+        self.view.alpha = 0.2
+        self.view.isUserInteractionEnabled = false
+    }
+    func start() {
+        self.activityIndicator.stopAnimating()
+        self.view.alpha = 1
+        self.view.isUserInteractionEnabled = true
+    }
 }
+
+
