@@ -1266,16 +1266,16 @@
                                         <rect key="frame" x="10" y="61" width="368" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="within" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBI-RO-M2A">
-                                                <rect key="frame" x="0.0" y="0.0" width="5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="8" y="0.0" width="317" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="325" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="328" y="0.0" width="40" height="30"/>
+                                                <rect key="frame" x="331" y="0.0" width="37" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1748,10 +1748,37 @@
                     <view key="view" contentMode="scaleToFill" id="8Ki-SV-k3B">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="zOn-MN-8nh">
+                                <rect key="frame" x="189" y="438" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Loe-e4-yRm"/>
+                                    <constraint firstAttribute="height" constant="50" id="QSx-qt-hRT"/>
+                                </constraints>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan the barcode of your book" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9V-3E-19v">
+                                <rect key="frame" x="69" y="94" width="291" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="3zk-nf-Fvt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="T9V-3E-19v" firstAttribute="leading" secondItem="3zk-nf-Fvt" secondAttribute="leading" constant="69" id="1CL-Ii-Crw"/>
+                            <constraint firstItem="T9V-3E-19v" firstAttribute="top" secondItem="3zk-nf-Fvt" secondAttribute="top" constant="50" id="GPN-xj-YdR"/>
+                            <constraint firstItem="zOn-MN-8nh" firstAttribute="top" secondItem="T9V-3E-19v" secondAttribute="bottom" constant="317" id="JTz-wn-3D9"/>
+                            <constraint firstItem="zOn-MN-8nh" firstAttribute="centerY" secondItem="8Ki-SV-k3B" secondAttribute="centerY" id="eYs-7K-lUR"/>
+                            <constraint firstItem="zOn-MN-8nh" firstAttribute="centerX" secondItem="8Ki-SV-k3B" secondAttribute="centerX" id="fcH-c8-xbM"/>
+                            <constraint firstItem="3zk-nf-Fvt" firstAttribute="trailing" secondItem="T9V-3E-19v" secondAttribute="trailing" constant="68" id="teK-UH-8Tt"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Post" image="camera" catalog="system" id="bK8-oD-8S5"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="zOn-MN-8nh" id="BCC-UT-ufl"/>
+                        <outlet property="scanLabel" destination="T9V-3E-19v" id="CpS-6P-KVC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bD-KK-BOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1871,7 +1898,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="authorLabel" destination="Vw9-Kb-Zzt" id="64w-I6-X6d"/>
+                        <outlet property="coverImageView" destination="8pi-Gr-EQ2" id="LzI-QS-vOa"/>
+                        <outlet property="editionLabel" destination="1zS-DP-AyR" id="gpe-lt-1yy"/>
                         <outlet property="isbnLabel" destination="8xy-xp-EGc" id="OUo-x9-coq"/>
+                        <outlet property="publishDateLabel" destination="SH7-Vt-2VW" id="ZBS-ff-dna"/>
+                        <outlet property="titleLabel" destination="QdH-ke-cJQ" id="ww0-71-Cb8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ce8-Y9-8ja" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
