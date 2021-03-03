@@ -35,24 +35,16 @@ class Book {
     }
 }
 
+
 class BookCell {
-    /*
-     if we want all info...
-     - title
-     - author
-     - condition
-     - location
-     - buyer/seller
-     - post date
-     - cover
-     - publishing date
-     - edition??? (isbn already kinda does that)
-     - isbn13
-     */
+    
+    // This class is used in HomeViewController
     
     let title: String
-    //let isbn: String
-    //let authors: [String]
+    let isbn: String
+    let edition: String
+    let publishDate: String
+    let author: String
     let condition: String
     let location: String
     let buyerSeller: String
@@ -60,18 +52,23 @@ class BookCell {
     let bookCover: String
     let userDescription: String
 
-    //var publishDate: String?
-    //var coverImage: Data? = nil
     
+    // Initialize for each book
     
-    init(title: String, condition: String, location: String, buyerSeller: String, postDate: String, bookCover: String, userDescription: String) {
+    init(title: String, isbn: String, edition: String, publishDate: String, author: String, condition: String, location: String, buyerSeller: String, postDate: String, bookCover: String, userDescription: String) {
+        
         self.title = title
+        self.isbn = isbn
+        self.edition = edition
+        self.publishDate = publishDate
+        self.author = author
         self.condition = condition
         self.location = location
         self.buyerSeller = buyerSeller
         self.postDate = postDate
         self.bookCover = bookCover
         self.userDescription = userDescription
+        
     }
     
 }

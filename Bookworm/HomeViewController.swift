@@ -19,8 +19,11 @@ class ListingsTableViewCell: UITableViewCell {
     var storageRef = Storage.storage().reference()
     
     func fillInBookCell (book: BookCell){
-        let bookCoverRef = storageRef.child(book.bookCover)
         
+        // get book image reference from Firebase Storage
+        let bookCoverRef = storageRef.child(book.bookCover)
+
+        // download URL of reference, then get contents of URL and set imageView to UIImage
         bookCoverRef.downloadURL { url, error in
             guard let imageURL = url, error == nil else {
                 print(error ?? "")
@@ -28,7 +31,7 @@ class ListingsTableViewCell: UITableViewCell {
             }
             
             guard let data = NSData(contentsOf: imageURL) else {
-                //same thing here, handle failed data download
+                assertionFailure("Error in getting Data")
                 return
             }
             
@@ -36,7 +39,6 @@ class ListingsTableViewCell: UITableViewCell {
             self.bookCoverImage.image = image
         }
         
-        //self.bookCoverImage.image = UIImage(systemName: "book")
         self.bookTitleLabel.text = book.title
         self.conditionLabel.text = "Condition: \(book.condition)"
         self.locationLabel.text = book.location
@@ -84,6 +86,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             let results = snapshot.value as? [String : String]
             var user = results?["User"] ?? ""
             let condition = results?["Condition"] ?? ""
+            let isbn = results?["ISBN"] ?? ""
+            let edition = results?["Edition"] ?? ""
+            let author = results?["Author"] ?? ""
+            let datePublished = results?["Date_Published"] ?? ""
             let datePosted = results?["Date_Posted"] ?? ""
             let location = results?["Location"] ?? ""
             let title = results?["Title"] ?? ""
@@ -100,8 +106,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                 
                 user = firstName + " " + lastName
                 
-                let databaseData = BookCell(title: title, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription)
-                
+                let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription)
+
                 self.books.append(databaseData)
                 
                 DispatchQueue.main.async {
@@ -148,14 +154,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        // empty dblistingVC for now
+        
+        let book = books[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "dblistingVC")
         guard let dblistingVC = vc as? DatabaseListingViewController else {
             assertionFailure("couldn't find vc")
             return
         }
+        
+        dblistingVC.bookTitle = book.title
+        dblistingVC.bookAuthor = book.author
+        dblistingVC.bookEdition = book.edition
+        dblistingVC.bookISBN = book.isbn
+        dblistingVC.bookPublishDate = book.publishDate
+        dblistingVC.bookCoverImage = book.bookCover
+        
         //dblistingVC.delegate = self
         
         present(dblistingVC, animated: true, completion: nil)

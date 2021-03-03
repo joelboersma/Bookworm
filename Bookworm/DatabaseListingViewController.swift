@@ -13,13 +13,60 @@ import MessageUI
 class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var contactSellerButton: UIButton!
-
     @IBOutlet weak var xButton: UIButton!
+    @IBOutlet weak var bookTitleLabel: UILabel!
+    @IBOutlet weak var bookImageView: UIImageView!
+    @IBOutlet weak var bookAuthorLabel: UITextField!
+    @IBOutlet weak var bookPublishingDateLabel: UITextField!
+    @IBOutlet weak var bookEditionLabel: UITextField!
+    @IBOutlet weak var bookISBNLabel: UITextField!
+    
+    var storageRef = Storage.storage().reference()
+    
+    var bookAuthor: String = ""
+    var bookTitle: String = ""
+    var bookPublishDate: String = ""
+    var bookEdition: String = ""
+    var bookISBN: String = ""
+    var bookCoverImage: String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        fillInBookInfo()
         // Do any additional setup after loading the view.
+    }
+    
+    func fillInBookInfo() {
+        let bookCoverRef = storageRef.child(bookCoverImage)
+        
+        bookCoverRef.downloadURL { url, error in
+            guard let imageURL = url, error == nil else {
+                print(error ?? "")
+                return
+            }
+            
+            guard let data = NSData(contentsOf: imageURL) else {
+                assertionFailure("Error in getting Data")
+                return
+            }
+            
+            let image = UIImage(data: data as Data)
+            self.bookImageView.image = image
+        }
+        
+        self.bookTitleLabel.text = bookTitle
+        self.bookAuthorLabel.text = "Author: \(bookAuthor)"
+        self.bookPublishingDateLabel.text = "Publish Date: \(bookPublishDate)"
+        
+        if (bookEdition != ""){
+            self.bookEditionLabel.text = "Edition: \(bookEdition)"
+        } else {
+            self.bookEditionLabel.text = "Edition: N/A"
+        }
+        
+        self.bookISBNLabel.text = "ISBN: \(bookISBN)"
+        
     }
     
     @IBAction func contactSellerButtonClicked(_ sender: Any) {

@@ -1137,8 +1137,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XeY-9C-rg7">
                                 <rect key="frame" x="20" y="148.66666666666663" width="350" height="547"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="&lt;BOOK_TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="15" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Yb-fy-cbq">
-                                        <rect key="frame" x="63" y="26" width="209.5" height="36"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;BOOK_TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="15" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Yb-fy-cbq">
+                                        <rect key="frame" x="63.000000000000014" y="26" width="209.33333333333337" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1207,7 +1207,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="sXy-bt-dzu" firstAttribute="top" secondItem="60d-Qq-VTk" secondAttribute="bottom" constant="20" id="4w5-2x-V4w"/>
-                                    <constraint firstItem="7Yb-fy-cbq" firstAttribute="centerX" secondItem="XeY-9C-rg7" secondAttribute="centerX" id="6Ls-6q-ced"/>
+                                    <constraint firstItem="7Yb-fy-cbq" firstAttribute="centerX" secondItem="XeY-9C-rg7" secondAttribute="centerX" constant="-7.25" id="6Ls-6q-ced"/>
                                     <constraint firstItem="sXy-bt-dzu" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="8Lr-Gn-4hf"/>
                                     <constraint firstItem="Iby-fZ-Ppt" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="D9H-Qr-eq6"/>
                                     <constraint firstItem="60d-Qq-VTk" firstAttribute="top" secondItem="Iby-fZ-Ppt" secondAttribute="bottom" constant="5" id="FOo-Nm-quK"/>
@@ -1217,11 +1217,11 @@
                                     <constraint firstAttribute="trailing" secondItem="60d-Qq-VTk" secondAttribute="trailing" constant="10" id="W7L-Um-tB7"/>
                                     <constraint firstAttribute="trailing" secondItem="eTj-EH-OXH" secondAttribute="trailing" constant="8" id="ZYl-4n-WVN"/>
                                     <constraint firstAttribute="height" constant="547" id="eGs-Q2-c6q"/>
-                                    <constraint firstItem="7Yb-fy-cbq" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="kCe-X5-K0F"/>
+                                    <constraint firstItem="7Yb-fy-cbq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XeY-9C-rg7" secondAttribute="leading" id="kCe-X5-K0F"/>
                                     <constraint firstItem="60d-Qq-VTk" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="m0g-3J-yG0"/>
-                                    <constraint firstItem="7Yb-fy-cbq" firstAttribute="top" secondItem="XeY-9C-rg7" secondAttribute="top" constant="10" id="nXt-YZ-2vR"/>
+                                    <constraint firstItem="7Yb-fy-cbq" firstAttribute="top" secondItem="XeY-9C-rg7" secondAttribute="top" constant="26" id="nXt-YZ-2vR"/>
                                     <constraint firstAttribute="trailing" secondItem="Iby-fZ-Ppt" secondAttribute="trailing" constant="10" id="pIF-wJ-Wnw"/>
-                                    <constraint firstAttribute="trailing" secondItem="7Yb-fy-cbq" secondAttribute="trailing" constant="10" id="uID-w2-pqp"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7Yb-fy-cbq" secondAttribute="trailing" id="uID-w2-pqp"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1235,6 +1235,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bookAuthorLabel" destination="2W6-qf-sCd" id="Tre-MK-Gwo"/>
+                        <outlet property="bookEditionLabel" destination="zk5-s2-p2i" id="1Lb-cF-BHL"/>
+                        <outlet property="bookISBNLabel" destination="a6H-yg-xej" id="Oqt-kQ-Z0U"/>
+                        <outlet property="bookImageView" destination="lWe-zm-4Hk" id="yL0-4e-i0l"/>
+                        <outlet property="bookPublishingDateLabel" destination="DQo-mJ-g3t" id="mRF-Jl-9IQ"/>
+                        <outlet property="bookTitleLabel" destination="7Yb-fy-cbq" id="GJc-B6-wmN"/>
                         <outlet property="contactSellerButton" destination="Iby-fZ-Ppt" id="QrI-zQ-T4d"/>
                         <outlet property="xButton" destination="eTj-EH-OXH" id="IpS-Bi-BKR"/>
                     </connections>
