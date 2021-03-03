@@ -115,7 +115,6 @@
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
 				4B2FB1D125DF596A00661D51 /* LoginViewController.swift */,
 				A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */,
-				255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */,
 				A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */,
 				1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */,
 				1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */,
@@ -126,6 +125,7 @@
 				846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */,
 				8461B29125E6E5260076C299 /* FilterViewController.swift */,
 				4BDCA8BB25E9D32B00EB8BAA /* AddRequestViewController.swift */,
+				255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */,
 				1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */,
 				1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */,
 				4B60AC7A25E9E4BE0081458A /* OpenLibraryAPI.swift */,
@@ -437,14 +437,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.w21.Bookworm;
+				PRODUCT_BUNDLE_IDENTIFIER = "syam-haque";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -459,14 +459,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.w21.Bookworm;
+				PRODUCT_BUNDLE_IDENTIFIER = "syam-haque";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

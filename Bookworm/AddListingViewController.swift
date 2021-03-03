@@ -16,14 +16,36 @@ protocol AddListingViewControllerDelegate {
 
 class AddListingViewController: UIViewController {
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var authorLabel: UITextField!
+    @IBOutlet weak var publishDateLabel: UITextField!
+    @IBOutlet weak var editionLabel: UITextField!
     @IBOutlet weak var isbnLabel: UITextField!
-    var isbn = "<ISBN_NUMBER>"
+    
     var delegate: AddListingViewControllerDelegate?
+    var isbn = "<ISBN_NUMBER>"
+    var bookTitle: String = ""
+    var bookAuthors: [String] = []
+    var bookPublishDate: String = ""
+    var bookISBN: String = ""
+    var bookCoverImageS: Data? = nil
+    var bookCoverImageM: Data? = nil
+    var bookCoverImageL: Data? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        isbnLabel.text = isbn
+        titleLabel.text = bookTitle
+        if let coverImageDataM = bookCoverImageM, let coverImageM = UIImage(data: coverImageDataM) {
+            coverImageView.image = coverImageM
+        }
+        else {
+            coverImageView.image = UIImage(systemName: "book")
+        }
+        authorLabel.text = bookAuthors.reduce("Authors: "){$0 + $1}
+        publishDateLabel.text = bookPublishDate
+        isbnLabel.text = bookISBN
     }
 
     override func viewWillDisappear(_ animated: Bool) {
