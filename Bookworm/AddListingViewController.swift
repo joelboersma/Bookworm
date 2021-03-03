@@ -26,7 +26,7 @@ class AddListingViewController: UIViewController {
     var delegate: AddListingViewControllerDelegate?
     var isbn = "<ISBN_NUMBER>"
     var bookTitle: String = ""
-    var bookAuthors: [String] = []
+    var bookAuthor:  String = ""
     var bookPublishDate: String = ""
     var bookISBN: String = ""
     var bookCoverImageS: Data? = nil
@@ -43,9 +43,9 @@ class AddListingViewController: UIViewController {
         else {
             coverImageView.image = UIImage(systemName: "book")
         }
-        authorLabel.text = bookAuthors.reduce("Authors: "){$0 + $1}
-        publishDateLabel.text = bookPublishDate
-        isbnLabel.text = bookISBN
+        authorLabel.text = "Author: " + bookAuthor
+        publishDateLabel.text = "Publish Date: " + bookPublishDate
+        isbnLabel.text = "ISBN: " + bookISBN
     }
 
     override func viewWillDisappear(_ animated: Bool) {
