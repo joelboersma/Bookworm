@@ -59,7 +59,6 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
         resultsTableView.dataSource = self
         resultsTableView.delegate = self
         searchBar.delegate = self
-        searchBar.becomeFirstResponder()
         
         self.activityIndicator.stopAnimating()
     }
@@ -172,10 +171,6 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {
-//            assertionFailure("Cell dequeue error")
-//            return UITableViewCell.init()
-//        }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "addRequestBookCell") as? AddRequestBookCell else {
             assertionFailure("Cell dequeue error")
             return UITableViewCell.init()
