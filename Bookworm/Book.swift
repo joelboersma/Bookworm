@@ -34,3 +34,40 @@ class Book {
         self.publishDate = publishDate
     }
 }
+
+class BookCell {
+    /*
+     if we want all info...
+     - title
+     - author
+     - condition
+     - location
+     - buyer/seller
+     - post date
+     - cover
+     - publishing date
+     - edition??? (isbn already kinda does that)
+     - isbn13
+     */
+    
+    let title: String
+    //let isbn: String
+    //let authors: [String]
+    let condition: String
+    let location: String
+    let buyerSeller: String
+    let postDate: String
+
+    //var publishDate: String?
+    //var coverImage: Data? = nil
+    
+    //
+    init(title: String, condition: String, location: String, buyerSeller: String, postDate: String) {
+        self.title = title
+        self.condition = condition
+        self.location = location
+        self.buyerSeller = buyerSeller
+        self.postDate = postDate
+    }
+    
+}

@@ -33,15 +33,24 @@ class ProfileViewController: UIViewController {
                 self.greetingLabel.text = "Hello, \(firstName)"
             }
         })
-    
+        
         
     }
     
     func returnToLoginView(){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "loginViewController") as? LoginViewController  else { assertionFailure("Couldn't find login view controller."); return }
-        let loginViewController = [vc]
-        self.navigationController?.setViewControllers(loginViewController, animated: true)
+        do
+        {
+            try Auth.auth().signOut()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "loginViewController") as? LoginViewController  else { assertionFailure("Couldn't find login view controller."); return }
+            let loginViewController = [vc]
+            self.navigationController?.setViewControllers(loginViewController, animated: true)
+        }
+        catch let error as NSError
+        {
+            print(error.localizedDescription)
+        }
+        
     }
     
     @IBAction func didPressLogout(_ sender: Any) {
