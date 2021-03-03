@@ -40,7 +40,7 @@ class ListingsTableViewCell: UITableViewCell {
         self.bookTitleLabel.text = book.title
         self.conditionLabel.text = "Condition: \(book.condition)"
         self.locationLabel.text = book.location
-        self.buyerSellerLabel.text = book.buyerSeller
+        self.buyerSellerLabel.text = "\(book.userDescription): \(book.buyerSeller)"
         self.postDateLabel.text = book.postDate
         
     }
@@ -69,6 +69,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         listingsTableView.dataSource = self
         listingsTableView.delegate = self
         
+        
         // For getting database data and reloadData for listingsTableView
         makeDatabaseCallsforReload()
         
@@ -79,26 +80,27 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     func makeDatabaseCallsforReload() {
         self.wait()
-        self.ref.child("Books").child("Requests").queryOrdered(byChild: "Posted_Date").observe(.childAdded, with: { (snapshot) in
+        self.ref.child("Books").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
-            var buyer = results?["Buyer"] ?? ""
+            var user = results?["User"] ?? ""
             let condition = results?["Condition"] ?? ""
-            let datePosted = results?["Posted_Date"] ?? ""
+            let datePosted = results?["Date_Posted"] ?? ""
             let location = results?["Location"] ?? ""
             let title = results?["Title"] ?? ""
+            let userDescription = results?["User_Description"] ?? ""
             
             // Phooto_Cover from DB returns path in FBStorage
             let bookCover = results?["Photo_Cover"] ?? ""
             
-            self.ref.child("Users").child(buyer).observeSingleEvent(of: .value, with: { (snapshot) in
+            self.ref.child("Users").child(user).observeSingleEvent(of: .value, with: { (snapshot) in
                 let buyerData = snapshot.value as? [String: String]
                 
                 let firstName = buyerData?["FirstName"] ?? ""
                 let lastName = buyerData?["LastName"] ?? ""
                 
-                buyer = firstName + " " + lastName
+                user = firstName + " " + lastName
                 
-                let databaseData = BookCell(title: title, condition: condition, location: location, buyerSeller: buyer, postDate: datePosted, bookCover: bookCover)
+                let databaseData = BookCell(title: title, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription)
                 
                 self.books.append(databaseData)
                 
@@ -110,7 +112,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             })
             
         })
-        
         
     }
     
