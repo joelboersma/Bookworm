@@ -220,12 +220,13 @@ struct OpenLibraryAPI {
         ISBN(isbn) { isbnResponse, error in
             // title, publish date, isbn13
             if let unwrappedError = error {
-                print(unwrappedError)
+                completion(bookInfo, unwrappedError)
                 return
             }
             
             guard let isbnResponse = isbnResponse else {
                 print("bad response ISBN")
+                completion(bookInfo, ApiError(response: [:]))
                 return
             }
             
@@ -234,22 +235,25 @@ struct OpenLibraryAPI {
             
             guard let authorKey = unwrapInnerKey(fromDictionary: isbnResponse, forOuterKey: "authors") else {
                 print("couldn't get key for author")
+                completion(bookInfo, ApiError(response: [:]))
                 return
             }
             
             author(authorKey) { authorResponse, error in
                 // author
                 if let unwrappedError = error {
-                    print(unwrappedError)
+                    completion(bookInfo, unwrappedError)
                     return
                 }
                 guard let authorResponse = authorResponse else {
                     print("bad response author")
+                    completion(bookInfo, ApiError(response: [:]))
                     return
                 }
                 
                 guard let authorName = authorResponse["name"] else {
                     print("no author")
+                    completion(bookInfo, ApiError(response: [:]))
                     return
                 }
                 bookInfo["author"] = authorName
@@ -257,17 +261,19 @@ struct OpenLibraryAPI {
                 cover(key: .ISBN, value: isbn, size: bookCoverSize) { coverResponse, error in
                     // cover
                     if let unwrappedError = error {
-                        print(unwrappedError)
+                        completion(bookInfo, unwrappedError)
                         return
                     }
                     guard let coverResponse = coverResponse else {
                         print("bad response cover")
+                        completion(bookInfo, ApiError(response: [:]))
                         return
                     }
                     print(coverResponse)
                     
                     guard let imageData = coverResponse["imageData"] as? Data else {
                         print("bad cover image data")
+                        completion(bookInfo, ApiError(response: [:]))
                         return
                     }
                     
