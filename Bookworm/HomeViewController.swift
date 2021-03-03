@@ -16,8 +16,27 @@ class ListingsTableViewCell: UITableViewCell {
     @IBOutlet weak var buyerSellerLabel: UILabel!
     @IBOutlet weak var postDateLabel: UILabel!
     
+    var storageRef = Storage.storage().reference()
+    
     func fillInBookCell (book: BookCell){
-        self.bookCoverImage.image = UIImage(systemName: "book")
+        let bookCoverRef = storageRef.child(book.bookCover)
+        
+        bookCoverRef.downloadURL { url, error in
+            guard let imageURL = url, error == nil else {
+                print(error ?? "")
+                return
+            }
+            
+            guard let data = NSData(contentsOf: imageURL) else {
+                //same thing here, handle failed data download
+                return
+            }
+            
+            let image = UIImage(data: data as Data)
+            self.bookCoverImage.image = image
+        }
+        
+        //self.bookCoverImage.image = UIImage(systemName: "book")
         self.bookTitleLabel.text = book.title
         self.conditionLabel.text = "Condition: \(book.condition)"
         self.locationLabel.text = book.location
@@ -39,6 +58,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     var books: [BookCell] = []
     
     var ref = Database.database().reference()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +87,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             let location = results?["Location"] ?? ""
             let title = results?["Title"] ?? ""
             
+            // Phooto_Cover from DB returns path in FBStorage
+            let bookCover = results?["Photo_Cover"] ?? ""
+            
             self.ref.child("Users").child(buyer).observeSingleEvent(of: .value, with: { (snapshot) in
                 let buyerData = snapshot.value as? [String: String]
                 
@@ -75,7 +98,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                 
                 buyer = firstName + " " + lastName
                 
-                let databaseData = BookCell(title: title, condition: condition, location: location, buyerSeller: buyer, postDate: datePosted)
+                let databaseData = BookCell(title: title, condition: condition, location: location, buyerSeller: buyer, postDate: datePosted, bookCover: bookCover)
                 
                 self.books.append(databaseData)
                 

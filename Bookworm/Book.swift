@@ -57,17 +57,19 @@ class BookCell {
     let location: String
     let buyerSeller: String
     let postDate: String
+    let bookCover: String
 
     //var publishDate: String?
     //var coverImage: Data? = nil
     
-    //
-    init(title: String, condition: String, location: String, buyerSeller: String, postDate: String) {
+    
+    init(title: String, condition: String, location: String, buyerSeller: String, postDate: String, bookCover: String) {
         self.title = title
         self.condition = condition
         self.location = location
         self.buyerSeller = buyerSeller
         self.postDate = postDate
+        self.bookCover = bookCover
     }
     
 }
