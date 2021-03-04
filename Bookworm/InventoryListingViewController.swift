@@ -12,16 +12,18 @@ class InventoryListingViewController: UIViewController {
 
     @IBOutlet weak var uploadImageButton: UIButton!
     @IBOutlet weak var soldButton: UIButton!
+    @IBOutlet weak var popupView: UIView!
     
     @IBOutlet weak var removefromInventoryButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // format buttons
+        // format buttons + view
         uploadImageButton.layer.cornerRadius = 5
         soldButton.layer.cornerRadius = 5
         removefromInventoryButton.layer.cornerRadius = 5
+        popupView.layer.cornerRadius = 10
     }
 
 

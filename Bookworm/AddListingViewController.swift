@@ -16,6 +16,11 @@ protocol AddListingViewControllerDelegate {
 
 class AddListingViewController: UIViewController {
     
+    @IBOutlet weak var popupView: UIView!
+    
+    @IBOutlet weak var uplaodImagesButton: UIButton!
+    @IBOutlet weak var addListingButton: UIButton!
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var authorLabel: UITextField!
@@ -36,6 +41,11 @@ class AddListingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //format buttons + view
+        popupView.layer.cornerRadius = 10
+        uplaodImagesButton.layer.cornerRadius = 5
+        addListingButton.layer.cornerRadius = 5
+        
         titleLabel.text = bookTitle
         if let coverImageDataM = bookCoverImageM, let coverImageM = UIImage(data: coverImageDataM) {
             coverImageView.image = coverImageM
@@ -54,4 +64,10 @@ class AddListingViewController: UIViewController {
             DispatchQueue.global(qos: .userInitiated).async { self.delegate?.addListingVCDismissed() }
         }
     }
+    @IBAction func didPressUploadImages(_ sender: Any) {
+    }
+    
+    @IBAction func didPressAddListing(_ sender: Any) {
+    }
+    
 }

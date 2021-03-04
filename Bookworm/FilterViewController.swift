@@ -12,6 +12,7 @@ import Firebase
 class FilterViewController: UIViewController {
     @IBOutlet weak var setFiltersButton: UIButton!
     @IBOutlet weak var categoryFilter: UISegmentedControl!
+    @IBOutlet weak var popupView: UIView!
     
     var categorySegment0 = "Listings"
     var categorySegment1 = "Requests"
@@ -19,6 +20,11 @@ class FilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //format buttons + view
+        setFiltersButton.layer.cornerRadius = 5
+        popupView.layer.cornerRadius = 10
+        
         
         categoryFilter.setTitle(categorySegment0, forSegmentAt: 0)
         categoryFilter.setTitle(categorySegment1, forSegmentAt: 1)

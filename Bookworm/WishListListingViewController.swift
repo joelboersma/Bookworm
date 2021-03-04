@@ -11,12 +11,14 @@ import Firebase
 class WishListListingViewController: UIViewController {
 
     @IBOutlet weak var removeFromWishlistButton: UIButton!
+    @IBOutlet weak var popupView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // format button
+        // format button + view
         removeFromWishlistButton.layer.cornerRadius = 5
+        popupView.layer.cornerRadius = 10
     }
     
     @IBAction func didPressX(_ sender: Any) {

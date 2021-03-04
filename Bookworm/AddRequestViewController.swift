@@ -53,6 +53,7 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     @IBOutlet weak var resultsTableView: UITableView!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var noSearchResultsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +63,8 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
         searchBar.delegate = self
         
         self.activityIndicator.stopAnimating()
+        
+        noSearchResultsLabel.text = ""
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
@@ -75,6 +78,9 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // Clear "No Results Found Label
+        noSearchResultsLabel.text = ""
+            
         // Hide keyboard
         view.endEditing(true)
         
@@ -101,7 +107,9 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                     return
                 }
                 
-                
+                if responseWorks.count == 0{
+                    self.noSearchResultsLabel.text = "No Results Found"
+                }
                 for work in responseWorks {
                     if self.books.count >= 25 {
                         print("woohoo 25 books")

@@ -1069,6 +1069,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="popupView" destination="zDO-A7-HEC" id="uSe-X9-h8a"/>
                         <outlet property="removeFromWishlistButton" destination="F5f-nN-IBn" id="D8h-77-g68"/>
                     </connections>
                 </viewController>
@@ -1318,6 +1319,7 @@
                         <outlet property="bookPublishingDateLabel" destination="DQo-mJ-g3t" id="mRF-Jl-9IQ"/>
                         <outlet property="bookTitleLabel" destination="7Yb-fy-cbq" id="GJc-B6-wmN"/>
                         <outlet property="contactSellerButton" destination="Iby-fZ-Ppt" id="QrI-zQ-T4d"/>
+                        <outlet property="popupView" destination="XeY-9C-rg7" id="ARm-qW-tUd"/>
                         <outlet property="xButton" destination="eTj-EH-OXH" id="IpS-Bi-BKR"/>
                     </connections>
                 </viewController>
@@ -1334,7 +1336,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2up-ip-rpm">
-                                <rect key="frame" x="20" y="244" width="374" height="182"/>
+                                <rect key="frame" x="8" y="237" width="374" height="182"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="K0C-RH-HNJ">
                                         <rect key="frame" x="10" y="20" width="330" height="32"/>
@@ -1412,6 +1414,7 @@
                     </view>
                     <connections>
                         <outlet property="categoryFilter" destination="K0C-RH-HNJ" id="HSg-9W-VEv"/>
+                        <outlet property="popupView" destination="2up-ip-rpm" id="nJK-aU-cbw"/>
                         <outlet property="setFiltersButton" destination="H4O-W8-qwQ" id="p3t-Ek-nQC"/>
                     </connections>
                 </viewController>
@@ -1562,6 +1565,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="popupView" destination="otu-y9-bha" id="pOB-LV-4tS"/>
                         <outlet property="removefromInventoryButton" destination="uq7-a9-wLM" id="Vox-xX-vV4"/>
                         <outlet property="soldButton" destination="Idc-LM-vtl" id="7fj-oZ-TPh"/>
                         <outlet property="uploadImageButton" destination="alX-lh-OXx" id="0pU-1e-CNU"/>
@@ -1704,6 +1708,7 @@
                     </view>
                     <connections>
                         <outlet property="contactButton" destination="vAX-yd-f2E" id="wvl-GS-cBy"/>
+                        <outlet property="popupView" destination="OTY-4b-FgS" id="bAb-Rv-x5s"/>
                         <outlet property="transactionButton" destination="5M2-iJ-NNE" id="7Fg-vp-3PL"/>
                         <outlet property="transactionLabel" destination="QlG-xY-IVD" id="jSj-Tt-c11"/>
                     </connections>
@@ -1804,6 +1809,12 @@
                                     <constraint firstAttribute="width" constant="50" id="ohS-D1-Glg"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NO_SEARCH_RESULTS_LABEL&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tza-R3-lJv">
+                                <rect key="frame" x="29.333333333333343" y="409" width="331.33333333333326" height="26.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" systemColor="placeholderTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1Tr-JM-0Ex"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1811,6 +1822,8 @@
                         <constraints>
                             <constraint firstItem="7Lz-Vo-4cS" firstAttribute="top" secondItem="1Tr-JM-0Ex" secondAttribute="top" constant="42" id="7Fz-v0-i9U"/>
                             <constraint firstItem="CNw-26-BGL" firstAttribute="centerY" secondItem="y7p-67-WjE" secondAttribute="centerY" id="Gmb-hd-Xs1"/>
+                            <constraint firstItem="tza-R3-lJv" firstAttribute="centerY" secondItem="y7p-67-WjE" secondAttribute="centerY" id="JUQ-UY-wOx"/>
+                            <constraint firstItem="tza-R3-lJv" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="LfX-az-aua"/>
                             <constraint firstItem="MfN-7K-KiK" firstAttribute="top" secondItem="wxv-yA-sR6" secondAttribute="bottom" symbolic="YES" id="Ner-JU-ulz"/>
                             <constraint firstItem="7Lz-Vo-4cS" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="TxE-H1-gnA"/>
                             <constraint firstItem="CNw-26-BGL" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="X6l-hc-5Z1"/>
@@ -1829,6 +1842,7 @@
                     <tabBarItem key="tabBarItem" title="Request" image="rectangle.and.pencil.and.ellipsis.rtl" catalog="system" id="Vw4-sd-D4o"/>
                     <connections>
                         <outlet property="activityIndicator" destination="CNw-26-BGL" id="Nts-iQ-Hnd"/>
+                        <outlet property="noSearchResultsLabel" destination="tza-R3-lJv" id="L5a-6P-s5R"/>
                         <outlet property="resultsTableView" destination="MfN-7K-KiK" id="zYK-5O-cBF"/>
                         <outlet property="searchBar" destination="wxv-yA-sR6" id="ThJ-39-u1W"/>
                         <outlet property="tapGestureRecognizer" destination="N2x-Je-olq" id="rqH-Wt-9Ax"/>
@@ -1904,7 +1918,7 @@
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
                                         <connections>
-                                            <action selector="contactButtonPressed" destination="tnP-8t-gAf" eventType="touchUpInside" id="xk5-C1-xWR"/>
+                                            <action selector="didPressUploadImages:" destination="6iZ-ij-G4L" eventType="touchUpInside" id="Ola-Ek-DMH"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oYB-6r-YHA">
@@ -1946,7 +1960,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="transactionButtonPressed:" destination="tnP-8t-gAf" eventType="touchUpInside" id="3tR-JP-jtp"/>
+                                            <action selector="didPressAddListing:" destination="6iZ-ij-G4L" eventType="touchUpInside" id="ajw-T7-NLL"/>
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8pi-Gr-EQ2">
@@ -2007,12 +2021,15 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addListingButton" destination="VA2-Vz-Rnj" id="Afy-Co-yNv"/>
                         <outlet property="authorLabel" destination="Vw9-Kb-Zzt" id="64w-I6-X6d"/>
                         <outlet property="coverImageView" destination="8pi-Gr-EQ2" id="LzI-QS-vOa"/>
                         <outlet property="editionLabel" destination="1zS-DP-AyR" id="gpe-lt-1yy"/>
                         <outlet property="isbnLabel" destination="8xy-xp-EGc" id="OUo-x9-coq"/>
+                        <outlet property="popupView" destination="Nuq-LR-K0z" id="hq2-TK-JJL"/>
                         <outlet property="publishDateLabel" destination="SH7-Vt-2VW" id="ZBS-ff-dna"/>
                         <outlet property="titleLabel" destination="QdH-ke-cJQ" id="ww0-71-Cb8"/>
+                        <outlet property="uplaodImagesButton" destination="O9q-ac-zXW" id="KdN-sP-ElE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ce8-Y9-8ja" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2160,6 +2177,7 @@
                         <outlet property="bookISBNLabel" destination="odN-eE-k5X" id="9W8-3L-eYu"/>
                         <outlet property="bookPublishDateLabel" destination="xg9-wA-DJe" id="ycz-2P-xG0"/>
                         <outlet property="bookTitleLabel" destination="d7J-Dl-C1d" id="eXX-hK-AOz"/>
+                        <outlet property="popupView" destination="sba-7h-6b7" id="dEA-CL-gdE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tm-F9-upw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2186,6 +2204,9 @@
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="placeholderTextColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

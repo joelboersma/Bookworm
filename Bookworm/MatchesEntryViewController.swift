@@ -15,6 +15,7 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
     @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var transactionButton: UIButton!
     @IBOutlet weak var transactionLabel: UITextField!
+    @IBOutlet weak var popupView: UIView!
     
     var isCurrentTable = true
     
@@ -30,9 +31,10 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
             transactionButton.isHidden = true
         }
         
-        //format buttons
+        //format buttons + view
         contactButton.layer.cornerRadius = 5
         transactionButton.layer.cornerRadius = 5
+        popupView.layer.cornerRadius = 10
     }
     
     @IBAction func contactButtonPressed() {

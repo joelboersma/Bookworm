@@ -21,6 +21,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     @IBOutlet weak var bookEditionLabel: UITextField!
     @IBOutlet weak var bookISBNLabel: UITextField!
     @IBOutlet weak var addToWishlistButton: UIButton!
+    @IBOutlet weak var popupView: UIView!
     
     var storageRef = Storage.storage().reference()
     
@@ -36,9 +37,10 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //format buttons
+        //format buttons + view
         contactSellerButton.layer.cornerRadius = 5
         addToWishlistButton.layer.cornerRadius = 5
+        popupView.layer.cornerRadius = 10
         
         fillInBookInfo()
         // Do any additional setup after loading the view.

@@ -17,6 +17,7 @@ class AddRequestListingViewController: UIViewController {
     @IBOutlet weak var bookISBNLabel: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addRequestButton: UIButton!
+    @IBOutlet weak var popupView: UIView!
     
     var bookAuthors: [String] = []
     var bookTitle: String = ""
@@ -27,8 +28,10 @@ class AddRequestListingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //format button
+        //format button + view
         addRequestButton.layer.cornerRadius = 5
+        popupView.layer.cornerRadius = 10
+        
         fillInBookInfo()
     }
     
@@ -38,8 +41,8 @@ class AddRequestListingViewController: UIViewController {
             self.bookCoverImage.image = coverImageM
         } else if let coverImageDataS = bookCoverImageS, let coverImageS = UIImage(data: coverImageDataS) {
             self.bookCoverImage.image = coverImageS
-        } else if let coverImageDataL = bookCoverImageL, let coverImageL = UIImage(data: coverImageDataL) {
-            self.bookCoverImage.image = coverImageL
+//        } else if let coverImageDataL = bookCoverImageL, let coverImageL = UIImage(data: coverImageDataL) {
+//            self.bookCoverImage.image = coverImageL
         } else {
             self.bookCoverImage.image = UIImage(systemName: "book")
         }
