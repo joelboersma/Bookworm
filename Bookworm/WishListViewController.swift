@@ -10,6 +10,8 @@ import UIKit
 class WishListTableViewCell: UITableViewCell{
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
+    @IBOutlet weak var bookAuthorLabel: UILabel!
+    @IBOutlet weak var bookPublishDateLabel: UILabel!
 }
 
 class WishListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {

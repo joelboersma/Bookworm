@@ -25,6 +25,12 @@ class ProfileViewController: UIViewController {
         
         self.navigationController?.isNavigationBarHidden = true
         
+        //format buttons
+        logoutButton.layer.cornerRadius = 5
+        inventoryButton.layer.cornerRadius = 5
+        wishListButton.layer.cornerRadius = 5
+        deleteAccountButton.layer.cornerRadius = 5
+        
         // set greeting label to first name
         let user = Auth.auth().currentUser
         ref.child("Users").child(user?.uid ?? "").child("FirstName").observeSingleEvent(of: .value, with: { (snapshot) in

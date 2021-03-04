@@ -20,6 +20,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     @IBOutlet weak var bookPublishingDateLabel: UITextField!
     @IBOutlet weak var bookEditionLabel: UITextField!
     @IBOutlet weak var bookISBNLabel: UITextField!
+    @IBOutlet weak var addToWishlistButton: UIButton!
     
     var storageRef = Storage.storage().reference()
     
@@ -30,9 +31,15 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     var bookISBN: String = ""
     var bookCoverImage: String = ""
     
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //format buttons
+        contactSellerButton.layer.cornerRadius = 5
+        addToWishlistButton.layer.cornerRadius = 5
+        
         fillInBookInfo()
         // Do any additional setup after loading the view.
     }
@@ -67,6 +74,9 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         
         self.bookISBNLabel.text = "ISBN: \(bookISBN)"
         
+    }
+    
+    @IBAction func addToWishlistClicked(_ sender: Any) {
     }
     
     @IBAction func contactSellerButtonClicked(_ sender: Any) {

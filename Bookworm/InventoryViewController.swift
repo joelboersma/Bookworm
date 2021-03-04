@@ -9,9 +9,10 @@ import UIKit
 import Firebase
 
 class InventoryTableViewCell: UITableViewCell{
-    @IBOutlet weak var bookTitleLabel: UILabel!
-
     @IBOutlet weak var bookCoverImage: UIImageView!
+    @IBOutlet weak var bookTitleLabel: UILabel!
+    @IBOutlet weak var bookAuthorLabel: UILabel!
+    @IBOutlet weak var bookPublishDateLabel: UILabel!
 }
 
 class InventoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {

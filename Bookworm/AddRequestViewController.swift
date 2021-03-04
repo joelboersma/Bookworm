@@ -12,7 +12,7 @@ class AddRequestBookCell: UITableViewCell {
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookAuthorsLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
-
+    
     func fillInBookCell (book: Book){
         
         //fill in book cover if available
@@ -37,7 +37,7 @@ class AddRequestBookCell: UITableViewCell {
         }
 
         //fill in book author
-        self.bookAuthorsLabel.text = book.authors.reduce("Authors: "){$0 + $1}
+        self.bookAuthorsLabel.text = book.authors.reduce("Authors:"){$0 + " " + $1}
     }
 }
 
@@ -56,6 +56,7 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         resultsTableView.dataSource = self
         resultsTableView.delegate = self
         searchBar.delegate = self
@@ -171,6 +172,7 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "addRequestBookCell") as? AddRequestBookCell else {
             assertionFailure("Cell dequeue error")
             return UITableViewCell.init()
@@ -178,6 +180,7 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
         
         let book = books[indexPath.row]
         cell.fillInBookCell(book: book)
+        cell.layer.cornerRadius = 5
         return cell
     }
     

@@ -29,6 +29,10 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
             transactionLabel.isHidden = false
             transactionButton.isHidden = true
         }
+        
+        //format buttons
+        contactButton.layer.cornerRadius = 5
+        transactionButton.layer.cornerRadius = 5
     }
     
     @IBAction func contactButtonPressed() {

@@ -10,10 +10,18 @@ import Firebase
 
 class InventoryListingViewController: UIViewController {
 
+    @IBOutlet weak var uploadImageButton: UIButton!
+    @IBOutlet weak var soldButton: UIButton!
+    
+    @IBOutlet weak var removefromInventoryButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // format buttons
+        uploadImageButton.layer.cornerRadius = 5
+        soldButton.layer.cornerRadius = 5
+        removefromInventoryButton.layer.cornerRadius = 5
     }
 
 

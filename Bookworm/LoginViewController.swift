@@ -28,8 +28,8 @@ class LoginViewController: UIViewController {
         
         self.errorLabel.text = ""
         
-        loginButton.layer.cornerRadius = 18
-        newAccountButton.layer.cornerRadius = 18
+        loginButton.layer.cornerRadius = 5
+        newAccountButton.layer.cornerRadius = 5
         
         // For dot inputs for password
         self.passwordTextField.isSecureTextEntry = true

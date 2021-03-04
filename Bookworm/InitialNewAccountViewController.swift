@@ -40,7 +40,7 @@ class InitialNewAccountViewController: UIViewController {
         
         self.errorLabel.text = ""
         
-        self.continueButton.layer.cornerRadius = 18
+        self.continueButton.layer.cornerRadius = 5
     }
     
     // Continiue Button Validation Checks

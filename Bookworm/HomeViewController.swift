@@ -76,7 +76,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         makeDatabaseCallsforReload()
         
         self.activityIndicator.stopAnimating()
-        
+        filterButton.layer.cornerRadius = 5
     }
     
     
@@ -150,6 +150,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         }
         let book = books[indexPath.row]
         cell.fillInBookCell(book: book)
+        cell.layer.cornerRadius = 10
         return cell
     }
     

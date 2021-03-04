@@ -20,6 +20,8 @@ class MatchesTableViewCell: UITableViewCell {
 
 class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var historyButton: UIButton!
+    @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var matchesTableView: UITableView!
     var changeTableID = 1
@@ -30,6 +32,10 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        //format buttons
+        historyButton.layer.cornerRadius = 5
+        filterButton.layer.cornerRadius = 5
         
         self.navigationController?.isNavigationBarHidden = true
         

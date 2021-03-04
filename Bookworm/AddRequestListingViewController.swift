@@ -16,6 +16,7 @@ class AddRequestListingViewController: UIViewController {
     @IBOutlet weak var bookEditionLabel: UITextField!
     @IBOutlet weak var bookISBNLabel: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var addRequestButton: UIButton!
     
     var bookAuthors: [String] = []
     var bookTitle: String = ""
@@ -26,6 +27,8 @@ class AddRequestListingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //format button
+        addRequestButton.layer.cornerRadius = 5
         fillInBookInfo()
     }
     
@@ -58,7 +61,7 @@ class AddRequestListingViewController: UIViewController {
                 return
             }
             
-            if let publishDate = unwrappedResponse["publish_date"] as? String{
+            if let publishDate = unwrappedResponse["publish_date"] as? String {
                 self.bookPublishDateLabel.text = "Publish Date: " + publishDate
             } else {
                 self.bookPublishDateLabel.text = "Publish Date: None found"
@@ -67,7 +70,7 @@ class AddRequestListingViewController: UIViewController {
         })
         
         //fill in book author
-        self.bookAuthorLabel.text = bookAuthors.reduce("Authors: "){$0 + $1}
+        self.bookAuthorLabel.text = bookAuthors.reduce("Authors:"){$0 + " " + $1}
         
         //fill in book isbn
         self.bookISBNLabel.text = "ISBN: " + bookISBN

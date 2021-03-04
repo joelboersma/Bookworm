@@ -10,10 +10,13 @@ import Firebase
 
 class WishListListingViewController: UIViewController {
 
+    @IBOutlet weak var removeFromWishlistButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // format button
+        removeFromWishlistButton.layer.cornerRadius = 5
     }
     
     @IBAction func didPressX(_ sender: Any) {
