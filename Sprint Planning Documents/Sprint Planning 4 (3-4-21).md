@@ -30,6 +30,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Got scanning view controller working with barcode of books. ([aafa383](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/aafa3835e6ad6719975705d830fa0e7b41d5f9f4)), ([91ded89](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/91ded8918217104cd5fc878c6cbd4e4afbaddcbc))
 ## Planned Tasks
   * Christina
+    * fix bugs in profile view, add request view 
   * Joel
   * Peter
   * Urvashi 
