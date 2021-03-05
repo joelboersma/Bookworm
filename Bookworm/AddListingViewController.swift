@@ -41,6 +41,7 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var bookPublishDate: String = ""
     var bookISBN: String = ""
     var bookCondition: String = ""
+    var bookLocation: String = ""
     var bookCoverImageS: Data? = nil
     var bookCoverImageM: Data? = nil
     var bookCoverImageL: Data? = nil
@@ -62,6 +63,8 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // put book conditions into array
         bookConditionPickerData = ["Poor", "Fair", "Good", "Great", "New"]
         
+        // if user doesn't touch UIPicker, default saved valuee is Poor
+        self.bookCondition = bookConditionPickerData[0] as String
         
         titleLabel.text = bookTitle
         if let coverImageDataM = bookCoverImageM, let coverImageM = UIImage(data: coverImageDataM) {
@@ -97,23 +100,43 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
         let date = formatter.string(from: currentDateTime)
         let uniqueBookID = UUID().uuidString
         
-        var bookLocation = ""
         
+        // save image to Firebase storage with uniqueBookID.jpg as image path
+        let imageRef = storageRef.child("\(uniqueBookID).jpg")
         
+        // Conditional check, use default book image if no image found for book cover
+        if let bookCoverData = bookCoverImageM {
+            imageRef.putData(bookCoverData, metadata: nil) { (metadata, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let metadata = metadata {
+                    print(metadata)
+                }
+            }
+        }
+        
+        // Grab user ID from logged in user
         guard let userID = Auth.auth().currentUser?.uid else {
             assertionFailure("Couldn't unwrap userID")
             return
         }
         
-        // save image to Firebase storage
-        let imageRef = storageRef.child("\(uniqueBookID).jpg")
+        // Grab zipcode from user, change zipcode to city
+        self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+            let userData = snapshot.value as? [String: String]
+            let bookZipCode = userData?["ZipCode"] ?? ""
+            
+            self.getCityFromPostalCode(postalCode: bookZipCode)
+            
+            // make push call to database
+            self.ref.child("Books").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniqueBookID).jpg"])
+            
+            
+        })
         
-        //let bookCoverData = bookCoverImageM ?? UIImage(systemName: "book")
         
-        
-        
-        // make push call to database
-        //self.ref.child("Books").child(uniqueBookID).setValue(["Title": bookTitle, "Author": bookAuthor, "Date_Published": bookPublishDate, "Edition": "", "ISBN": bookISBN, "Condition": bookCondition, "User": userID, "Date_Posted": date, "Location": bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniqueBookID).jpg"])
+        self.dismiss(animated: true, completion: nil)
         
     }
     
@@ -132,6 +155,29 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent  component: Int) {
         bookCondition = bookConditionPickerData[row] as String
+    }
+    
+    
+    func getCityFromPostalCode(postalCode: String){
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(postalCode) { results, error in
+            
+            // Placemark gives an array of best/closest results. First value of array most accurate.
+            if let placemark = results?[0] {
+                let locality = placemark.locality ?? ""
+                let state = placemark.administrativeArea ?? ""
+                print(locality)
+                print(state)
+                
+                
+                self.bookLocation = "\(locality), \(state)"
+                
+            }
+            if let error = error {
+                print(error)
+                self.bookLocation = "Did not Work"
+            }
+        }
     }
     
     
