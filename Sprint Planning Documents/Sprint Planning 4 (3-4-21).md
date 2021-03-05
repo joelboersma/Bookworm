@@ -25,19 +25,21 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Updated UI ([fc06743](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/fc06743c9f32cf6978ff5ea31aa75f15abddb733))
     * Placeholder listings and popup linking ([2df80a8](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/2df80a8f9288d21d6c5ddccb483d1df4efb805dc))
   * Mohammed
-  
+    * Created matches view controller and completed it's flow. ([11026b5](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/11026b595d94812380db80c14268f01b3f21b83c)), ([3aea0e5](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/3aea0e54831ea01f9d1092027c082c8e09295071))
+    * Created table cell for matches. ([c02d9fa](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/c02d9fa595289e4959ec7e0f8f1c853ad41342e4))
+    * Got scanning view controller working with barcode of books. ([aafa383](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/aafa3835e6ad6719975705d830fa0e7b41d5f9f4)), ([91ded89](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/91ded8918217104cd5fc878c6cbd4e4afbaddcbc))
 ## Planned Tasks
   * Christina
-    * fix some bugs in profile view, add request view  
   * Joel
   * Peter
   * Urvashi 
     * Looking into OCR
   * Mohammed
+    * Looking into Vision framework to implement into AV Capture Session.
   
 ## Issues
   * Christina - None
   * Joel
   * Peter 
   * Urvashi - None 
-  * Mohammed
+  * Mohammed - None
