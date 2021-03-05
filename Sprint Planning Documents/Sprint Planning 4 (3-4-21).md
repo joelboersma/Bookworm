@@ -22,8 +22,8 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
   * Joel
   * Peter
   * Urvashi 
-    * Updated UI ([fc06743](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/fc06743c9f32cf6978ff5ea31aa75f15abddb733)
-    * Placeholder listings and popup linking ([2df80a8](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/2df80a8f9288d21d6c5ddccb483d1df4efb805dc)
+    * Updated UI ([fc06743](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/fc06743c9f32cf6978ff5ea31aa75f15abddb733))
+    * Placeholder listings and popup linking ([2df80a8](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/2df80a8f9288d21d6c5ddccb483d1df4efb805dc))
   * Mohammed
   
 ## Planned Tasks
