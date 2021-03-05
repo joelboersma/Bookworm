@@ -99,10 +99,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             let bookCover = results?["Photo_Cover"] ?? ""
             
             self.ref.child("Users").child(user).observeSingleEvent(of: .value, with: { (snapshot) in
-                let buyerData = snapshot.value as? [String: String]
+                let userData = snapshot.value as? [String: String]
                 
-                let firstName = buyerData?["FirstName"] ?? ""
-                let lastName = buyerData?["LastName"] ?? ""
+                let firstName = userData?["FirstName"] ?? ""
+                let lastName = userData?["LastName"] ?? ""
                 
                 user = firstName + " " + lastName
                 
