@@ -28,6 +28,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
   
 ## Planned Tasks
   * Christina
+    * fix some bugs in profile view, add request view  
   * Joel
   * Peter
   * Urvashi 
