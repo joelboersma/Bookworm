@@ -1353,10 +1353,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="317" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="324" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="323" y="0.0" width="7" height="30"/>
+                                                <rect key="frame" x="330" y="0.0" width="0.0" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1875,6 +1875,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CX3-yu-tAh">
+                                <rect key="frame" x="16" y="132" width="358" height="629"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3zk-nf-Fvt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1889,12 +1893,13 @@
                     <tabBarItem key="tabBarItem" title="Post" image="camera" catalog="system" id="bK8-oD-8S5"/>
                     <connections>
                         <outlet property="activityIndicator" destination="zOn-MN-8nh" id="BCC-UT-ufl"/>
+                        <outlet property="imageView" destination="CX3-yu-tAh" id="hVf-pB-aXk"/>
                         <outlet property="scanLabel" destination="T9V-3E-19v" id="CpS-6P-KVC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bD-KK-BOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4391" y="104"/>
+            <point key="canvasLocation" x="4390.7692307692305" y="103.7914691943128"/>
         </scene>
         <!--Add Listing View Controller-->
         <scene sceneID="S64-Wg-ueC">

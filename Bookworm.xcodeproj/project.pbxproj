@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B33D25E0F25BA51FE845C7B /* Pods_Bookworm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF39BDDC03A612AFF0D3650 /* Pods_Bookworm.framework */; };
 		1D7474B525E9BFE700946263 /* MatchesEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */; };
+		1D86636C25F2421100E38C84 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 1D86636B25F2421000E38C84 /* tessdata */; };
 		1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */; };
 		1D8E88ED25ECE5B2004D3AC1 /* AddListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */; };
 		1DCAEAC625E24AA1000C9047 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */; };
@@ -19,7 +21,6 @@
 		25190E8525E41CAF007573D6 /* InventoryListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */; };
 		255CF1F125EE479700457C5A /* AddRequestListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */; };
 		25F3D9E525EDC4FD008D4463 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */; };
-		282404F0BF436D017F4BA1AC /* Pods_Bookworm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */; };
 		4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */; };
 		4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */; };
 		4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1D125DF596A00661D51 /* LoginViewController.swift */; };
@@ -37,11 +38,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1050B7713DFAF70D23EA793C /* Pods-Bookworm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.debug.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.debug.xcconfig"; sourceTree = "<group>"; };
 		1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesEntryViewController.swift; sourceTree = "<group>"; };
+		1D86636B25F2421000E38C84 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListingViewController.swift; sourceTree = "<group>"; };
 		1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
+		20F69EF96481DCB1BBBE0A55 /* Pods-Bookworm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.release.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.release.xcconfig"; sourceTree = "<group>"; };
 		25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		25190E7825E39CDA007573D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		25190E7B25E41BFC007573D6 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
@@ -50,7 +52,6 @@
 		25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryListingViewController.swift; sourceTree = "<group>"; };
 		255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRequestListingViewController.swift; sourceTree = "<group>"; };
 		25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		3C77E61063F7FA02A8DD8A7D /* Pods-Bookworm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.release.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.release.xcconfig"; sourceTree = "<group>"; };
 		4B2FB1CA25DF596A00661D51 /* Bookworm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookworm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,11 +64,12 @@
 		4B60AC7A25E9E4BE0081458A /* OpenLibraryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLibraryAPI.swift; sourceTree = "<group>"; };
 		4BB674F525EDFF6500FA2F73 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		4BDCA8BB25E9D32B00EB8BAA /* AddRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRequestViewController.swift; sourceTree = "<group>"; };
+		6CE2FA6BFBBCB49AEA91481E /* Pods-Bookworm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookworm.debug.xcconfig"; path = "Target Support Files/Pods-Bookworm/Pods-Bookworm.debug.xcconfig"; sourceTree = "<group>"; };
 		8461B29125E6E5260076C299 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListingViewController.swift; sourceTree = "<group>"; };
 		A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNewAccountViewController.swift; sourceTree = "<group>"; };
-		AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookworm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBF39BDDC03A612AFF0D3650 /* Pods_Bookworm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookworm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,13 +77,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				282404F0BF436D017F4BA1AC /* Pods_Bookworm.framework in Frameworks */,
+				0B33D25E0F25BA51FE845C7B /* Pods_Bookworm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B001B4A1AEAC5BF35FD4868 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FBF39BDDC03A612AFF0D3650 /* Pods_Bookworm.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4B2FB1C125DF596A00661D51 = {
 			isa = PBXGroup;
 			children = (
@@ -89,7 +99,7 @@
 				4B2FB1CC25DF596A00661D51 /* Bookworm */,
 				4B2FB1CB25DF596A00661D51 /* Products */,
 				C9167E9FD9712F984CAF87DF /* Pods */,
-				7C07146D53A0B1F1C8828F9F /* Frameworks */,
+				3B001B4A1AEAC5BF35FD4868 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +114,7 @@
 		4B2FB1CC25DF596A00661D51 /* Bookworm */ = {
 			isa = PBXGroup;
 			children = (
+				1D86636B25F2421000E38C84 /* tessdata */,
 				4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */,
 				25190E7B25E41BFC007573D6 /* WishListViewController.swift */,
 				25190E8125E41C88007573D6 /* WishListListingViewController.swift */,
@@ -134,19 +145,11 @@
 			path = Bookworm;
 			sourceTree = "<group>";
 		};
-		7C07146D53A0B1F1C8828F9F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AF731692ACABF4E6538DE9BB /* Pods_Bookworm.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		C9167E9FD9712F984CAF87DF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1050B7713DFAF70D23EA793C /* Pods-Bookworm.debug.xcconfig */,
-				3C77E61063F7FA02A8DD8A7D /* Pods-Bookworm.release.xcconfig */,
+				6CE2FA6BFBBCB49AEA91481E /* Pods-Bookworm.debug.xcconfig */,
+				20F69EF96481DCB1BBBE0A55 /* Pods-Bookworm.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -158,11 +161,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B2FB1DE25DF596B00661D51 /* Build configuration list for PBXNativeTarget "Bookworm" */;
 			buildPhases = (
-				A5FCED4D5546391C63E82054 /* [CP] Check Pods Manifest.lock */,
+				192A3EFE42CCA3232DFEF2C4 /* [CP] Check Pods Manifest.lock */,
 				4B2FB1C625DF596A00661D51 /* Sources */,
 				4B2FB1C725DF596A00661D51 /* Frameworks */,
 				4B2FB1C825DF596A00661D51 /* Resources */,
-				9DBD460A14E980C59E0D1620 /* [CP] Embed Pods Frameworks */,
+				4F0FAF7523FCB2B34FA0315C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -215,30 +218,14 @@
 				25190E5125DF9BCD007573D6 /* GoogleService-Info.plist in Resources */,
 				4B2FB1D725DF596B00661D51 /* Assets.xcassets in Resources */,
 				4B2FB1D525DF596A00661D51 /* Main.storyboard in Resources */,
+				1D86636C25F2421100E38C84 /* tessdata in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9DBD460A14E980C59E0D1620 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bookworm/Pods-Bookworm-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bookworm/Pods-Bookworm-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bookworm/Pods-Bookworm-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A5FCED4D5546391C63E82054 /* [CP] Check Pods Manifest.lock */ = {
+		192A3EFE42CCA3232DFEF2C4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -258,6 +245,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F0FAF7523FCB2B34FA0315C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bookworm/Pods-Bookworm-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bookworm/Pods-Bookworm-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bookworm/Pods-Bookworm-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -431,18 +435,75 @@
 		};
 		4B2FB1DF25DF596B00661D51 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1050B7713DFAF70D23EA793C /* Pods-Bookworm.debug.xcconfig */;
+			baseConfigurationReference = 6CE2FA6BFBBCB49AEA91481E /* Pods-Bookworm.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WSM4GMUTKD;
+				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseAuth\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseCoreDiagnostics\"",
+					"-framework",
+					"\"FirebaseDatabase\"",
+					"-framework",
+					"\"FirebaseInstallations\"",
+					"-framework",
+					"\"FirebaseStorage\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GTMSessionFetcher\"",
+					"-framework",
+					"\"GoogleAppMeasurement\"",
+					"-framework",
+					"\"GoogleDataTransport\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"PhoneNumberKit\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"TesseractOCR\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"leveldb\"",
+					"-framework",
+					"\"nanopb\"",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "syam-haque";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -454,17 +515,74 @@
 		};
 		4B2FB1E025DF596B00661D51 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C77E61063F7FA02A8DD8A7D /* Pods-Bookworm.release.xcconfig */;
+			baseConfigurationReference = 20F69EF96481DCB1BBBE0A55 /* Pods-Bookworm.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WSM4GMUTKD;
+				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"c++\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseAuth\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseCoreDiagnostics\"",
+					"-framework",
+					"\"FirebaseDatabase\"",
+					"-framework",
+					"\"FirebaseInstallations\"",
+					"-framework",
+					"\"FirebaseStorage\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GTMSessionFetcher\"",
+					"-framework",
+					"\"GoogleAppMeasurement\"",
+					"-framework",
+					"\"GoogleDataTransport\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"PhoneNumberKit\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"TesseractOCR\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"leveldb\"",
+					"-framework",
+					"\"nanopb\"",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "syam-haque";
 				PRODUCT_NAME = "$(TARGET_NAME)";

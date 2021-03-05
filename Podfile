@@ -15,5 +15,7 @@ target 'Bookworm' do
   # PhoneNumberKit Pod
   pod 'PhoneNumberKit'
 
+  # Tesseract OCR
+  pod ‘TesseractOCRiOS’
 
 end
