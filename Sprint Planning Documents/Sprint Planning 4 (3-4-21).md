@@ -21,6 +21,9 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Updated tab bar ([a8b8796](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/a8b8796a68d3554b4e79bfb0a0792cdb092e1375))
   * Joel
   * Peter
+    * Implemented on pulling all books to populate HomeVC ([ff14ca3](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/ff14ca3aa9562666f0e8507783714f113a73d31e))
+    * Made pushing of listing to database ([f4ed84b](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/f4ed84b616ba2e0b6dfc43e46b30c0f917c23f8d))
+    * Updated some UI for HomeVC, AddListingVC ([8dd391f](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/b5397280b19b5682c733813b15c372b89c75aec3))
   * Urvashi 
     * Updated UI ([fc06743](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/fc06743c9f32cf6978ff5ea31aa75f15abddb733))
     * Placeholder listings and popup linking ([2df80a8](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/2df80a8f9288d21d6c5ddccb483d1df4efb805dc))
@@ -31,6 +34,9 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * fix some bugs in profile view, add request view  
   * Joel
   * Peter
+    * Fix bug for location not saving when pushing listing
+    * Work on filter HomeVC
+    * Look into Book Cover OCR implementation
   * Urvashi 
     * Looking into OCR
   * Mohammed
@@ -38,6 +44,6 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 ## Issues
   * Christina - None
   * Joel
-  * Peter 
+  * Peter - None
   * Urvashi - None 
   * Mohammed
