@@ -28,15 +28,17 @@ struct OpenLibraryAPI {
     
     struct ApiError: Error {
         var message: String
+        var code: String
         
-        init(_ message: String) {
-            self.message = message
+        init(response: [String: Any]) {
+            self.message = (response["error_message"] as? String) ?? "Network error"
+            self.code = (response["error_code"] as? String) ?? "network_error"
         }
     }
     
     typealias ApiCompletion = ((_ response: [String: Any]?, _ error: ApiError?) -> Void)
     
-    static let defaultError = ApiError("Network Error")
+    static let defaultError = ApiError(response: [:])
     
     static func configuration() -> URLSessionConfiguration {
         let config = URLSessionConfiguration.ephemeral
@@ -76,7 +78,7 @@ struct OpenLibraryAPI {
                     completion(responseData, nil)
                 } else {
                     print(error ?? "unknown error")
-                    completion(nil, defaultError)
+                    completion(nil, ApiError(response: responseData))
                 }
             }
             
@@ -110,7 +112,7 @@ struct OpenLibraryAPI {
                     completion(responseData, nil)
                 } else {
                     print(error ?? "unknown error")
-                    completion(nil, defaultError)
+                    completion(nil, ApiError(response: responseData))
                 }
             }
             
@@ -215,98 +217,75 @@ struct OpenLibraryAPI {
         var bookInfo: [String: Any] = [:]
         bookInfo["isbn"] = isbn
         
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            ISBN(isbn) { isbnResponse, isbnError in
-                // title, publish date, isbn13
-                if let _isbnError = isbnError {
-                    // isbn error
-                    print(_isbnError)
+        ISBN(isbn) { isbnResponse, error in
+            // title, publish date, isbn13
+            if let unwrappedError = error {
+                completion(bookInfo, unwrappedError)
+                return
+            }
+            
+            guard let isbnResponse = isbnResponse else {
+                print("bad response ISBN")
+                completion(bookInfo, ApiError(response: [:]))
+                return
+            }
+            
+            bookInfo["title"] = isbnResponse["title"]
+            bookInfo["publishDate"] = isbnResponse["publish_date"]
+            
+            guard let authorKey = unwrapInnerKey(fromDictionary: isbnResponse, forOuterKey: "authors") else {
+                print("couldn't get key for author")
+                completion(bookInfo, ApiError(response: [:]))
+                return
+            }
+            
+            author(authorKey) { authorResponse, error in
+                // author
+                if let unwrappedError = error {
+                    completion(bookInfo, unwrappedError)
+                    return
                 }
-                else if let _isbnResponse = isbnResponse {
-                    bookInfo["title"] = _isbnResponse["title"]
-                    bookInfo["publishDate"] = _isbnResponse["publish_date"]
-                    
-                    // authors
-                    if let authorsJson = _isbnResponse["authors"] as? [[String: Any]] {
-                        let authorSemaphore = DispatchSemaphore(value: 0)
-                        var authorNames: [String] = []
-                        // authors info from this api call
-                        for a in authorsJson {
-                            if let key = a["key"] as? String {
-                                DispatchQueue.global(qos: .userInitiated).async {
-                                    author(key) { authorResponse, authorError in
-                                        if let _authorError = authorError {
-                                            // author error
-                                            print(_authorError)
-                                        }
-                                        else if let _authorResponse = authorResponse,
-                                                let authorName = _authorResponse["name"] as? String {
-                                            authorNames.append(authorName)
-                                        }
-                                        authorSemaphore.signal()
-                                    }
-                                }
-                            }
-                            else {
-                                // with the way the api is laid out, this really shouldn't happen
-                                authorSemaphore.signal()
-                            }
-                        }
-                        
-                        for _ in authorsJson {
-                            authorSemaphore.wait()
-                        }
-                        
-                        semaphore.signal()
-                    }
-                    else {
-                        // can't find authors array from editions json
-                        
-                        // use works key to get author keys???
-                        // not yet
-                        
-                        semaphore.signal()
-                    }
-                    
-                }
-                else {
-                    // bad isbn response
+                guard let authorResponse = authorResponse else {
+                    print("bad response author")
+                    completion(bookInfo, ApiError(response: [:]))
+                    return
                 }
                 
-                semaphore.signal()
-            }
-        }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            cover(key: .ISBN, value: isbn, size: bookCoverSize) { coverResponse, error in
-                // cover
-                if let _error = error {
-                    // cover error
-                    print(_error)
+                guard let authorName = authorResponse["name"] else {
+                    print("no author")
+                    completion(bookInfo, ApiError(response: [:]))
+                    return
                 }
-                else if let coverResponse = coverResponse, let imageData = coverResponse["imageData"] as? Data {
+                bookInfo["author"] = authorName
+                
+                cover(key: .ISBN, value: isbn, size: bookCoverSize) { coverResponse, error in
+                    // cover
+                    if let unwrappedError = error {
+                        completion(bookInfo, unwrappedError)
+                        return
+                    }
+                    guard let coverResponse = coverResponse else {
+                        print("bad response cover")
+                        completion(bookInfo, ApiError(response: [:]))
+                        return
+                    }
+                    print(coverResponse)
+                    
+                    guard let imageData = coverResponse["imageData"] as? Data else {
+                        print("bad cover image data")
+                        completion(bookInfo, ApiError(response: [:]))
+                        return
+                    }
+                    
                     bookInfo["imageData"] = imageData
+                    
+                    completion(bookInfo, nil)
                 }
-                else {
-                    // bad response cover
-                }
-                
-                semaphore.signal()
             }
         }
-        
-        semaphore.wait()
-        semaphore.wait()
-        semaphore.wait()
-        
-        completion(bookInfo, nil)
-        
     }
     
     static func getAllInfoForISBN(_ isbn: Int, bookCoverSize: BookCoverSize, completion: @escaping ApiCompletion) {
         getAllInfoForISBN("\(isbn)", bookCoverSize: bookCoverSize, completion: completion)
     }
 }
-
