@@ -16,10 +16,10 @@ class AddRequestBookCell: UITableViewCell {
     func fillInBookCell (book: Book){
         
         //fill in book cover if available
-        if let coverImageDataS = book.coverImageS, let coverImageS = UIImage(data: coverImageDataS) {
-            self.bookCoverImage.image = coverImageS
-        } else if let coverImageDataM = book.coverImageM, let coverImageM = UIImage(data: coverImageDataM) {
+        if let coverImageDataM = book.coverImageM, let coverImageM = UIImage(data: coverImageDataM) {
             self.bookCoverImage.image = coverImageM
+        } else if let coverImageDataS = book.coverImageS, let coverImageS = UIImage(data: coverImageDataS) {
+            self.bookCoverImage.image = coverImageS
         } else if let coverImageDataL = book.coverImageL, let coverImageL = UIImage(data: coverImageDataL) {
             self.bookCoverImage.image = coverImageL
         } else {
@@ -112,7 +112,7 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                 }
                 for work in responseWorks {
                     if self.books.count >= 25 {
-                        print("woohoo 25 books")
+//                        print("woohoo 25 books")
                         break
                     }
                     if let title = work["title"] as? String,
