@@ -3,10 +3,9 @@
 //  PhoneNumberKit
 //
 //  Created by Roy Marmelstein on 29/11/2015.
-//  Copyright © 2021 Roy Marmelstein. All rights reserved.
+//  Copyright © 2020 Roy Marmelstein. All rights reserved.
 //
 
-#if canImport(ObjectiveC)
 import Foundation
 
 /// Partial formatter
@@ -397,4 +396,3 @@ public final class PartialFormatter {
         return rebuiltString
     }
 }
-#endif

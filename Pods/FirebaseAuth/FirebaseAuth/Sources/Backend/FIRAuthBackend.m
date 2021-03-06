@@ -296,7 +296,7 @@ static NSString *const kMissingAndroidPackageNameErrorMessage = @"MISSING_ANDROI
 
 /** @var kUnauthorizedDomainErrorMessage
     @brief This is the error message the server will respond with if the domain of the continue URL
-        specified is not allowlisted in the Firebase console.
+        specified is not whitelisted in the firebase console.
  */
 static NSString *const kUnauthorizedDomainErrorMessage = @"UNAUTHORIZED_DOMAIN";
 
@@ -654,7 +654,6 @@ static id<FIRAuthBackendImplementation> gBackendImplementation;
   NSString *emulatorHostAndPort = requestConfiguration.emulatorHostAndPort;
   if (emulatorHostAndPort) {
     fetcher.allowLocalhostRequest = YES;
-    fetcher.allowedInsecureSchemes = @[ @"http" ];
   }
   fetcher.bodyData = body;
   [fetcher beginFetchWithCompletionHandler:handler];

@@ -6,7 +6,6 @@
 //  Copyright © 2019 Xenonium. All rights reserved.
 //
 
-#if canImport(ObjectiveC)
 import Foundation
 
 open class PhoneNumberFormatter: Foundation.Formatter {
@@ -220,4 +219,3 @@ private extension unichar {
         return self >= 0x30 && self <= 0x39 // '0' < '9'
     }
 }
-#endif
