@@ -20,24 +20,8 @@ class ListingsTableViewCell: UITableViewCell {
     
     func fillInBookCell (book: BookCell){
         
-        // get book image reference from Firebase Storage
-        let bookCoverRef = storageRef.child(book.bookCover)
-
-        // download URL of reference, then get contents of URL and set imageView to UIImage
-        bookCoverRef.downloadURL { url, error in
-            guard let imageURL = url, error == nil else {
-                print(error ?? "")
-                return
-            }
-            
-            guard let data = NSData(contentsOf: imageURL) else {
-                assertionFailure("Error in getting Data")
-                return
-            }
-            
-            let image = UIImage(data: data as Data)
-            self.bookCoverImage.image = image
-        }
+        let image = UIImage(data: book.bookCoverData as Data)
+        self.bookCoverImage.image = image
         
         self.bookTitleLabel.text = book.title
         self.conditionLabel.text = "Condition: \(book.condition)"
@@ -81,6 +65,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     
     func makeDatabaseCallsforReload() {
+        let storageRef = Storage.storage().reference()
+        
         self.wait()
         self.ref.child("Books").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
@@ -98,24 +84,40 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             // Phooto_Cover from DB returns path in FBStorage
             let bookCover = results?["Photo_Cover"] ?? ""
             
-            self.ref.child("Users").child(user).observeSingleEvent(of: .value, with: { (snapshot) in
-                let userData = snapshot.value as? [String: String]
-                
-                let firstName = userData?["FirstName"] ?? ""
-                let lastName = userData?["LastName"] ?? ""
-                
-                user = firstName + " " + lastName
-                
-                let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription)
-
-                self.books.append(databaseData)
-                
-                DispatchQueue.main.async {
-                    self.listingsTableView.reloadData()
-                    self.start()
+            // get book image reference from Firebase Storage
+            let bookCoverRef = storageRef.child(bookCover)
+            
+            // download URL of reference, then get contents of URL and set imageView to UIImage
+            bookCoverRef.downloadURL { url, error in
+                guard let imageURL = url, error == nil else {
+                    print(error ?? "")
+                    return
                 }
                 
-            })
+                guard let bookCoverData = NSData(contentsOf: imageURL) else {
+                    assertionFailure("Error in getting Data")
+                    return
+                }
+                
+                self.ref.child("Users").child(user).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let userData = snapshot.value as? [String: String]
+                    
+                    let firstName = userData?["FirstName"] ?? ""
+                    let lastName = userData?["LastName"] ?? ""
+                    
+                    user = firstName + " " + lastName
+                    
+                    let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
+
+                    self.books.append(databaseData)
+                    
+                    DispatchQueue.main.async {
+                        self.listingsTableView.reloadData()
+                        self.start()
+                    }
+                    
+                })
+            }
             
         })
         
