@@ -95,20 +95,28 @@ struct OpenLibraryAPI {
         
         let session = URLSession(configuration: configuration())
         var request = URLRequest(url: url)
+        print(request)
         request.httpMethod = "GET"
         
         session.dataTask(with: request) { data, response, error in
+            guard let sessionResponse = response as? HTTPURLResponse else{
+                print("no response")
+                return
+            }
+
+            
             guard let rawData = data else {
                 print("no raw data")
                 DispatchQueue.main.async { completion(nil, defaultError) }
                 return
             }
+    
             
             // JPEG data will need to be converted to UIImage within VC
             let responseData: [String: Any] = ["imageData": rawData]
-            
+        
             DispatchQueue.main.async {
-                if error == nil {
+                if error == nil && sessionResponse.statusCode != 404 {
                     completion(responseData, nil)
                 } else {
                     print(error ?? "unknown error")
@@ -159,7 +167,8 @@ struct OpenLibraryAPI {
          self.view.addSubview(imageView)
      */
     static func cover(key: BookCoverKey, value: String, size: BookCoverSize, completion: @escaping ApiCompletion) {
-        CoverApiCall(endpoint: "/b/\(key.rawValue)/\(value)-\(size.rawValue).jpg", completion: completion)
+        CoverApiCall(endpoint: "/b/\(key.rawValue)/\(value)-\(size.rawValue).jpg?default=false", completion: completion)
+      
     }
     
     static func author(_ key: String, completion: @escaping ApiCompletion) {

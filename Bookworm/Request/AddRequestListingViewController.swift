@@ -83,7 +83,7 @@ class AddRequestListingViewController: UIViewController {
         })
         
         //fill in book author
-        self.bookAuthorLabel.text = bookAuthors.reduce("Authors:"){$0 + " " + $1}
+        self.bookAuthorLabel.text = "Authors:" + bookAuthors.joined(separator: ", ")
         
         //fill in book isbn
         self.bookISBNLabel.text = "ISBN: " + bookISBN
@@ -149,9 +149,11 @@ class AddRequestListingViewController: UIViewController {
             if let bookImage = UIImage(systemName: "book"), let bookImageData = bookImage.jpegData(compressionQuality: 1.0) {
                 imageRef.putData(bookImageData, metadata: nil) { (metadata, error) in
                     if let error = error {
+                        print("error w default image")
                         print(error)
                     }
                     if let metadata = metadata {
+                        print("error w default image")
                         print(metadata)
                     }
                 }

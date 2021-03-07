@@ -37,7 +37,7 @@ class AddRequestBookCell: UITableViewCell {
         }
 
         //fill in book author
-        self.bookAuthorsLabel.text = book.authors.reduce("Authors:"){$0 + " " + $1}
+        self.bookAuthorsLabel.text = "Authors: " + book.authors.joined(separator: ", ")
     }
 }
 
@@ -137,6 +137,7 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                                 else if let coverResponse = response {
                                     let coverS = coverResponse["imageData"] as? Data
                                     book.coverImageS = coverS
+                                    
                                 }
                                 self.resultsTableView.reloadData()
 
@@ -149,8 +150,13 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                                     print(unwrappedError)
                                 }
                                 else if let coverResponse = response {
-                                    let coverM = coverResponse["imageData"] as? Data
-                                    book.coverImageM = coverM
+                                    guard let imageData: Data = coverResponse["imageData"] as? Data else {
+                                        print("bad image data")
+                                        return
+                                    }
+//                                    let coverM = coverResponse["imageData"] as? Data
+//                                    book.coverImageM = coverM
+                                    book.coverImageM = imageData
                                 }
                                 self.resultsTableView.reloadData()
 
