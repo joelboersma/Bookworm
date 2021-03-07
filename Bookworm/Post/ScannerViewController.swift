@@ -15,14 +15,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scanLabel: UILabel!
+    
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
-    var requests = [VNRequest]()
+    var recognizeTextRequest = VNRecognizeTextRequest()
+    var recognizedText = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = UIColor.black
+        
         captureSession = AVCaptureSession()
 
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
@@ -57,10 +58,16 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         let videoDataOutput = AVCaptureVideoDataOutput()
         
-        captureSession?.addOutput(videoDataOutput)
-        
-        videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-        videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
+        if captureSession?.canAddOutput(videoDataOutput) != nil {
+            captureSession?.addOutput(videoDataOutput)
+            
+            videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+            videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
+        }
+        else {
+            captureFailed()
+            return
+        }
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession ?? AVCaptureSession())
         previewLayer?.frame = imageView.layer.bounds
@@ -72,14 +79,10 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         activityIndicator.stopAnimating()
         
         captureSession?.startRunning()
-        
-        let textRequest = VNDetectTextRectanglesRequest(completionHandler: self.detectTextHandler)
-        textRequest.reportCharacterBoxes = true
-        self.requests = [textRequest]
+        recognizeTextHandler()
     }
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         var requestOptions:[VNImageOption : Any] = [:]
         
@@ -87,10 +90,12 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             requestOptions = [.cameraIntrinsics:camData]
         }
         
-        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: CGImagePropertyOrientation(rawValue: 6)!, options: requestOptions)
+        guard let outputImage = getImageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
+        
+        let imageRequestHandler = VNImageRequestHandler(cgImage: outputImage, options: requestOptions)
         
         do {
-            try imageRequestHandler.perform(self.requests)
+            try imageRequestHandler.perform([recognizeTextRequest])
         } catch {
             print(error)
             return
@@ -103,32 +108,23 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         present(ac, animated: true)
         captureSession = nil
     }
-
-    func addListingVCDismissed() {
-        if captureSession?.isRunning == false {
-            captureSession?.startRunning()
-        }
-    }
     
-    func detectTextHandler(request: VNRequest, error: Error?) {
-        guard let observations = request.results else { return }
-        
-        let result = observations.map({$0 as? VNTextObservation})
-        
-        DispatchQueue.main.async() {
-            self.imageView.layer.sublayers?.removeSubrange(1...)
-            for region in result {
-                guard let rg = region else { continue }
-                
-                self.highlightWord(box: rg)
-                
-                if let boxes = region?.characterBoxes {
-                    for characterBox in boxes {
-                        self.highlightLetters(box: characterBox)
+    func recognizeTextHandler() {
+        recognizeTextRequest = VNRecognizeTextRequest(completionHandler: { (request, error) in
+            if let results = request.results, !results.isEmpty {
+                if let requestResults = request.results as? [VNRecognizedTextObservation] {
+                    self.recognizedText = ""
+                    for observation in requestResults {
+                        guard let candidiate = observation.topCandidates(1).first else { return }
+                        self.recognizedText += candidiate.string
+                        self.recognizedText += "\n"
                     }
+                    print(self.recognizedText)
                 }
             }
-        }
+        })
+        recognizeTextRequest.recognitionLevel = .accurate
+        recognizeTextRequest.usesLanguageCorrection = false
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -137,7 +133,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             self.wait()
             
             OpenLibraryAPI.getAllInfoForISBN(stringValue, bookCoverSize: .M) { (response, error) in
@@ -163,58 +158,38 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
     
-    func highlightWord(box: VNTextObservation) {
-        guard let boxes = box.characterBoxes else {
-            return
+    // Conversion code taken from stackoverflow
+    func getImageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> CGImage? {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return nil
         }
-        
-        var maxX: CGFloat = 9999.0
-        var minX: CGFloat = 0.0
-        var maxY: CGFloat = 9999.0
-        var minY: CGFloat = 0.0
-        
-        for char in boxes {
-            if char.bottomLeft.x < maxX {
-                maxX = char.bottomLeft.x
-            }
-            if char.bottomRight.x > minX {
-                minX = char.bottomRight.x
-            }
-            if char.bottomRight.y < maxY {
-                maxY = char.bottomRight.y
-            }
-            if char.topRight.y > minY {
-                minY = char.topRight.y
-            }
+        CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
+        let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer)
+        let width = CVPixelBufferGetWidth(pixelBuffer)
+        let height = CVPixelBufferGetHeight(pixelBuffer)
+        let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+        guard let context = CGContext(data: baseAddress, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else {
+            return nil
         }
-        
-        let xCord = maxX * imageView.frame.size.width
-        let yCord = (1 - minY) * imageView.frame.size.height
-        let width = (minX - maxX) * imageView.frame.size.width
-        let height = (minY - maxY) * imageView.frame.size.height
-        
-        let outline = CALayer()
-        outline.frame = CGRect(x: xCord, y: yCord, width: width, height: height)
-        outline.borderWidth = 2.0
-        outline.borderColor = UIColor.red.cgColor
-        
-        imageView.layer.addSublayer(outline)
+        guard let cgImage = context.makeImage() else {
+            return nil
+        }
+        CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
+        return cgImage
     }
     
-    func highlightLetters(box: VNRectangleObservation) {
-        let xCord = box.topLeft.x * imageView.frame.size.width
-        let yCord = (1 - box.topLeft.y) * imageView.frame.size.height
-        let width = (box.topRight.x - box.bottomLeft.x) * imageView.frame.size.width
-        let height = (box.topLeft.y - box.bottomLeft.y) * imageView.frame.size.height
-        
-        let outline = CALayer()
-        outline.frame = CGRect(x: xCord, y: yCord, width: width, height: height)
-        outline.borderWidth = 1.0
-        outline.borderColor = UIColor.blue.cgColor
-        
-        imageView.layer.addSublayer(outline)
+    func addListingVCDismissed() {
+        if captureSession?.isRunning == false {
+            captureSession?.startRunning()
+        }
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        if captureSession?.isRunning == true {
+            captureSession?.stopRunning()        }
+    }
     
     //following two functions taken from hw solutions
     func wait() {
