@@ -61,14 +61,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         listingsTableView.dataSource = self
         listingsTableView.delegate = self
         
+        
+        // For getting database data and reloadData for listingsTableView
+        makeDatabaseCallsforReload()
+        
         self.activityIndicator.stopAnimating()
         filterButton.layer.cornerRadius = 5
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        // For getting database data and reloadData for listingsTableView
-        books.removeAll()
-        makeDatabaseCallsforReload()
     }
     
     
@@ -116,7 +114,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     user = firstName + " " + lastName
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
-                    
+
                     self.books.append(databaseData)
                     
                     DispatchQueue.main.async {
@@ -126,6 +124,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     
                 })
             }
+            
         })
         
     }
