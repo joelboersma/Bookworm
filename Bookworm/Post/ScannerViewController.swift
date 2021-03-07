@@ -20,9 +20,13 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     var previewLayer: AVCaptureVideoPreviewLayer?
     var recognizeTextRequest = VNRecognizeTextRequest()
     var recognizedText = ""
+    var captureTimer = Timer()
+    var secondPassed = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
         
         captureSession = AVCaptureSession()
 
@@ -90,15 +94,17 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             requestOptions = [.cameraIntrinsics:camData]
         }
         
-        guard let outputImage = getImageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
-        
-        let imageRequestHandler = VNImageRequestHandler(cgImage: outputImage, options: requestOptions)
-        
-        do {
-            try imageRequestHandler.perform([recognizeTextRequest])
-        } catch {
-            print(error)
-            return
+        if secondPassed {
+            guard let outputImage = getImageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
+            let imageRequestHandler = VNImageRequestHandler(cgImage: outputImage, options: requestOptions)
+            
+            do {
+                try imageRequestHandler.perform([recognizeTextRequest])
+            } catch {
+                print(error)
+                return
+            }
+            secondPassed = false
         }
     }
     
@@ -183,12 +189,26 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     func addListingVCDismissed() {
         if captureSession?.isRunning == false {
             captureSession?.startRunning()
+            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if captureSession?.isRunning == false {
+            captureSession?.startRunning()
+            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         if captureSession?.isRunning == true {
-            captureSession?.stopRunning()        }
+            captureSession?.stopRunning()
+            captureTimer.invalidate()
+        }
+    }
+    
+    @objc func timerCalled() {
+        secondPassed = true
     }
     
     //following two functions taken from hw solutions
