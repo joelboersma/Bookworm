@@ -127,11 +127,14 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
             let userData = snapshot.value as? [String: String]
             let bookZipCode = userData?["ZipCode"] ?? ""
             
-            self.getCityFromPostalCode(postalCode: bookZipCode)
+            self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniqueBookID: uniqueBookID, date: date)
             
-            // make push call to database
-            self.ref.child("Books").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniqueBookID).jpg"])
-            
+            //TODO: Erase section of code below if location implementation was updated correctly
+//            self.getCityFromPostalCode(postalCode: bookZipCode)
+//
+//            // make push call to database
+//            self.ref.child("Books").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniqueBookID).jpg"])
+//
             
         })
         
@@ -157,8 +160,14 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
         bookCondition = bookConditionPickerData[row] as String
     }
     
-    
-    func getCityFromPostalCode(postalCode: String){
+    func createNewListing(userID: String, uniqueBookID: String, date: String){
+        // make push call to database
+        self.ref.child("Books").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniqueBookID).jpg"])
+    }
+
+//    func getCityFromPostalCode(postalCode: String){
+    func getCityFromPostalCode(postalCode: String, userID: String, uniqueBookID: String, date: String) {
+
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(postalCode) { results, error in
             
@@ -171,6 +180,8 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 
                 
                 self.bookLocation = "\(locality), \(state)"
+                print()
+                self.createNewListing(userID: userID, uniqueBookID: uniqueBookID, date: date )
                 
             }
             if let error = error {

@@ -24,10 +24,16 @@ class ListingsTableViewCell: UITableViewCell {
         self.bookCoverImage.image = image
         
         self.bookTitleLabel.text = book.title
-        self.conditionLabel.text = "Condition: \(book.condition)"
         self.locationLabel.text = book.location
         self.buyerSellerLabel.text = "\(book.userDescription): \(book.buyerSeller)"
         self.postDateLabel.text = book.postDate
+        
+        //display condition label if user is selling
+        if book.userDescription == "Buyer"{
+            self.conditionLabel.text = ""
+        } else{
+            self.conditionLabel.text = "Condition: \(book.condition)"
+        }
         
     }
     

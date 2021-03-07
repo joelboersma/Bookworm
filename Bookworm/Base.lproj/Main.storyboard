@@ -2149,6 +2149,7 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Kym-PA-eB7" secondAttribute="bottom" constant="25" id="Bgw-wo-Slg"/>
                                     <constraint firstItem="d7J-Dl-C1d" firstAttribute="leading" secondItem="sba-7h-6b7" secondAttribute="leading" constant="30" id="CNx-f8-xlI"/>
@@ -2167,6 +2168,9 @@
                                     <constraint firstAttribute="trailing" secondItem="aYF-Mn-Hcp" secondAttribute="trailing" constant="10" id="xk5-vt-taR"/>
                                     <constraint firstAttribute="trailing" secondItem="BFj-C8-CRZ" secondAttribute="trailing" constant="30" id="zih-Ma-6wc"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="K2D-is-GV9" appends="YES" id="R7S-LG-RJL"/>
+                                </connections>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="7EP-Uf-pjp">
                                 <rect key="frame" x="170" y="397" width="50" height="50"/>
@@ -2199,9 +2203,15 @@
                         <outlet property="bookPublishDateLabel" destination="xg9-wA-DJe" id="ycz-2P-xG0"/>
                         <outlet property="bookTitleLabel" destination="d7J-Dl-C1d" id="eXX-hK-AOz"/>
                         <outlet property="popupView" destination="sba-7h-6b7" id="dEA-CL-gdE"/>
+                        <outlet property="tapGestureRecognizer" destination="K2D-is-GV9" id="JD5-Cy-P4t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tm-F9-upw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="K2D-is-GV9">
+                    <connections>
+                        <action selector="didTap:" destination="ZvJ-jl-0GD" id="j3Y-xP-odv"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5545" y="800"/>
         </scene>
