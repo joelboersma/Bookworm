@@ -67,13 +67,13 @@ class ProfileViewController: UIViewController {
     @IBAction func didPressInventory(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "inventoryViewController") as? InventoryViewController  else { assertionFailure("Couldn't find inventory view controller."); return }
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func didPressWishList(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "wishListViewController") as? WishListViewController  else { assertionFailure("Couldn't find wish list view controller."); return }
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: true, completion: nil)
     }
     
     
