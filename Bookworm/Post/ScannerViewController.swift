@@ -6,9 +6,7 @@
 //
 
 import Foundation
-import CoreLocation
 import UIKit
-import Firebase
 import AVFoundation
 import Vision
 
@@ -33,32 +31,42 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         do {
             videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
         } catch {
+            print(error)
             return
         }
 
-        if (captureSession?.canAddInput(videoInput) != nil) {
+        if captureSession?.canAddInput(videoInput) != nil {
             captureSession?.addInput(videoInput)
         } else {
-            failed()
+            captureFailed()
             return
         }
 
         let metadataOutput = AVCaptureMetadataOutput()
 
-        if (captureSession?.canAddOutput(metadataOutput) != nil) {
+        if captureSession?.canAddOutput(metadataOutput) != nil {
             captureSession?.addOutput(metadataOutput)
             
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417]
-        } else {
-            failed()
+        }
+        else {
+            captureFailed()
             return
         }
         
         let videoDataOutput = AVCaptureVideoDataOutput()
-        videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-        videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
-        captureSession?.addOutput(videoDataOutput)
+        
+        if captureSession?.addOutput(videoDataOutput) != nil {
+            captureSession?.addOutput(videoDataOutput)
+            
+            videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+            videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
+        }
+        else {
+            captureFailed()
+            return
+        }
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession ?? AVCaptureSession())
         previewLayer?.frame = imageView.layer.bounds
@@ -68,6 +76,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         view.bringSubviewToFront(scanLabel)
         view.bringSubviewToFront(activityIndicator)
         activityIndicator.stopAnimating()
+        
         captureSession?.startRunning()
         
         let textRequest = VNDetectTextRectanglesRequest(completionHandler: self.detectTextHandler)
@@ -76,9 +85,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            return
-        }
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         var requestOptions:[VNImageOption : Any] = [:]
         
@@ -92,10 +99,11 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             try imageRequestHandler.perform(self.requests)
         } catch {
             print(error)
+            return
         }
     }
     
-    func failed() {
+    func captureFailed() {
         let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code from an item. Please use a device with a camera.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
@@ -109,19 +117,14 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     func detectTextHandler(request: VNRequest, error: Error?) {
-        guard let observations = request.results else {
-            print("no result")
-            return
-        }
+        guard let observations = request.results else { return }
         
         let result = observations.map({$0 as? VNTextObservation})
         
         DispatchQueue.main.async() {
             self.imageView.layer.sublayers?.removeSubrange(1...)
             for region in result {
-                guard let rg = region else {
-                    continue
-                }
+                guard let rg = region else { continue }
                 
                 self.highlightWord(box: rg)
                 
