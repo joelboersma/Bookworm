@@ -57,16 +57,10 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         
         let videoDataOutput = AVCaptureVideoDataOutput()
         
-        if captureSession?.addOutput(videoDataOutput) != nil {
-            captureSession?.addOutput(videoDataOutput)
-            
-            videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-            videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
-        }
-        else {
-            captureFailed()
-            return
-        }
+        captureSession?.addOutput(videoDataOutput)
+        
+        videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+        videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession ?? AVCaptureSession())
         previewLayer?.frame = imageView.layer.bounds

@@ -11,7 +11,6 @@
 		1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */; };
 		1D8E88ED25ECE5B2004D3AC1 /* AddListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */; };
 		1DCAEAC625E24AA1000C9047 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */; };
-		1DDE19DE25F4B6F300C01865 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 1DDE19DD25F4B6F300C01865 /* tessdata */; };
 		25190E5125DF9BCD007573D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */; };
 		25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7825E39CDA007573D6 /* ProfileViewController.swift */; };
 		25190E7C25E41BFC007573D6 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7B25E41BFC007573D6 /* WishListViewController.swift */; };
@@ -43,7 +42,6 @@
 		1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListingViewController.swift; sourceTree = "<group>"; };
 		1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
-		1DDE19DD25F4B6F300C01865 /* tessdata */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tessdata; path = Bookworm/tessdata; sourceTree = SOURCE_ROOT; };
 		25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		25190E7825E39CDA007573D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		25190E7B25E41BFC007573D6 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 		4BFEFFC125F4A7A600F8EDF4 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				1DDE19DD25F4B6F300C01865 /* tessdata */,
 				1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */,
 				1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */,
 			);
@@ -298,7 +295,6 @@
 				25190E5125DF9BCD007573D6 /* GoogleService-Info.plist in Resources */,
 				4B2FB1D725DF596B00661D51 /* Assets.xcassets in Resources */,
 				4B2FB1D525DF596A00661D51 /* Main.storyboard in Resources */,
-				1DDE19DE25F4B6F300C01865 /* tessdata in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,8 +572,6 @@
 					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
-					"\"TesseractOCR\"",
-					"-framework",
 					"\"UIKit\"",
 					"-framework",
 					"\"leveldb\"",
@@ -654,8 +648,6 @@
 					"\"StoreKit\"",
 					"-framework",
 					"\"SystemConfiguration\"",
-					"-framework",
-					"\"TesseractOCR\"",
 					"-framework",
 					"\"UIKit\"",
 					"-framework",
