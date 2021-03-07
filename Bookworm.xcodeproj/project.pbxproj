@@ -104,34 +104,114 @@
 		4B2FB1CC25DF596A00661D51 /* Bookworm */ = {
 			isa = PBXGroup;
 			children = (
+				4BFEFFBE25F4A6C100F8EDF4 /* Login */,
+				4BFEFFBF25F4A71900F8EDF4 /* Home */,
+				4BFEFFC025F4A76F00F8EDF4 /* Matches */,
+				4BFEFFC125F4A7A600F8EDF4 /* Post */,
+				4BFEFFC225F4A7DE00F8EDF4 /* Request */,
+				4BFEFFC325F4A80B00F8EDF4 /* Profile */,
+				4BFEFFC925F4A97700F8EDF4 /* Misc VCs */,
+				4BFEFFC725F4A93300F8EDF4 /* Support */,
 				4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */,
-				25190E7B25E41BFC007573D6 /* WishListViewController.swift */,
-				25190E8125E41C88007573D6 /* WishListListingViewController.swift */,
-				25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */,
-				25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */,
-				25190E7E25E41C3F007573D6 /* InventoryViewController.swift */,
-				25190E7825E39CDA007573D6 /* ProfileViewController.swift */,
 				25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */,
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
-				4B2FB1D125DF596A00661D51 /* LoginViewController.swift */,
-				A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */,
-				A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */,
-				1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */,
-				1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */,
 				4B2FB1D325DF596A00661D51 /* Main.storyboard */,
 				4B2FB1D625DF596B00661D51 /* Assets.xcassets */,
 				4B2FB1D825DF596B00661D51 /* LaunchScreen.storyboard */,
 				4B2FB1DB25DF596B00661D51 /* Info.plist */,
-				846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */,
-				8461B29125E6E5260076C299 /* FilterViewController.swift */,
-				4BDCA8BB25E9D32B00EB8BAA /* AddRequestViewController.swift */,
-				255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */,
-				1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */,
-				1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */,
-				4B60AC7A25E9E4BE0081458A /* OpenLibraryAPI.swift */,
-				4BB674F525EDFF6500FA2F73 /* Book.swift */,
 			);
 			path = Bookworm;
+			sourceTree = "<group>";
+		};
+		4BFEFFBE25F4A6C100F8EDF4 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4B2FB1D125DF596A00661D51 /* LoginViewController.swift */,
+				A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */,
+				A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		4BFEFFBF25F4A71900F8EDF4 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		4BFEFFC025F4A76F00F8EDF4 /* Matches */ = {
+			isa = PBXGroup;
+			children = (
+				1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */,
+				1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */,
+			);
+			path = Matches;
+			sourceTree = "<group>";
+		};
+		4BFEFFC125F4A7A600F8EDF4 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */,
+				1D8E88EC25ECE5B2004D3AC1 /* AddListingViewController.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		4BFEFFC225F4A7DE00F8EDF4 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				4BDCA8BB25E9D32B00EB8BAA /* AddRequestViewController.swift */,
+				255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		4BFEFFC325F4A80B00F8EDF4 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				25190E7825E39CDA007573D6 /* ProfileViewController.swift */,
+				4BFEFFC425F4A82900F8EDF4 /* Wish List */,
+				4BFEFFC525F4A83700F8EDF4 /* Inventory */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		4BFEFFC425F4A82900F8EDF4 /* Wish List */ = {
+			isa = PBXGroup;
+			children = (
+				25190E7B25E41BFC007573D6 /* WishListViewController.swift */,
+				25190E8125E41C88007573D6 /* WishListListingViewController.swift */,
+			);
+			path = "Wish List";
+			sourceTree = "<group>";
+		};
+		4BFEFFC525F4A83700F8EDF4 /* Inventory */ = {
+			isa = PBXGroup;
+			children = (
+				25190E7E25E41C3F007573D6 /* InventoryViewController.swift */,
+				25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */,
+			);
+			path = Inventory;
+			sourceTree = "<group>";
+		};
+		4BFEFFC725F4A93300F8EDF4 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				4BB674F525EDFF6500FA2F73 /* Book.swift */,
+				4B60AC7A25E9E4BE0081458A /* OpenLibraryAPI.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		4BFEFFC925F4A97700F8EDF4 /* Misc VCs */ = {
+			isa = PBXGroup;
+			children = (
+				846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */,
+				8461B29125E6E5260076C299 /* FilterViewController.swift */,
+			);
+			path = "Misc VCs";
 			sourceTree = "<group>";
 		};
 		C9167E9FD9712F984CAF87DF /* Pods */ = {
@@ -501,7 +581,6 @@
 					"\"nanopb\"",
 					"-ObjC",
 				);
-
 				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.w21.Bookworm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
