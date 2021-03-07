@@ -60,15 +60,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         self.searchBar.delegate = self
         listingsTableView.dataSource = self
         listingsTableView.delegate = self
-        
-        
-        // For getting database data and reloadData for listingsTableView
-        makeDatabaseCallsforReload()
+    
         
         self.activityIndicator.stopAnimating()
         filterButton.layer.cornerRadius = 5
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // For getting database data and reloadData for listingsTableView
+        books.removeAll()
+        makeDatabaseCallsforReload()
+    }
     
     func makeDatabaseCallsforReload() {
         let storageRef = Storage.storage().reference()
