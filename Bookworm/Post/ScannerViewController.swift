@@ -9,19 +9,21 @@ import Foundation
 import UIKit
 import AVFoundation
 import Vision
+import VisionKit
 
-class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, AddListingViewControllerDelegate {
+class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate, AddListingViewControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scanLabel: UILabel!
+    @IBOutlet weak var scanButton: UIButton!
     
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
     var recognizeTextRequest = VNRecognizeTextRequest()
     var recognizedText = ""
     var captureTimer = Timer()
-    var secondPassed = false
+    var timePassed = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,27 +88,68 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         recognizeTextHandler()
     }
 
+    @IBAction func scanButtonPressed() {
+        let documentCameraViewController = VNDocumentCameraViewController()
+        documentCameraViewController.delegate = self
+        self.present(documentCameraViewController, animated: true, completion: nil)
+    }
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        let image = scan.imageOfPage(at: 0)
+        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+        do {
+            try handler.perform([recognizeTextRequest])
+        } catch {
+            print(error)
+        }
+        controller.dismiss(animated: true)
+    }
+    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-        var requestOptions:[VNImageOption : Any] = [:]
-        
-        if let camData = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, attachmentModeOut: nil) {
-            requestOptions = [.cameraIntrinsics:camData]
-        }
-        
-        if secondPassed {
-            guard let outputImage = getImageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
-            let imageRequestHandler = VNImageRequestHandler(cgImage: outputImage, options: requestOptions)
-            
+//        var requestOptions:[VNImageOption : Any] = [:]
+//
+//        if let camData = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, attachmentModeOut: nil) {
+//            requestOptions = [.cameraIntrinsics:camData]
+//        }
+//
+//        if timePassed {
+//            guard let outputImage = getImageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
+//            let imageRequestHandler = VNImageRequestHandler(cgImage: outputImage, options: requestOptions)
+//
+//            do {
+//                try imageRequestHandler.perform([recognizeTextRequest])
+//            } catch {
+//                print(error)
+//                return
+//            }
+//            timePassed = false
+//        }
+        if timePassed {
+            let requestHandler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .down)
+
+            let request = VNRecognizeTextRequest(completionHandler: textDetectHandler)
+
             do {
-                try imageRequestHandler.perform([recognizeTextRequest])
+                // Perform the text-detection request.
+                try requestHandler.perform([request])
             } catch {
-                print(error)
-                return
+                print("Unable to perform the request: \(error).")
             }
-            secondPassed = false
+            timePassed = false
         }
     }
+    
+    func textDetectHandler(request: VNRequest, error: Error?) {
+        guard let observations =
+                request.results as? [VNRecognizedTextObservation] else { return }
+        // Process each observation to find the recognized body pose points.
+        let recognizedStrings = observations.compactMap { observation in
+            // Return the string of the top VNRecognizedText instance.
+            return observation.topCandidates(1).first?.string
+        }
+        print(recognizedStrings)
+      }
     
     func captureFailed() {
         let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code from an item. Please use a device with a camera.", preferredStyle: .alert)
@@ -208,7 +251,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     @objc func timerCalled() {
-        secondPassed = true
+        timePassed = true
     }
     
     //following two functions taken from hw solutions
