@@ -26,7 +26,7 @@ class ListingsTableViewCell: UITableViewCell {
         self.bookTitleLabel.text = book.title
         self.locationLabel.text = book.location
         self.buyerSellerLabel.text = "\(book.userDescription): \(book.buyerSeller)"
-        self.postDateLabel.text = book.postDate
+        self.postDateLabel.text = "Posted: " + book.postDate
         
         //display condition label if user is selling
         if book.userDescription == "Buyer"{
