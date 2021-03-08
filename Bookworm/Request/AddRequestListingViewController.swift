@@ -91,7 +91,7 @@ class AddRequestListingViewController: UIViewController {
     
     func createNewListing(userID: String, uniqueBookID: String, date: String){
         // make push call to database
-        self.ref.child("Books").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniqueBookID).jpg"])
+        self.ref.child("Posts").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniqueBookID).jpg"])
     }
     
     func getCityFromPostalCode(postalCode: String, userID: String, uniqueBookID: String, date: String) {
