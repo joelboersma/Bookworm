@@ -89,12 +89,12 @@ class AddRequestListingViewController: UIViewController {
         self.bookISBNLabel.text = "ISBN: " + bookISBN
     }
     
-    func createNewListing(userID: String, uniqueBookID: String, date: String){
+    func createNewListing(userID: String, uniquePostID: String, date: String){
         // make push call to database
-        self.ref.child("Posts").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniqueBookID).jpg"])
+        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg"])
     }
     
-    func getCityFromPostalCode(postalCode: String, userID: String, uniqueBookID: String, date: String) {
+    func getCityFromPostalCode(postalCode: String, userID: String, uniquePostID: String, date: String) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(postalCode) { results, error in
             // Placemark gives an array of best/closest results. First value of array most accurate.
@@ -104,7 +104,7 @@ class AddRequestListingViewController: UIViewController {
                 print(locality)
                 print(state)
                 self.bookLocation = "\(locality), \(state)"
-                self.createNewListing(userID: userID, uniqueBookID: uniqueBookID, date: date )
+                self.createNewListing(userID: userID, uniquePostID: uniquePostID, date: date )
             }
             if let error = error {
                 print(error)
@@ -120,11 +120,11 @@ class AddRequestListingViewController: UIViewController {
         formatter.timeStyle = .short
         formatter.dateStyle = .short
         let date = formatter.string(from: currentDateTime)
-        let uniqueBookID = UUID().uuidString
+        let uniquePostID = UUID().uuidString
 
 
         // save image to Firebase storage with uniqueBookID.jpg as image path
-        let imageRef = storageRef.child("\(uniqueBookID).jpg")
+        let imageRef = storageRef.child("\(uniquePostID).jpg")
 
         // Conditional check, use default book image if no image found for book cover
         if let bookCoverData = bookCoverImageM {
@@ -165,13 +165,17 @@ class AddRequestListingViewController: UIViewController {
             assertionFailure("Couldn't unwrap userID")
             return
         }
+        
+        //add book isbn to user's wishlist
+        ref.self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN])
+
 
         // Grab zipcode from user, change zipcode to city
         self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
             let userData = snapshot.value as? [String: String]
             let bookZipCode = userData?["ZipCode"] ?? ""
 
-            self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniqueBookID: uniqueBookID, date: date)
+            self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date)
         })
 
         self.dismiss(animated: true, completion: nil)
