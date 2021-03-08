@@ -60,7 +60,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         self.searchBar.delegate = self
         listingsTableView.dataSource = self
         listingsTableView.delegate = self
-    
+        
         
         self.activityIndicator.stopAnimating()
         filterButton.layer.cornerRadius = 5
@@ -76,7 +76,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         let storageRef = Storage.storage().reference()
         
         self.wait()
-        self.ref.child("Books").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
+        self.ref.child("Posts").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
             var user = results?["User"] ?? ""
             let condition = results?["Condition"] ?? ""
@@ -116,7 +116,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     user = firstName + " " + lastName
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
-
+                    
                     self.books.append(databaseData)
                     
                     DispatchQueue.main.async {
