@@ -10,11 +10,11 @@ import CoreLocation
 import UIKit
 import Firebase
 
-protocol AddListingViewControllerDelegate {
-    func addListingVCDismissed()
+protocol AddPostListingViewControllerDelegate {
+    func addPostListingVCDismissed()
 }
 
-class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     @IBOutlet weak var popupView: UIView!
@@ -34,10 +34,11 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
     
-    var delegate: AddListingViewControllerDelegate?
+    var delegate: AddPostListingViewControllerDelegate?
     var isbn = "<ISBN_NUMBER>"
     var bookTitle: String = ""
-    var bookAuthor:  String = ""
+    var bookAuthors:  [String] = []
+    var bookAuthor: String = ""
     var bookPublishDate: String = ""
     var bookISBN: String = ""
     var bookCondition: String = ""
@@ -73,7 +74,17 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
         else {
             coverImageView.image = UIImage(systemName: "book")
         }
-        authorLabel.text = "Author: " + bookAuthor
+        
+        if bookAuthor.isEmpty && bookAuthors.isEmpty {
+            authorLabel.text = "Author: "
+        }
+        else if bookAuthor.isEmpty && !bookAuthors.isEmpty {
+            authorLabel.text = "Authors:" + bookAuthors.joined(separator: ", ")
+        }
+        else {
+            authorLabel.text = "Author: " + bookAuthor
+        }
+        
         publishDateLabel.text = "Publish Date: " + bookPublishDate
         isbnLabel.text = "ISBN: " + bookISBN
     }
@@ -81,7 +92,7 @@ class AddListingViewController: UIViewController, UIPickerViewDelegate, UIPicker
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isBeingDismissed {
-            DispatchQueue.global(qos: .userInitiated).async { self.delegate?.addListingVCDismissed() }
+            DispatchQueue.global(qos: .userInitiated).async { self.delegate?.addPostListingVCDismissed() }
         }
     }
     

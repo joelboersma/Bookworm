@@ -11,7 +11,7 @@ import AVFoundation
 import Vision
 import VisionKit
 
-class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate, AddListingViewControllerDelegate {
+class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate, AddPostListingViewControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -88,6 +88,13 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         recognizeTextHandler()
     }
 
+    func captureFailed() {
+        let ac = UIAlertController(title: "Camera not supported", message: "Your device does not support a camera.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+        captureSession = nil
+    }
+    
     @IBAction func scanButtonPressed() {
         let documentCameraViewController = VNDocumentCameraViewController()
         documentCameraViewController.delegate = self
@@ -102,60 +109,28 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         } catch {
             print(error)
         }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "addPostVC") as? AddPostViewController  else { assertionFailure("couldn't find vc"); return }
+        vc.inputSearch = recognizedText
+        let addPostVC = [vc]
+        self.navigationController?.setViewControllers(addPostVC, animated: true)
+        
         controller.dismiss(animated: true)
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        
-//        var requestOptions:[VNImageOption : Any] = [:]
-//
-//        if let camData = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, attachmentModeOut: nil) {
-//            requestOptions = [.cameraIntrinsics:camData]
-//        }
-//
-//        if timePassed {
-//            guard let outputImage = getImageFromSampleBuffer(sampleBuffer: sampleBuffer) else { return }
-//            let imageRequestHandler = VNImageRequestHandler(cgImage: outputImage, options: requestOptions)
-//
-//            do {
-//                try imageRequestHandler.perform([recognizeTextRequest])
-//            } catch {
-//                print(error)
-//                return
-//            }
-//            timePassed = false
-//        }
         if timePassed {
-            let requestHandler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .down)
-
-            let request = VNRecognizeTextRequest(completionHandler: textDetectHandler)
+            let imageRequestHandler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .down)
 
             do {
-                // Perform the text-detection request.
-                try requestHandler.perform([request])
+                try imageRequestHandler.perform([recognizeTextRequest])
             } catch {
-                print("Unable to perform the request: \(error).")
+                print(error)
+                return
             }
             timePassed = false
         }
-    }
-    
-    func textDetectHandler(request: VNRequest, error: Error?) {
-        guard let observations =
-                request.results as? [VNRecognizedTextObservation] else { return }
-        // Process each observation to find the recognized body pose points.
-        let recognizedStrings = observations.compactMap { observation in
-            // Return the string of the top VNRecognizedText instance.
-            return observation.topCandidates(1).first?.string
-        }
-        print(recognizedStrings)
-      }
-    
-    func captureFailed() {
-        let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code from an item. Please use a device with a camera.", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
-        present(ac, animated: true)
-        captureSession = nil
     }
     
     func recognizeTextHandler() {
@@ -165,15 +140,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                     self.recognizedText = ""
                     for observation in requestResults {
                         guard let candidiate = observation.topCandidates(1).first else { return }
+                        print(candidiate.string)
                         self.recognizedText += candidiate.string
-                        self.recognizedText += "\n"
+                        self.recognizedText += " "
                     }
-                    print(self.recognizedText)
                 }
             }
         })
         recognizeTextRequest.recognitionLevel = .accurate
-        recognizeTextRequest.usesLanguageCorrection = false
+        recognizeTextRequest.usesLanguageCorrection = true
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -187,49 +162,27 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             OpenLibraryAPI.getAllInfoForISBN(stringValue, bookCoverSize: .M) { (response, error) in
                 print(stringValue)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(identifier: "addListingVC")
-                guard let addListingVC = vc as? AddListingViewController else {
+                let vc = storyboard.instantiateViewController(identifier: "addPostListingVC")
+                guard let addPostListingVC = vc as? AddPostListingViewController else {
                     assertionFailure("couldn't find vc")
                     return
                 }
                 
                 if let bookInfo = response {
-                    addListingVC.bookTitle = bookInfo["title"] as? String ?? ""
-                    addListingVC.bookPublishDate = bookInfo["publishDate"] as? String ?? ""
-                    addListingVC.bookAuthor = bookInfo["author"] as? String ?? ""
-                    addListingVC.bookISBN = bookInfo["isbn"] as? String ?? ""
-                    addListingVC.bookCoverImageM = bookInfo["imageData"] as? Data
-                    addListingVC.delegate = self
-                    self.present(addListingVC, animated: true, completion: nil)
+                    addPostListingVC.bookTitle = bookInfo["title"] as? String ?? ""
+                    addPostListingVC.bookPublishDate = bookInfo["publishDate"] as? String ?? ""
+                    addPostListingVC.bookAuthor = bookInfo["author"] as? String ?? ""
+                    addPostListingVC.bookISBN = bookInfo["isbn"] as? String ?? ""
+                    addPostListingVC.bookCoverImageM = bookInfo["imageData"] as? Data
+                    addPostListingVC.delegate = self
+                    self.present(addPostListingVC, animated: true, completion: nil)
                 }
                 self.start()
             }
         }
     }
     
-    // Conversion code taken from stackoverflow
-    func getImageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> CGImage? {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            return nil
-        }
-        CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
-        let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer)
-        let width = CVPixelBufferGetWidth(pixelBuffer)
-        let height = CVPixelBufferGetHeight(pixelBuffer)
-        let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
-        guard let context = CGContext(data: baseAddress, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else {
-            return nil
-        }
-        guard let cgImage = context.makeImage() else {
-            return nil
-        }
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
-        return cgImage
-    }
-    
-    func addListingVCDismissed() {
+    func addPostListingVCDismissed() {
         if captureSession?.isRunning == false {
             captureSession?.startRunning()
             captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
