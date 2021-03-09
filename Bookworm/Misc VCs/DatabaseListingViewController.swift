@@ -24,9 +24,13 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     @IBOutlet weak var popupView: UIView!
     
     var storageRef = Storage.storage().reference()
-    
+    var ref = Database.database().reference()
+   
+    var userDescription: String = ""
     var bookAuthor: String = ""
     var bookTitle: String = ""
+    var buyerSellerID: String = ""
+    var buyerSeller: String = ""
     var bookPublishDate: String = ""
     var bookEdition: String = ""
     var bookISBN: String = ""
@@ -84,12 +88,24 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     @IBAction func contactSellerButtonClicked(_ sender: Any) {
         let controller = MFMessageComposeViewController()
         controller.messageComposeDelegate = self
-        controller.body = "Hello from Book Worm!"
-        // using my phone number as placeholder
-        controller.recipients = ["+1 408 890 9988"]
-        if MFMessageComposeViewController.canSendText() {
-            self.present(controller, animated: true, completion: nil)
+        
+        if(self.userDescription == "Buyer"){
+            controller.body = "Hello " + self.buyerSeller + ", I saw your request for " + self.bookTitle + " on Book Worm and I have a copy! Are you interested?"
+        }else{
+            controller.body = "Hello " + self.buyerSeller + ", I am interested in your listing for " + self.bookTitle + " on Book Worm."
         }
+
+        self.ref.child("Users/\(self.buyerSellerID)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let buyerSellerData = snapshot.value as? [String: String]
+            let buyerSellerContact = buyerSellerData?["PhoneNumber"] ?? ""
+            controller.recipients = [buyerSellerContact]
+            if MFMessageComposeViewController.canSendText() {
+                self.present(controller, animated: true, completion: nil)
+            }
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+       
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {

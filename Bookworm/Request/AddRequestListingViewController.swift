@@ -90,12 +90,12 @@ class AddRequestListingViewController: UIViewController {
         self.bookISBNLabel.text = "ISBN: " + bookISBN
     }
     
-    func createNewListing(userID: String, uniquePostID: String, date: String){
+    func createNewListing(userID: String, uniquePostID: String, date: String, timestamp: String){
         // make push call to database
-        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg"])
+        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
     }
     
-    func getCityFromPostalCode(postalCode: String, userID: String, uniquePostID: String, date: String) {
+    func getCityFromPostalCode(postalCode: String, userID: String, uniquePostID: String, date: String, timestamp: String) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(postalCode) { results, error in
             // Placemark gives an array of best/closest results. First value of array most accurate.
@@ -105,7 +105,7 @@ class AddRequestListingViewController: UIViewController {
                 print(locality)
                 print(state)
                 self.bookLocation = "\(locality), \(state)"
-                self.createNewListing(userID: userID, uniquePostID: uniquePostID, date: date )
+                self.createNewListing(userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
             }
             if let error = error {
                 print(error)
@@ -117,6 +117,7 @@ class AddRequestListingViewController: UIViewController {
 
     @IBAction func didPressAddRequest(_ sender: Any) {
         let currentDateTime = Date()
+        let timestamp = String(currentDateTime.timeIntervalSince1970)
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .short
@@ -179,7 +180,7 @@ class AddRequestListingViewController: UIViewController {
             let userLastName = userData?["LastName"] ?? ""
             let userFullName = userFirstName + " " + userLastName
 
-            self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date)
+            self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
             
             // add user as a "buyer" of this book under database's "Books"
             self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in

@@ -147,7 +147,11 @@ struct OpenLibraryAPI {
     }
     
     static func search(_ searchText: String, completion: @escaping ApiCompletion) {
-        let query: String = searchText.replacingOccurrences(of: " ", with: "+")
+        guard let query: String = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            print("bad url string")
+            return
+        }
+        
         print(query)
         ApiCall(endpoint: "/search.json?q=\(query)", completion: completion)
     }
