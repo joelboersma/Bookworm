@@ -225,88 +225,219 @@ struct OpenLibraryAPI {
      - isbn13
      */
     
+    // returns json object containing author name(s) and one cover from a given works key
+    static func getWorksInfo(key: String, bookCoverSize: BookCoverSize) -> [String: Any] {
+        var worksInfo: [String: Any] = [:]
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        works(key) { worksResponse, error in
+            if let _error = error {
+                print(_error)
+                return
+            }
+            else if let _worksResponse = worksResponse {
+                
+                if let coverArray = _worksResponse["covers"] as? [Int], let coverID = coverArray.first {
+                    cover(key: .ID, value: String(coverID), size: bookCoverSize) { coverResponse, error in
+                        if let unwrappedError = error {
+                            print("works cover error")
+                            return
+                        }
+                        else if let coverResponse = coverResponse {
+                            print(coverResponse)
+                            
+                            if let imageData = coverResponse["imageData"] as? Data {
+                                worksInfo["imageData"] = imageData
+                            }
+                            else {
+                                print("works bad cover image data")
+                            }
+                        }
+                        else {
+                            print("bad works cover response")
+                        }
+                        semaphore.signal()
+                    }
+                }
+                else {
+                    semaphore.signal()
+                }
+                
+                if let authorsJson = _worksResponse["authors"] as? [[String: Any]] {
+                    var authorNames: [String] = []
+                    print("\(authorsJson.count) author(s)")
+                    for authorArrayObject in authorsJson {
+                        if let authorObject = authorArrayObject["author"] as? [String : Any],
+                           let key = authorObject["key"] as? String {
+                            print(key)
+                            author(key) { authorResponse, authorError in
+                                if let _authorError = authorError {
+                                    // author error
+                                    print(_authorError)
+                                }
+                                else if let _authorResponse = authorResponse,
+                                        let authorName = _authorResponse["name"] as? String {
+                                    authorNames.append(authorName)
+                                    print(authorName)
+                                }
+                                else {
+                                    print("bad author response")
+                                }
+                                
+                                // if it's the final author, start the exit process
+                                if authorNames.count == authorsJson.count {
+                                    authorNames.sort()  // because they might be added out of order
+                                    worksInfo["authors"] = authorNames
+                                    semaphore.signal()
+                                }
+                            }
+                        }
+                        else {
+                            // couldn't find key in author object
+                            return
+                        }
+                    }
+                }
+                else {
+                    
+                }
+            }
+            else {
+                print("bad works info")
+            }
+        }
+        
+        semaphore.wait()
+        semaphore.wait()
+        return worksInfo
+    }
+    
     
     static func getAllInfoForISBN(_ isbn: String, bookCoverSize: BookCoverSize, completion: @escaping ApiCompletion) {
         var bookInfo: [String: Any] = [:]
         bookInfo["isbn"] = isbn
         
+        var worksKey: String = ""
+        var worksInfo: [String: Any] = [:]
+        
         ISBN(isbn) { isbnResponse, error in
             // title, publish date, isbn13
             if let unwrappedError = error {
-                completion(bookInfo, unwrappedError)
+                DispatchQueue.main.async {
+                    completion(bookInfo, unwrappedError)
+                }
                 return
             }
             else if let _isbnResponse = isbnResponse {
                 bookInfo["title"] = _isbnResponse["title"]
                 bookInfo["publishDate"] = _isbnResponse["publish_date"]
                 
+                // get works key, just in case
+                if let worksJson = _isbnResponse["works"] as? [[String: Any]],
+                   let worksObject = worksJson.first {
+                    worksKey = worksObject["key"] as? String ?? ""
+                }
+                
                 cover(key: .ISBN, value: isbn, size: bookCoverSize) { coverResponse, error in
                     // cover
-                    if let unwrappedError = error {
-                        completion(bookInfo, unwrappedError)
-                        return
-                    }
-                    else if let coverResponse = coverResponse {
-                        print(coverResponse)
-                        
-                        if let imageData = coverResponse["imageData"] as? Data {
-                            bookInfo["imageData"] = imageData
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        if let unwrappedError = error {
+                            DispatchQueue.main.async {
+                                completion(bookInfo, unwrappedError)
+                            }
                         }
-                        else {
-                            print("bad cover image data")
-                        }
-                        
-                        // authors
-                        if let authorsJson = _isbnResponse["authors"] as? [[String: Any]] {
-                            var authorNames: [String] = []
-                            print("\(authorsJson.count) author(s)")
-                            for a in authorsJson {
-                                if let key = a["key"] as? String {
-                                    print(key)
-                                    author(key) { authorResponse, authorError in
-                                        if let _authorError = authorError {
-                                            // author error
-                                            print(_authorError)
+                        else if let coverResponse = coverResponse {
+                            print(coverResponse)
+                            
+                            if let imageData = coverResponse["imageData"] as? Data {
+                                bookInfo["imageData"] = imageData
+                            }
+                            else {
+                                print("bad cover image data")
+                                if !worksKey.isEmpty && worksInfo.isEmpty {
+                                    print("going to works")
+                                    worksInfo = getWorksInfo(key: worksKey, bookCoverSize: bookCoverSize)
+                                }
+                                
+                                if !worksInfo.isEmpty {
+                                    print("using works info for cover")
+                                    bookInfo["imageData"] = worksInfo["imageData"]
+                                }
+                            }
+                            
+                            // authors
+                            if let authorsJson = _isbnResponse["authors"] as? [[String: Any]] {
+                                var authorNames: [String] = []
+                                print("\(authorsJson.count) author(s)")
+                                for a in authorsJson {
+                                    if let key = a["key"] as? String {
+                                        print(key)
+                                        author(key) { authorResponse, authorError in
+                                            if let _authorError = authorError {
+                                                // author error
+                                                print(_authorError)
+                                            }
+                                            else if let _authorResponse = authorResponse,
+                                                    let authorName = _authorResponse["name"] as? String {
+                                                authorNames.append(authorName)
+                                                print(authorName)
+                                            }
+                                            else {
+                                                print("bad author response")
+                                            }
+                                            
+                                            // if it's the final author, start the exit process
+                                            if authorNames.count == authorsJson.count {
+                                                authorNames.sort()  // because they might be added out of order
+                                                bookInfo["authors"] = authorNames
+                                                DispatchQueue.main.async {
+                                                    completion(bookInfo, nil)
+                                                }
+                                            }
                                         }
-                                        else if let _authorResponse = authorResponse,
-                                                let authorName = _authorResponse["name"] as? String {
-                                            authorNames.append(authorName)
-                                            print(authorName)
-                                        }
-                                        else {
-                                            print("bad author response")
-                                        }
-                                        
-                                        // if it's the final author, start the exit process
-                                        if authorNames.count == authorsJson.count {
-                                            authorNames.sort()  // because they might be added out of order
-                                            bookInfo["authors"] = authorNames
-                                            bookInfo["author"] = authorNames.first  // so that some code doesn't break immediately
-                                            completion(bookInfo, nil)
-                                        }
+                                    }
+                                    else {
+                                        // couldn't find key in author object
+                                    }
+                                }
+                            }
+                            else {
+                                print("can't find authors in isbn response")
+                                // check works
+                                if !worksKey.isEmpty && worksInfo.isEmpty {
+                                    print("going to works")
+                                    worksInfo = getWorksInfo(key: worksKey, bookCoverSize: bookCoverSize)
+                                }
+                                
+                                if !worksInfo.isEmpty {
+                                    print("using works info for authors")
+                                    bookInfo["authors"] = worksInfo["authors"]
+                                    DispatchQueue.main.async {
+                                        completion(bookInfo, nil)
                                     }
                                 }
                                 else {
-                                    // couldn't find key in author object
+                                    DispatchQueue.main.async {
+                                        completion(bookInfo, ApiError(response: [:]))
+                                    }
                                 }
                             }
                         }
                         else {
-                            print("can't find authors in isbn response")
-                            completion(bookInfo, ApiError(response: [:]))
+                            print("bad response cover")
                         }
-                    }
-                    else {
-                        print("bad response cover")
                     }
                 }
             }
             else {
                 print("bad response ISBN")
-                completion(bookInfo, ApiError(response: [:]))
+                DispatchQueue.main.async {
+                    completion(bookInfo, ApiError(response: [:]))
+                }
                 return
             }
         }
+        
     }
     
     static func getAllInfoForISBN(_ isbn: Int, bookCoverSize: BookCoverSize, completion: @escaping ApiCompletion) {
