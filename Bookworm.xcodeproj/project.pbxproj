@@ -20,6 +20,8 @@
 		25190E8525E41CAF007573D6 /* InventoryListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */; };
 		255CF1F125EE479700457C5A /* AddRequestListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */; };
 		25F3D9E525EDC4FD008D4463 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */; };
+		25FD302225F73F76009D0485 /* Wishlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FD302125F73F76009D0485 /* Wishlist.swift */; };
+		25FD302525F76926009D0485 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FD302425F76926009D0485 /* Inventory.swift */; };
 		4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */; };
 		4B2FB1D025DF596A00661D51 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */; };
 		4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2FB1D125DF596A00661D51 /* LoginViewController.swift */; };
@@ -52,6 +54,8 @@
 		25190E8425E41CAF007573D6 /* InventoryListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryListingViewController.swift; sourceTree = "<group>"; };
 		255CF1F025EE479700457C5A /* AddRequestListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRequestListingViewController.swift; sourceTree = "<group>"; };
 		25F3D9E425EDC4FD008D4463 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		25FD302125F73F76009D0485 /* Wishlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wishlist.swift; sourceTree = "<group>"; };
+		25FD302425F76926009D0485 /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
 		4B2FB1CA25DF596A00661D51 /* Bookworm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookworm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				4BB674F525EDFF6500FA2F73 /* Book.swift */,
+				25FD302125F73F76009D0485 /* Wishlist.swift */,
+				25FD302425F76926009D0485 /* Inventory.swift */,
 				4B60AC7A25E9E4BE0081458A /* OpenLibraryAPI.swift */,
 			);
 			path = Support;
@@ -350,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25FD302525F76926009D0485 /* Inventory.swift in Sources */,
 				4B60AC7B25E9E4BE0081458A /* OpenLibraryAPI.swift in Sources */,
 				846E4BFA25E62E5A0058AB54 /* DatabaseListingViewController.swift in Sources */,
 				25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */,
@@ -368,6 +375,7 @@
 				4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */,
 				25F3D9E525EDC4FD008D4463 /* HomeViewController.swift in Sources */,
 				1D7474B525E9BFE700946263 /* MatchesEntryViewController.swift in Sources */,
+				25FD302225F73F76009D0485 /* Wishlist.swift in Sources */,
 				25190E7F25E41C3F007573D6 /* InventoryViewController.swift in Sources */,
 				A6D94B5B25E2632D004DE869 /* NewAccountViewController.swift in Sources */,
 				1D2A8CA625F62F4500279DC2 /* AddPostViewController.swift in Sources */,
