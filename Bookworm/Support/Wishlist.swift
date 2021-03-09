@@ -14,27 +14,17 @@ class WishListBook {
     let bookCover: String
     let bookCoverData: Data
     var edition: String? = ""
+    let postID: String
  
 
-    init(title: String, isbn: String, authors: [String], publishDate: String, bookCover: String, bookCoverData: Data) {
+    init(title: String, isbn: String, authors: [String], publishDate: String, bookCover: String, bookCoverData: Data, postID: String) {
         self.title = title
         self.isbn = isbn
         self.authors = authors
         self.publishDate = publishDate
         self.bookCover = bookCover
         self.bookCoverData = bookCoverData
+        self.postID = postID
     }
 }
 
-//class WishListCell{
-//    let title: String
-//    let authors: String
-//    let bookCoverData: Data
-//
-//    init(title: String, authors: String, bookCoverData: Data) {
-//
-//        self.title = title
-//        self.authors = authors
-//        self.bookCoverData = bookCoverData
-//    }
-//}

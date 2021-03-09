@@ -126,7 +126,30 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
                     print(metadata)
                 }
             }
+        } else if let bookCoverData = bookCoverImageS {
+            imageRef.putData(bookCoverData, metadata: nil) { (metadata, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let metadata = metadata {
+                    print(metadata)
+                }
+            }
+        } else { //default book image
+            if let bookImage = UIImage(systemName: "book"), let bookImageData = bookImage.jpegData(compressionQuality: 1.0) {
+                imageRef.putData(bookImageData, metadata: nil) { (metadata, error) in
+                    if let error = error {
+                        print("error w default image")
+                        print(error)
+                    }
+                    if let metadata = metadata {
+                        print("error w default image")
+                        print(metadata)
+                    }
+                }
+            }
         }
+
         
         // Grab user ID from logged in user
         guard let userID = Auth.auth().currentUser?.uid else {

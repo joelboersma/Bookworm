@@ -27,6 +27,13 @@ class WishListListingViewController: UIViewController {
     var bookPublishDate: String = ""
     var bookEdition: String = ""
     var bookTitle: String = ""
+    var bookPostID: String = ""
+    var bookCover: String = ""
+    
+    var delegate: ReloadAfterBookRemovalDelegate?
+
+    let storageRef = Storage.storage().reference()
+    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +60,42 @@ class WishListListingViewController: UIViewController {
     }
     
     @IBAction func didPressRemove(_ sender: Any) {
+        // Grab user ID from logged in user
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return
+        }
+        
+        //database- remove post from "Posts"
+        self.ref.child("Posts/\(self.bookPostID)").removeValue()
+        
+        //database- remove book from user's wishlist in "Wishlists"
+        self.ref.child("Wishlists/\(userID)/\(self.bookPostID)").removeValue()
+        
+        //database- remove user from "Sellers" of the book in "Books"
+        self.ref.child("Books/\(self.bookISBN)/Buyers/\(userID)").removeValue()
+        
+        //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+        ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
+          // Get user value
+            let numChildren = snapshot.childrenCount
+            
+            if numChildren == 1 {
+                self.ref.child("Books/\(self.bookISBN)").removeValue()
+            }
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+        
+        //database- remove book image from storage
+        let imageRef = self.storageRef.child(self.bookCover)
+        imageRef.delete(completion: nil)
+        
+        //call delegate which will reload inventory data
+        self.delegate?.reloadAfterBookRemoval()
+        
+        //dismiss the view and reload data
+        self.dismiss(animated: true, completion: nil)
     }
     
     func wait() {

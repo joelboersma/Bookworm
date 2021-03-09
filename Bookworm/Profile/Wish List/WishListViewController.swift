@@ -20,7 +20,7 @@ class WishListTableViewCell: UITableViewCell{
     }
 }
 
-class WishListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class WishListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReloadAfterBookRemovalDelegate  {
 
     @IBOutlet weak var wishListTableView: UITableView!
     
@@ -43,15 +43,20 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         self.dismiss(animated: true, completion: nil)
     }
     
-    func addBookToDataSource(bookInfo: NSDictionary, isbn: String){
+    func reloadAfterBookRemoval() {
+        wishListBooks.removeAll()
+        wishListTableView.reloadData()
+        loadWishList()
+    }
+    
+    func addBookToDataSource(bookInfo: NSDictionary, isbn: String, postID: String){
         guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String, let cover = bookInfo.value(forKey: "Photo_Cover") as? String else{
             print("error getting book data")
             return
         }
-        let storageRef = Storage.storage().reference()
 
         // get book image reference from Firebase Storage
-        let bookCoverRef = storageRef.child(cover)
+        let bookCoverRef = self.storageRef.child(cover)
         
         // download URL of reference, then get contents of URL and set imageView to UIImage
         bookCoverRef.downloadURL { url, error in
@@ -64,7 +69,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                 assertionFailure("Error in getting Data")
                 return
             }
-            let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData)
+            let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, postID: postID)
             self.wishListBooks.append(book)
             self.wishListTableView.reloadData()
         }
@@ -80,10 +85,15 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
 
             //get wishlist content, fill in table view
             guard let wishlist = snapshot.value as? NSDictionary else {
-                print("couldn't access user's wishlist")
+                print("user's wishlist is empty")
                 return
             }
             for postID in wishlist{
+                guard let postIDKey = postID.key as? String else{
+                    print("post id couldn't be unwrapped")
+                    return
+                }
+                
                 if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
 //                    print(isbn)
                     // look up isbn in Books node for book info -> fill in table view cell
@@ -91,7 +101,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in
                             
                             if let bookInfo = snapshot.value as? NSDictionary {
-                                self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn)
+                                self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, postID: postIDKey)
                             } else{
                                 print("couldnt acess book information")
                             }

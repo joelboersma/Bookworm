@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 
+
 class InventoryTableViewCell: UITableViewCell{
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
@@ -20,7 +21,8 @@ class InventoryTableViewCell: UITableViewCell{
     }
 }
 
-class InventoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class InventoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReloadAfterBookRemovalDelegate  {
+    
     @IBOutlet weak var inventoryTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -39,11 +41,13 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
 
     }
     
+    
     @IBAction func didPressX(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func addBookToDataSource(bookInfo: NSDictionary, isbn: String, condition: String){
+    func addBookToDataSource(bookInfo: NSDictionary, isbn: String, condition: String, postID: String){
+        
         guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String, let cover = bookInfo.value(forKey: "Photo_Cover") as? String else{
             print("error getting book data")
             return
@@ -64,10 +68,16 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
                 assertionFailure("Error in getting Data")
                 return
             }
-            let book = InventoryBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, condition: condition)
+            let book = InventoryBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, condition: condition, postID: postID)
             self.inventoryBooks.append(book)
             self.inventoryTableView.reloadData()
         }
+    }
+    
+    func reloadAfterBookRemoval() {
+        inventoryBooks.removeAll()
+        inventoryTableView.reloadData()
+        loadInventory()
     }
     
     func loadInventory(){
@@ -80,10 +90,15 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
 
             //get wishlist content, fill in table view
             guard let wishlist = snapshot.value as? NSDictionary else {
-                print("couldn't access user's wishlist")
+                print("user's inventory is empty")
                 return
             }
             for postID in wishlist{
+                guard let postIDKey = postID.key as? String else{
+                    print("post id couldn't be unwrapped")
+                    return
+                }
+            
                 if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
 //                    print(isbn)
                     // look up isbn in Books node for book info -> fill in table view cell
@@ -96,7 +111,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
                                 self.ref.child("Books").child(isbn).child("Sellers").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let postInfo = snapshot.value as? NSDictionary, let condition = postInfo.value(forKey: "Condition") as? String{
                                         
-                                        self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, condition: condition)
+                                        self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, condition: condition, postID: postIDKey)
                                     }
                                   }) { (error) in
                                     print(error.localizedDescription)
@@ -145,6 +160,8 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
             return
         }
         
+        inventoryListingVC.delegate = self
+        
         inventoryListingVC.bookAuthors = book.authors.joined(separator: ", ")
         inventoryListingVC.bookISBN = book.isbn
         inventoryListingVC.bookTitle = book.title
@@ -152,6 +169,8 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
         inventoryListingVC.bookCoverData = book.bookCoverData
         inventoryListingVC.bookPublishDate = book.publishDate
         inventoryListingVC.bookCondition = book.condition
+        inventoryListingVC.bookPostID = book.postID
+        inventoryListingVC.bookCover = book.bookCover
         
         present(inventoryListingVC, animated: true, completion: nil)
 

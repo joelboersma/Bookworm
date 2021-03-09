@@ -15,9 +15,10 @@ class InventoryBook {
     let bookCoverData: Data
     let condition: String
     var edition: String? = ""
+    let postID: String 
 
 
-    init(title: String, isbn: String, authors: [String], publishDate: String, bookCover: String, bookCoverData: Data, condition: String) {
+    init(title: String, isbn: String, authors: [String], publishDate: String, bookCover: String, bookCoverData: Data, condition: String, postID: String) {
         self.title = title
         self.isbn = isbn
         self.authors = authors
@@ -25,6 +26,7 @@ class InventoryBook {
         self.bookCover = bookCover
         self.bookCoverData = bookCoverData
         self.condition = condition
+        self.postID = postID
     }
 }
 
