@@ -266,7 +266,8 @@ struct OpenLibraryAPI {
                     // authors
                     if let authorsJson = _isbnResponse["authors"] as? [[String: Any]] {
                         var authorNames: [String] = []
-                        for (index, a) in authorsJson.enumerated() {
+                        print("\(authorsJson.count) authors")
+                        for a in authorsJson {
                             if let key = a["key"] as? String {
                                 print(key)
                                 author(key) { authorResponse, authorError in
@@ -284,7 +285,8 @@ struct OpenLibraryAPI {
                                     }
                                     
                                     // if it's the final author, start the exit process
-                                    if index == authorsJson.count - 1 {
+                                    if authorNames.count == authorsJson.count {
+                                        authorNames.sort()  // because they might be added out of order
                                         bookInfo["authors"] = authorNames
                                         bookInfo["author"] = authorNames.first  // so that some code doesn't break immediately
                                         completion(bookInfo, nil)
