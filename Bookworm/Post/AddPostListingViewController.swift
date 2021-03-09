@@ -144,14 +144,21 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
             let userFirstName = userData?["FirstName"] ?? ""
             let userLastName = userData?["LastName"] ?? ""
             let userFullName = userFirstName + " " + userLastName
-            
+            var authors = ""
             //change zip code to city and push new post onto database "Posts"
             self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date)
             
+            if self.bookAuthor.isEmpty && !self.bookAuthors.isEmpty {
+                authors = self.bookAuthors.joined(separator: ", ")
+            }
+            else {
+                authors = self.bookAuthor
+            }
+
             // add user as a "seller" of this book under database's "Books"
             self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
                 //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
-                self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
+                self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": authors, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
                 
                 // Append user + post info to "Buyers" node
                 self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).setValue(["User_Name": userFullName, "Post_Timestamp": date, "User_Location": bookZipCode, "Condition": self.bookCondition])
