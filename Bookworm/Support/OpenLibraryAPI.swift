@@ -236,40 +236,9 @@ struct OpenLibraryAPI {
                 completion(bookInfo, unwrappedError)
                 return
             }
-            
-            guard let isbnResponse = isbnResponse else {
-                print("bad response ISBN")
-                completion(bookInfo, ApiError(response: [:]))
-                return
-            }
-            
-            bookInfo["title"] = isbnResponse["title"]
-            bookInfo["publishDate"] = isbnResponse["publish_date"]
-            
-            guard let authorKey = unwrapInnerKey(fromDictionary: isbnResponse, forOuterKey: "authors") else {
-                print("couldn't get key for author")
-                completion(bookInfo, ApiError(response: [:]))
-                return
-            }
-            
-            author(authorKey) { authorResponse, error in
-                // author
-                if let unwrappedError = error {
-                    completion(bookInfo, unwrappedError)
-                    return
-                }
-                guard let authorResponse = authorResponse else {
-                    print("bad response author")
-                    completion(bookInfo, ApiError(response: [:]))
-                    return
-                }
-                
-                guard let authorName = authorResponse["name"] else {
-                    print("no author")
-                    completion(bookInfo, ApiError(response: [:]))
-                    return
-                }
-                bookInfo["author"] = authorName
+            else if let _isbnResponse = isbnResponse {
+                bookInfo["title"] = _isbnResponse["title"]
+                bookInfo["publishDate"] = _isbnResponse["publish_date"]
                 
                 cover(key: .ISBN, value: isbn, size: bookCoverSize) { coverResponse, error in
                     // cover
@@ -277,23 +246,66 @@ struct OpenLibraryAPI {
                         completion(bookInfo, unwrappedError)
                         return
                     }
-                    guard let coverResponse = coverResponse else {
+                    else if let coverResponse = coverResponse {
+                        print(coverResponse)
+                        
+                        guard let imageData = coverResponse["imageData"] as? Data else {
+                            print("bad cover image data")
+                            completion(bookInfo, ApiError(response: [:]))
+                            return
+                        }
+                        
+                        bookInfo["imageData"] = imageData
+                    }
+                    else {
                         print("bad response cover")
                         completion(bookInfo, ApiError(response: [:]))
                         return
                     }
-                    print(coverResponse)
                     
-                    guard let imageData = coverResponse["imageData"] as? Data else {
-                        print("bad cover image data")
-                        completion(bookInfo, ApiError(response: [:]))
-                        return
+                    // authors
+                    if let authorsJson = _isbnResponse["authors"] as? [[String: Any]] {
+                        var authorNames: [String] = []
+                        for (index, a) in authorsJson.enumerated() {
+                            if let key = a["key"] as? String {
+                                print(key)
+                                author(key) { authorResponse, authorError in
+                                    if let _authorError = authorError {
+                                        // author error
+                                        print(_authorError)
+                                    }
+                                    else if let _authorResponse = authorResponse,
+                                            let authorName = _authorResponse["name"] as? String {
+                                        authorNames.append(authorName)
+                                        print(authorName)
+                                    }
+                                    else {
+                                        print("bad author response")
+                                    }
+                                    
+                                    // if it's the final author, start the exit process
+                                    if index == authorsJson.count - 1 {
+                                        bookInfo["authors"] = authorNames
+                                        bookInfo["author"] = authorNames.first  // so that some code doesn't break immediately
+                                        completion(bookInfo, nil)
+                                    }
+                                }
+                            }
+                            else {
+                                // couldn't find key in author object
+                            }
+                        }
                     }
-                    
-                    bookInfo["imageData"] = imageData
-                    
-                    completion(bookInfo, nil)
+                    else {
+                        print("can't find authors in isbn response")
+                        completion(bookInfo, ApiError(response: [:]))
+                    }
                 }
+            }
+            else {
+                print("bad response ISBN")
+                completion(bookInfo, ApiError(response: [:]))
+                return
             }
         }
     }
