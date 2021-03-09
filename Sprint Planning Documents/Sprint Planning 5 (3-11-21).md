@@ -1,4 +1,4 @@
-# Sprint Planning 4 (3/4/21)
+# Sprint Planning 5 (3/11/21)
 
 ## App Summary
 
@@ -15,6 +15,8 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Completed Tasks
   * Christina 
+    * Populate Wishlist and Inventory tableviews
+    * Populate wishlist's and inventory's book info views
   * Joel
   * Peter
   * Urvashi 
@@ -22,6 +24,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Planned Tasks
   * Christina
+    * removal of posts from database 
   * Joel
   * Peter
   * Urvashi 
