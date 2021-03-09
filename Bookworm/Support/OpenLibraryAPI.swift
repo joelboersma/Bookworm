@@ -249,58 +249,55 @@ struct OpenLibraryAPI {
                     else if let coverResponse = coverResponse {
                         print(coverResponse)
                         
-                        guard let imageData = coverResponse["imageData"] as? Data else {
+                        if let imageData = coverResponse["imageData"] as? Data {
+                            bookInfo["imageData"] = imageData
+                        }
+                        else {
                             print("bad cover image data")
-                            completion(bookInfo, ApiError(response: [:]))
-                            return
                         }
                         
-                        bookInfo["imageData"] = imageData
+                        // authors
+                        if let authorsJson = _isbnResponse["authors"] as? [[String: Any]] {
+                            var authorNames: [String] = []
+                            print("\(authorsJson.count) author(s)")
+                            for a in authorsJson {
+                                if let key = a["key"] as? String {
+                                    print(key)
+                                    author(key) { authorResponse, authorError in
+                                        if let _authorError = authorError {
+                                            // author error
+                                            print(_authorError)
+                                        }
+                                        else if let _authorResponse = authorResponse,
+                                                let authorName = _authorResponse["name"] as? String {
+                                            authorNames.append(authorName)
+                                            print(authorName)
+                                        }
+                                        else {
+                                            print("bad author response")
+                                        }
+                                        
+                                        // if it's the final author, start the exit process
+                                        if authorNames.count == authorsJson.count {
+                                            authorNames.sort()  // because they might be added out of order
+                                            bookInfo["authors"] = authorNames
+                                            bookInfo["author"] = authorNames.first  // so that some code doesn't break immediately
+                                            completion(bookInfo, nil)
+                                        }
+                                    }
+                                }
+                                else {
+                                    // couldn't find key in author object
+                                }
+                            }
+                        }
+                        else {
+                            print("can't find authors in isbn response")
+                            completion(bookInfo, ApiError(response: [:]))
+                        }
                     }
                     else {
                         print("bad response cover")
-                        completion(bookInfo, ApiError(response: [:]))
-                        return
-                    }
-                    
-                    // authors
-                    if let authorsJson = _isbnResponse["authors"] as? [[String: Any]] {
-                        var authorNames: [String] = []
-                        print("\(authorsJson.count) authors")
-                        for a in authorsJson {
-                            if let key = a["key"] as? String {
-                                print(key)
-                                author(key) { authorResponse, authorError in
-                                    if let _authorError = authorError {
-                                        // author error
-                                        print(_authorError)
-                                    }
-                                    else if let _authorResponse = authorResponse,
-                                            let authorName = _authorResponse["name"] as? String {
-                                        authorNames.append(authorName)
-                                        print(authorName)
-                                    }
-                                    else {
-                                        print("bad author response")
-                                    }
-                                    
-                                    // if it's the final author, start the exit process
-                                    if authorNames.count == authorsJson.count {
-                                        authorNames.sort()  // because they might be added out of order
-                                        bookInfo["authors"] = authorNames
-                                        bookInfo["author"] = authorNames.first  // so that some code doesn't break immediately
-                                        completion(bookInfo, nil)
-                                    }
-                                }
-                            }
-                            else {
-                                // couldn't find key in author object
-                            }
-                        }
-                    }
-                    else {
-                        print("can't find authors in isbn response")
-                        completion(bookInfo, ApiError(response: [:]))
                     }
                 }
             }
