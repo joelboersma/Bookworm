@@ -171,7 +171,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 if let bookInfo = response {
                     addPostListingVC.bookTitle = bookInfo["title"] as? String ?? ""
                     addPostListingVC.bookPublishDate = bookInfo["publishDate"] as? String ?? ""
-                    addPostListingVC.bookAuthor = bookInfo["author"] as? String ?? ""
+//                    addPostListingVC.bookAuthor = bookInfo["author"] as? String ?? ""
+                    addPostListingVC.bookAuthors = bookInfo["authors"] as? [String] ?? []
                     addPostListingVC.bookISBN = bookInfo["isbn"] as? String ?? ""
                     addPostListingVC.bookCoverImageM = bookInfo["imageData"] as? Data
                     addPostListingVC.delegate = self
