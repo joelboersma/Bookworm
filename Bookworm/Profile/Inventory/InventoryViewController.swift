@@ -90,20 +90,17 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in
                             
-                            var condition: String = ""
-                            
-                            //get book condition
-                            self.ref.child("Books").child(isbn).child("Sellers").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-                                if let postInfo = snapshot.value as? [String: String]{
-                                    condition = postInfo["Condition"] ?? ""
-                                }
-                              }) { (error) in
-                                print(error.localizedDescription)
-                            }
-                            
                             //create book instance, add to array
                             if let bookInfo = snapshot.value as? NSDictionary {
-                                self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, condition: condition)
+                                //get book condition
+                                self.ref.child("Books").child(isbn).child("Sellers").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                                    if let postInfo = snapshot.value as? NSDictionary, let condition = postInfo.value(forKey: "Condition") as? String{
+                                        
+                                        self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, condition: condition)
+                                    }
+                                  }) { (error) in
+                                    print(error.localizedDescription)
+                                }
                             } else{
                                 print("couldnt acess book information")
                             }
