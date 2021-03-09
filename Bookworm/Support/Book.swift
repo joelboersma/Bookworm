@@ -47,6 +47,7 @@ class BookCell {
     let author: String
     let condition: String
     let location: String
+    let buyerSellerID: String
     let buyerSeller: String
     let postDate: String
     let bookCover: String
@@ -55,7 +56,7 @@ class BookCell {
     
     // Initialize for each book
     
-    init(title: String, isbn: String, edition: String, publishDate: String, author: String, condition: String, location: String, buyerSeller: String, postDate: String, bookCover: String, userDescription: String, bookCoverData: NSData) {
+    init(title: String, isbn: String, edition: String, publishDate: String, author: String, condition: String, location: String, buyerSellerID: String, buyerSeller: String, postDate: String, bookCover: String, userDescription: String, bookCoverData: NSData) {
         
         self.title = title
         self.isbn = isbn
@@ -64,6 +65,7 @@ class BookCell {
         self.author = author
         self.condition = condition
         self.location = location
+        self.buyerSellerID = buyerSellerID
         self.buyerSeller = buyerSeller
         self.postDate = postDate
         self.bookCover = bookCover

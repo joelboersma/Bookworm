@@ -113,9 +113,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     let firstName = userData?["FirstName"] ?? ""
                     let lastName = userData?["LastName"] ?? ""
                     
-                    user = firstName + " " + lastName
+                    let userName = firstName + " " + lastName
                     
-                    let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSeller: user, postDate: datePosted, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
+                    let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
                     
                     self.books.append(databaseData)
                     
@@ -175,6 +175,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         }
         
         dblistingVC.bookTitle = book.title
+        dblistingVC.userDescription = book.userDescription
+        dblistingVC.buyerSellerID = book.buyerSellerID
+        dblistingVC.buyerSeller = book.buyerSeller
         dblistingVC.bookAuthor = book.author
         dblistingVC.bookEdition = book.edition
         dblistingVC.bookISBN = book.isbn
