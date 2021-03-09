@@ -105,12 +105,13 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBAction func didPressAddListing(_ sender: Any) {
         
         let currentDateTime = Date()
+        let timestamp = String(currentDateTime.timeIntervalSince1970)
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .short
         let date = formatter.string(from: currentDateTime)
         let uniquePostID = UUID().uuidString
-
+        
         
         // save image to Firebase storage with uniqueBookID.jpg as image path
         let imageRef = storageRef.child("\(uniquePostID).jpg")
@@ -135,7 +136,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         //add book isbn to user's inventory
         ref.self.ref.child("Inventories").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN])
-
+        
         
         // Grab zipcode from user
         self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -146,7 +147,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
             let userFullName = userFirstName + " " + userLastName
             var authors = ""
             //change zip code to city and push new post onto database "Posts"
-            self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date)
+            self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
             
             if self.bookAuthor.isEmpty && !self.bookAuthors.isEmpty {
                 authors = self.bookAuthors.joined(separator: ", ")
@@ -154,7 +155,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
             else {
                 authors = self.bookAuthor
             }
-
+            
             // add user as a "seller" of this book under database's "Books"
             self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
                 //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
@@ -163,18 +164,11 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
                 // Append user + post info to "Buyers" node
                 self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).setValue(["User_Name": userFullName, "Post_Timestamp": date, "User_Location": bookZipCode, "Condition": self.bookCondition])
                 
-                }) { (error) in
+            }) { (error) in
                 print("Error adding post to \"Books\" node")
                 print(error.localizedDescription)
             }
-                        
             
-            //TODO: Erase section of code below if location implementation was updated correctly
-//            self.getCityFromPostalCode(postalCode: bookZipCode)
-//
-//            // make push call to database
-//            self.ref.child("Books").child(uniqueBookID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniqueBookID).jpg"])
-//
             
         })
         
@@ -200,14 +194,14 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
         bookCondition = bookConditionPickerData[row] as String
     }
     
-    func createNewListing(userID: String, uniquePostID: String, date: String){
+    func createNewListing(userID: String, uniquePostID: String, date: String, timestamp: String){
         // make push call to database
-        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniquePostID).jpg"])
+        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
     }
-
-//    func getCityFromPostalCode(postalCode: String){
-    func getCityFromPostalCode(postalCode: String, userID: String, uniquePostID: String, date: String) {
-
+    
+    //    func getCityFromPostalCode(postalCode: String){
+    func getCityFromPostalCode(postalCode: String, userID: String, uniquePostID: String, date: String, timestamp: String) {
+        
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(postalCode) { results, error in
             
@@ -221,7 +215,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
                 
                 self.bookLocation = "\(locality), \(state)"
                 print()
-                self.createNewListing(userID: userID, uniquePostID: uniquePostID, date: date )
+                self.createNewListing(userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
                 
             }
             if let error = error {
