@@ -90,7 +90,6 @@ PODS:
   - PhoneNumberKit/UIKit (3.3.1):
     - PhoneNumberKit/PhoneNumberKitCore
   - PromisesObjC (1.2.12)
-  - TesseractOCRiOS (5.0.1)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -99,7 +98,6 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - PhoneNumberKit
-  - TesseractOCRiOS
 
 SPEC REPOS:
   trunk:
@@ -119,7 +117,6 @@ SPEC REPOS:
     - nanopb
     - PhoneNumberKit
     - PromisesObjC
-    - TesseractOCRiOS
 
 SPEC CHECKSUMS:
   Firebase: 26223c695fe322633274198cb19dca8cb7e54416
@@ -138,8 +135,7 @@ SPEC CHECKSUMS:
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PhoneNumberKit: ff153d5e299f6da566cb73c6aa71e354933b2932
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  TesseractOCRiOS: 2c189465f86abb030d0c5141c90da9705b647854
 
-PODFILE CHECKSUM: 9d229e5d3e767a6a9d232a4f7d717bbee05d3852
+PODFILE CHECKSUM: 3b45d02441daafbd28a76e29e2a666305fe9b7e3
 
 COCOAPODS: 1.10.1
