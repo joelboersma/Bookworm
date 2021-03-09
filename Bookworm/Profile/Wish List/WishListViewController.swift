@@ -144,12 +144,15 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
         
+        wishListListingVC.delegate = self
+        
         wishListListingVC.bookAuthors = book.authors.joined(separator: ", ")
         wishListListingVC.bookISBN = book.isbn
         wishListListingVC.bookTitle = book.title
         wishListListingVC.bookEdition = book.edition ?? ""
         wishListListingVC.bookCoverData = book.bookCoverData
         wishListListingVC.bookPublishDate = book.publishDate
+        wishListListingVC.bookPostID = book.postID
         
         present(wishListListingVC, animated: true, completion: nil)
     
