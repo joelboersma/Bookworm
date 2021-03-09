@@ -79,7 +79,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
             authorLabel.text = "Author: "
         }
         else if bookAuthor.isEmpty && !bookAuthors.isEmpty {
-            authorLabel.text = "Authors:" + bookAuthors.joined(separator: ", ")
+            authorLabel.text = "Authors: " + bookAuthors.joined(separator: ", ")
         }
         else {
             authorLabel.text = "Author: " + bookAuthor
@@ -141,11 +141,25 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
             let userData = snapshot.value as? [String: String]
             let bookZipCode = userData?["ZipCode"] ?? ""
+            let userFirstName = userData?["FirstName"] ?? ""
+            let userLastName = userData?["LastName"] ?? ""
+            let userFullName = userFirstName + " " + userLastName
             
             //change zip code to city and push new post onto database "Posts"
             self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date)
             
-            //TODO: add user as seller under "Books"-> (isbn) -> Sellers" (should include UserID -> condition, location, date posted)
+            // add user as a "seller" of this book under database's "Books"
+            self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
+                //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
+                self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
+                
+                // Append user + post info to "Buyers" node
+                self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).setValue(["User_Name": userFullName, "Post_Timestamp": date, "User_Location": bookZipCode, "Condition": self.bookCondition])
+                
+                }) { (error) in
+                print("Error adding post to \"Books\" node")
+                print(error.localizedDescription)
+            }
                         
             
             //TODO: Erase section of code below if location implementation was updated correctly

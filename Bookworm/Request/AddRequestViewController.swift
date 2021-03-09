@@ -146,8 +146,8 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                             //get medium sized cover for the add request listing view
                             OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .M) { response, error in
                                 if let unwrappedError = error {
-                                    print("error finding cover")
-                                    print(unwrappedError)
+//                                    print("error finding cover")
+//                                    print(unwrappedError)
                                 }
                                 else if let coverResponse = response {
                                     guard let imageData: Data = coverResponse["imageData"] as? Data else {

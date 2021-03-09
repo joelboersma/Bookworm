@@ -76,6 +76,7 @@ class AddRequestListingViewController: UIViewController {
             
             if let publishDate = unwrappedResponse["publish_date"] as? String {
                 self.bookPublishDateLabel.text = "Publish Date: " + publishDate
+                self.bookPublishDate = publishDate
             } else {
                 self.bookPublishDateLabel.text = "Publish Date: None found"
             }
@@ -83,7 +84,7 @@ class AddRequestListingViewController: UIViewController {
         })
         
         //fill in book author
-        self.bookAuthorLabel.text = "Authors:" + bookAuthors.joined(separator: ", ")
+        self.bookAuthorLabel.text = "Authors: " + bookAuthors.joined(separator: ", ")
         
         //fill in book isbn
         self.bookISBNLabel.text = "ISBN: " + bookISBN
@@ -168,14 +169,30 @@ class AddRequestListingViewController: UIViewController {
         
         //add book isbn to user's wishlist
         ref.self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN])
-
+        
 
         // Grab zipcode from user, change zipcode to city
         self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
             let userData = snapshot.value as? [String: String]
             let bookZipCode = userData?["ZipCode"] ?? ""
+            let userFirstName = userData?["FirstName"] ?? ""
+            let userLastName = userData?["LastName"] ?? ""
+            let userFullName = userFirstName + " " + userLastName
 
             self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date)
+            
+            // add user as a "buyer" of this book under database's "Books"
+            self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
+                //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
+                self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
+                
+                // Append user + post info to "Buyers" node
+                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).setValue(["User_Name": userFullName,"Post_Timestamp": date, "User_Location": bookZipCode])
+                
+                }) { (error) in
+                print("Error adding request to \"Books\" node")
+                print(error.localizedDescription)
+            }
         })
 
         self.dismiss(animated: true, completion: nil)
