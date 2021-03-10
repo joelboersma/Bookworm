@@ -47,17 +47,13 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func addBookToDataSource(bookInfo: NSDictionary, isbn: String, condition: String, postID: String){
-        print("here")
 
         guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String else{
             print("error getting book data")
             return
         }
-        print("there")
         let cover = "\(postID).jpg"
-        
-        print(cover)
-        
+                
         let storageRef = Storage.storage().reference()
 
         // get book image reference from Firebase Storage
@@ -106,7 +102,6 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             
                 if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
-                    print(isbn)
                     // look up isbn in Books node for book info -> fill in table view cell
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in

@@ -98,7 +98,6 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
                 if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
-//                    print(isbn)
                     // look up isbn in Books node for book info -> fill in table view cell
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in
