@@ -11,12 +11,11 @@ import AVFoundation
 import Vision
 import VisionKit
 
-class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate, AddPostListingViewControllerDelegate {
+class ScannerViewController: UIViewController, AddPostListingViewControllerDelegate, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var scanLabel: UILabel!
-    @IBOutlet weak var scanButton: UIButton!
+    @IBOutlet weak var popUpView: UIView!
     
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
@@ -27,6 +26,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        popUpView.layer.cornerRadius = 10
         
         captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
         
@@ -80,7 +80,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         previewLayer?.videoGravity = .resizeAspectFill
         imageView.layer.addSublayer(previewLayer ?? AVCaptureVideoPreviewLayer())
 
-        view.bringSubviewToFront(scanLabel)
         view.bringSubviewToFront(activityIndicator)
         activityIndicator.stopAnimating()
         
@@ -95,29 +94,29 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         captureSession = nil
     }
     
-    @IBAction func scanButtonPressed() {
-        let documentCameraViewController = VNDocumentCameraViewController()
-        documentCameraViewController.delegate = self
-        self.present(documentCameraViewController, animated: true, completion: nil)
-    }
-    
-    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-        let image = scan.imageOfPage(at: 0)
-        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
-        do {
-            try handler.perform([recognizeTextRequest])
-        } catch {
-            print(error)
-        }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "addPostVC") as? AddPostViewController  else { assertionFailure("couldn't find vc"); return }
-        vc.inputSearch = recognizedText
-        let addPostVC = [vc]
-        self.navigationController?.setViewControllers(addPostVC, animated: true)
-        
-        controller.dismiss(animated: true)
-    }
+//    @IBAction func scanButtonPressed() {
+//        let documentCameraViewController = VNDocumentCameraViewController()
+//        documentCameraViewController.delegate = self
+//        self.present(documentCameraViewController, animated: true, completion: nil)
+//    }
+//
+//    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+//        let image = scan.imageOfPage(at: 0)
+//        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+//        do {
+//            try handler.perform([recognizeTextRequest])
+//        } catch {
+//            print(error)
+//        }
+//
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        guard let vc = storyboard.instantiateViewController(withIdentifier: "addPostVC") as? AddPostViewController  else { assertionFailure("couldn't find vc"); return }
+//        vc.inputSearch = recognizedText
+//        let addPostVC = [vc]
+//        self.navigationController?.setViewControllers(addPostVC, animated: true)
+//
+//        controller.dismiss(animated: true)
+//    }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if timePassed {
