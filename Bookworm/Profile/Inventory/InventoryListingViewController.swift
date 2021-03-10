@@ -89,7 +89,7 @@ class InventoryListingViewController: UIViewController {
         self.ref.child("Inventories/\(userID)/\(self.bookPostID)").removeValue()
         
         //database- remove user from "Sellers" of the book in "Books"
-        self.ref.child("Books/\(self.bookISBN)/Sellers/\(userID)").removeValue()
+        self.ref.child("Books/\(self.bookISBN)/Sellers/\(userID)/\(self.bookPostID)").removeValue()
         
         //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
         ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in

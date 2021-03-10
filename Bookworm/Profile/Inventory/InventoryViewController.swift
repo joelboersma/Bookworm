@@ -47,11 +47,17 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func addBookToDataSource(bookInfo: NSDictionary, isbn: String, condition: String, postID: String){
-        
-        guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String, let cover = bookInfo.value(forKey: "Photo_Cover") as? String else{
+        print("here")
+
+        guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String else{
             print("error getting book data")
             return
         }
+        print("there")
+        let cover = "\(postID).jpg"
+        
+        print(cover)
+        
         let storageRef = Storage.storage().reference()
 
         // get book image reference from Firebase Storage
@@ -100,7 +106,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             
                 if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
-//                    print(isbn)
+                    print(isbn)
                     // look up isbn in Books node for book info -> fill in table view cell
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -108,7 +114,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
                             //create book instance, add to array
                             if let bookInfo = snapshot.value as? NSDictionary {
                                 //get book condition
-                                self.ref.child("Books").child(isbn).child("Sellers").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                                self.ref.child("Books").child(isbn).child("Sellers").child(userID).child(postIDKey).observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let postInfo = snapshot.value as? NSDictionary, let condition = postInfo.value(forKey: "Condition") as? String{
                                         
                                         self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, condition: condition, postID: postIDKey)

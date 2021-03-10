@@ -185,7 +185,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
                 self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": authors, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
                 
                 // Append user + post info to "Buyers" node
-                self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).setValue(["User_Name": userFullName, "Post_Timestamp": date, "User_Location": bookZipCode, "Condition": self.bookCondition])
+                self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).child(uniquePostID).setValue(["User_Name": userFullName, "Post_Timestamp": date, "User_Location": bookZipCode, "Condition": self.bookCondition])
                 
             }) { (error) in
                 print("Error adding post to \"Books\" node")

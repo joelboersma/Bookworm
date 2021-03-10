@@ -50,10 +50,12 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func addBookToDataSource(bookInfo: NSDictionary, isbn: String, postID: String){
-        guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String, let cover = bookInfo.value(forKey: "Photo_Cover") as? String else{
+        guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String else{
             print("error getting book data")
             return
         }
+        
+        let cover = "\(postID).jpg"
 
         // get book image reference from Firebase Storage
         let bookCoverRef = self.storageRef.child(cover)
@@ -109,7 +111,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                             
                         }) { (error) in
                             print("error loading book info")
-                            print(error.localizedDescription)
+//                            print(error.localizedDescription)
                         }
                     }
                 }
