@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 import Firebase
 
+protocol FilterViewControllerDelegate {
+    func filterVCDismissed(selectedFilterValue: Int)
+}
+
 class FilterViewController: UIViewController {
     @IBOutlet weak var setFiltersButton: UIButton!
     @IBOutlet weak var categoryFilter: UISegmentedControl!
@@ -18,9 +22,16 @@ class FilterViewController: UIViewController {
     var categorySegment1 = "Requests"
     var categorySegment2 = "Both"
     
+    var delegate: FilterViewControllerDelegate?
+    
+    var selectedFilterValue = 2
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        categoryFilter.selectedSegmentIndex = selectedFilterValue
+            
         //format buttons + view
         setFiltersButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
@@ -33,17 +44,31 @@ class FilterViewController: UIViewController {
     
     @IBAction func setFiltersButtonPressed(_ sender: Any) {
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "homeViewController")
+        guard let homeVC = vc as? HomeViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        
         // 0 = Listing
         // 1 = Requests
         // 2 = Both
-        if categoryFilter.isEnabledForSegment(at: 0) {
+        if (categoryFilter.selectedSegmentIndex == 0) {
             print("Listing!")
-        } else if categoryFilter.isEnabledForSegment(at: 1) {
+            selectedFilterValue = 0
+            homeVC.filterValue = 0
+        } else if (categoryFilter.selectedSegmentIndex == 1) {
             print("Request!")
+            selectedFilterValue = 1
+            homeVC.filterValue = 1
         } else {
             print("Both!")
+            selectedFilterValue = 2
+            homeVC.filterValue = 2
         }
         
+        self.delegate?.filterVCDismissed(selectedFilterValue: selectedFilterValue)
         
         // Dismiss view controller
         self.dismiss(animated: true, completion: nil)

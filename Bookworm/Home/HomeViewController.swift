@@ -8,14 +8,6 @@
 import UIKit
 import Firebase
 
-enum filterOptions {
-    case listing
-    case request
-    case both
-    case distance
-}
-
-
 class ListingsTableViewCell: UITableViewCell {
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
@@ -48,7 +40,7 @@ class ListingsTableViewCell: UITableViewCell {
 }
 
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate  {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -59,7 +51,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     var ref = Database.database().reference()
     
-    var filter = 0
+    // 0 = Listing
+    // 1 = Requests
+    // Default: 2 = Both
+    var filterValue = 2
     
     
     override func viewDidLoad() {
@@ -79,10 +74,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     override func viewDidAppear(_ animated: Bool) {
         // For getting database data and reloadData for listingsTableView
         self.books.removeAll()
-        self.makeDatabaseCallsforReload()
+        self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
     
-    func makeDatabaseCallsforReload() {
+    
+    func makeDatabaseCallsforReload(filterOption: Int) {
         let storageRef = Storage.storage().reference()
         
         self.wait()
@@ -132,6 +128,18 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     DispatchQueue.main.async {
                         
                         self.books.append(databaseData)
+                        
+                        // For listings
+                        if (filterOption == 0){
+                            self.books = self.books.filter { $0.userDescription != "Buyer" }
+                        }
+                        
+                        // For requests
+                        if (filterOption == 1) {
+                            self.books = self.books.filter { $0.userDescription != "Seller" }
+                        }
+                        
+                        // Default is both
                         // Sort by date and time.
                         self.books.sort(by: {$0.timeStamp > $1.timeStamp})
                         self.listingsTableView.reloadData()
@@ -152,10 +160,19 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             assertionFailure("couldn't find vc")
             return
         }
-        //filterVC.delegate = self
+        
+        filterVC.selectedFilterValue = filterValue
+        filterVC.delegate = self
         
         present(filterVC, animated: true, completion: nil)
     }
+    
+    func filterVCDismissed(selectedFilterValue: Int) {
+        filterValue = selectedFilterValue
+        self.books.removeAll()
+        makeDatabaseCallsforReload(filterOption: selectedFilterValue)
+    }
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // hides the keyboard.

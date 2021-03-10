@@ -22,6 +22,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
   * Peter
     * Created new node values for database, such as timestamp.
     * Populated HomeView filtering by date and time.
+    * Implemented filtering for request and listing in HomeView
   * Urvashi 
   * Mohammed
 
@@ -31,7 +32,6 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
   * Joel
   * Peter
     * Work on Matched View Controller
-    * Implement filtering for request or listing in HomeView
   * Urvashi 
   * Mohammed
   
