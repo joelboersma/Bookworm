@@ -11,12 +11,10 @@ import AVFoundation
 import Vision
 import VisionKit
 
-class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate, AddPostListingViewControllerDelegate {
+class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var scanLabel: UILabel!
-    @IBOutlet weak var scanButton: UIButton!
     
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
@@ -80,7 +78,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         previewLayer?.videoGravity = .resizeAspectFill
         imageView.layer.addSublayer(previewLayer ?? AVCaptureVideoPreviewLayer())
 
-        view.bringSubviewToFront(scanLabel)
         view.bringSubviewToFront(activityIndicator)
         activityIndicator.stopAnimating()
         
@@ -95,29 +92,29 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         captureSession = nil
     }
     
-    @IBAction func scanButtonPressed() {
-        let documentCameraViewController = VNDocumentCameraViewController()
-        documentCameraViewController.delegate = self
-        self.present(documentCameraViewController, animated: true, completion: nil)
-    }
-    
-    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-        let image = scan.imageOfPage(at: 0)
-        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
-        do {
-            try handler.perform([recognizeTextRequest])
-        } catch {
-            print(error)
-        }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "addPostVC") as? AddPostViewController  else { assertionFailure("couldn't find vc"); return }
-        vc.inputSearch = recognizedText
-        let addPostVC = [vc]
-        self.navigationController?.setViewControllers(addPostVC, animated: true)
-        
-        controller.dismiss(animated: true)
-    }
+//    @IBAction func scanButtonPressed() {
+//        let documentCameraViewController = VNDocumentCameraViewController()
+//        documentCameraViewController.delegate = self
+//        self.present(documentCameraViewController, animated: true, completion: nil)
+//    }
+//
+//    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+//        let image = scan.imageOfPage(at: 0)
+//        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+//        do {
+//            try handler.perform([recognizeTextRequest])
+//        } catch {
+//            print(error)
+//        }
+//
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        guard let vc = storyboard.instantiateViewController(withIdentifier: "addPostVC") as? AddPostViewController  else { assertionFailure("couldn't find vc"); return }
+//        vc.inputSearch = recognizedText
+//        let addPostVC = [vc]
+//        self.navigationController?.setViewControllers(addPostVC, animated: true)
+//
+//        controller.dismiss(animated: true)
+//    }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if timePassed {
@@ -175,20 +172,21 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                     addPostListingVC.bookAuthors = bookInfo["authors"] as? [String] ?? []
                     addPostListingVC.bookISBN = bookInfo["isbn"] as? String ?? ""
                     addPostListingVC.bookCoverImageM = bookInfo["imageData"] as? Data
-                    addPostListingVC.delegate = self
+//                    addPostListingVC.delegate = self
                     self.present(addPostListingVC, animated: true, completion: nil)
                 }
+                self.dismiss(animated: true, completion: nil)
                 self.start()
             }
         }
     }
     
-    func addPostListingVCDismissed() {
-        if captureSession?.isRunning == false {
-            captureSession?.startRunning()
-            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
-        }
-    }
+//    func addPostListingVCDismissed() {
+//        if captureSession?.isRunning == false {
+//            captureSession?.startRunning()
+//            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
+//        }
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
         if captureSession?.isRunning == false {

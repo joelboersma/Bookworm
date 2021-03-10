@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Vision
+import VisionKit
 
 class AddPostBookCell: UITableViewCell {
     @IBOutlet weak var bookCoverImage: UIImageView!
@@ -42,13 +44,15 @@ class AddPostBookCell: UITableViewCell {
 }
 
 
-class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, VNDocumentCameraViewControllerDelegate {
 
     // Search API
     // https://openlibrary.org/dev/docs/api/search
     
     var books: [Book] = []
     var inputSearch: String = ""
+    var recognizeTextRequest = VNRecognizeTextRequest()
+    var recognizedText = ""
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var resultsTableView: UITableView!
@@ -67,11 +71,11 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         
         noSearchResultsLabel.text = ""
         
-        if !inputSearch.isEmpty {
-            searchBar.text = inputSearch
-            searchBarSearchButtonClicked(searchBar)
-            self.tapGestureRecognizer.isEnabled = false
-        }
+//        if !inputSearch.isEmpty {
+//            searchBar.text = inputSearch
+//            searchBarSearchButtonClicked(searchBar)
+//            self.tapGestureRecognizer.isEnabled = false
+//        }
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
@@ -224,7 +228,6 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         addPostListingVC.bookCoverImageL = book.coverImageL
     
         present(addPostListingVC,animated: true)
-
     }
     
     @IBAction func didTap(_ sender: UITapGestureRecognizer) {
@@ -234,13 +237,63 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         }
     }
     
-    @IBAction func cancelButtonPressed(_ sender: Any) {
+    @IBAction func scanBarcodePressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
-        vc.selectedIndex = 2
-        let tabBarController = [vc]
-        self.navigationController?.setViewControllers(tabBarController, animated: true)
+        let vc = storyboard.instantiateViewController(identifier: "scannerVC")
+        guard let scannerVC = vc as? ScannerViewController else {
+            assertionFailure("couldn't find vc")
+            return
+        }
+        present(scannerVC, animated: true, completion: nil)
     }
+    
+    @IBAction func scanCoverPressed(_ sender: Any) {
+        let documentCameraViewController = VNDocumentCameraViewController()
+        documentCameraViewController.delegate = self
+        self.present(documentCameraViewController, animated: true, completion: nil)
+    }
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        let image = scan.imageOfPage(at: 0)
+        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+        do {
+            try handler.perform([recognizeTextRequest])
+        } catch {
+            print(error)
+        }
+        
+        searchBar.text = recognizedText
+        searchBarSearchButtonClicked(searchBar)
+        self.tapGestureRecognizer.isEnabled = false
+        
+        controller.dismiss(animated: true)
+    }
+    
+    func recognizeTextHandler() {
+        recognizeTextRequest = VNRecognizeTextRequest(completionHandler: { (request, error) in
+            if let results = request.results, !results.isEmpty {
+                if let requestResults = request.results as? [VNRecognizedTextObservation] {
+                    self.recognizedText = ""
+                    for observation in requestResults {
+                        guard let candidiate = observation.topCandidates(1).first else { return }
+                        print(candidiate.string)
+                        self.recognizedText += candidiate.string
+                        self.recognizedText += " "
+                    }
+                }
+            }
+        })
+        recognizeTextRequest.recognitionLevel = .accurate
+        recognizeTextRequest.usesLanguageCorrection = true
+    }
+    
+//    @IBAction func cancelButtonPressed(_ sender: Any) {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
+//        vc.selectedIndex = 2
+//        let tabBarController = [vc]
+//        self.navigationController?.setViewControllers(tabBarController, animated: true)
+//    }
     
     func wait() {
         self.activityIndicator.startAnimating()
