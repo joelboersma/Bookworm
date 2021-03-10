@@ -57,7 +57,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
 
         // get book image reference from Firebase Storage
         let bookCoverRef = self.storageRef.child(cover)
-        
+                
         // download URL of reference, then get contents of URL and set imageView to UIImage
         bookCoverRef.downloadURL { url, error in
             guard let imageURL = url, error == nil else {
@@ -69,6 +69,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                 assertionFailure("Error in getting Data")
                 return
             }
+            
             let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, postID: postID)
             self.wishListBooks.append(book)
             self.wishListTableView.reloadData()
@@ -153,6 +154,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         wishListListingVC.bookCoverData = book.bookCoverData
         wishListListingVC.bookPublishDate = book.publishDate
         wishListListingVC.bookPostID = book.postID
+        wishListListingVC.bookCover = book.bookCover
         
         present(wishListListingVC, animated: true, completion: nil)
     
