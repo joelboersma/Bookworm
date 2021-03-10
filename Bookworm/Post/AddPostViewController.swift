@@ -71,6 +71,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         
         noSearchResultsLabel.text = ""
         
+        recognizeTextHandler()
 //        if !inputSearch.isEmpty {
 //            searchBar.text = inputSearch
 //            searchBarSearchButtonClicked(searchBar)

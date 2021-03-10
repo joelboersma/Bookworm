@@ -11,10 +11,11 @@ import AVFoundation
 import Vision
 import VisionKit
 
-class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate {
+class ScannerViewController: UIViewController, AddPostListingViewControllerDelegate, AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, VNDocumentCameraViewControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var popUpView: UIView!
     
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
@@ -25,6 +26,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        popUpView.layer.cornerRadius = 10
         
         captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
         
@@ -172,21 +174,20 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                     addPostListingVC.bookAuthors = bookInfo["authors"] as? [String] ?? []
                     addPostListingVC.bookISBN = bookInfo["isbn"] as? String ?? ""
                     addPostListingVC.bookCoverImageM = bookInfo["imageData"] as? Data
-//                    addPostListingVC.delegate = self
+                    addPostListingVC.delegate = self
                     self.present(addPostListingVC, animated: true, completion: nil)
                 }
-                self.dismiss(animated: true, completion: nil)
                 self.start()
             }
         }
     }
     
-//    func addPostListingVCDismissed() {
-//        if captureSession?.isRunning == false {
-//            captureSession?.startRunning()
-//            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
-//        }
-//    }
+    func addPostListingVCDismissed() {
+        if captureSession?.isRunning == false {
+            captureSession?.startRunning()
+            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         if captureSession?.isRunning == false {
