@@ -40,7 +40,7 @@ class ListingsTableViewCell: UITableViewCell {
 }
 
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate  {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -50,6 +50,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     var books: [BookCell] = []
     
     var ref = Database.database().reference()
+    
+    // 0 = Listing
+    // 1 = Requests
+    // Default: 2 = Both
+    var filterValue = 2
     
     
     override func viewDidLoad() {
@@ -68,17 +73,19 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     override func viewDidAppear(_ animated: Bool) {
         // For getting database data and reloadData for listingsTableView
-        books.removeAll()
-        makeDatabaseCallsforReload()
+        self.books.removeAll()
+        self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
     
-    func makeDatabaseCallsforReload() {
+    
+    func makeDatabaseCallsforReload(filterOption: Int) {
         let storageRef = Storage.storage().reference()
         
         self.wait()
+        
         self.ref.child("Posts").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
-            var user = results?["User"] ?? ""
+            let user = results?["User"] ?? ""
             let condition = results?["Condition"] ?? ""
             let isbn = results?["ISBN"] ?? ""
             let edition = results?["Edition"] ?? ""
@@ -118,10 +125,21 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
                     
-                    self.books.append(databaseData)
-                    
                     DispatchQueue.main.async {
                         
+                        self.books.append(databaseData)
+                        
+                        // For listings
+                        if (filterOption == 0){
+                            self.books = self.books.filter { $0.userDescription != "Buyer" }
+                        }
+                        
+                        // For requests
+                        if (filterOption == 1) {
+                            self.books = self.books.filter { $0.userDescription != "Seller" }
+                        }
+                        
+                        // Default is both
                         // Sort by date and time.
                         self.books.sort(by: {$0.timeStamp > $1.timeStamp})
                         self.listingsTableView.reloadData()
@@ -142,10 +160,19 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             assertionFailure("couldn't find vc")
             return
         }
-        //filterVC.delegate = self
+        
+        filterVC.selectedFilterValue = filterValue
+        filterVC.delegate = self
         
         present(filterVC, animated: true, completion: nil)
     }
+    
+    func filterVCDismissed(selectedFilterValue: Int) {
+        filterValue = selectedFilterValue
+        self.books.removeAll()
+        makeDatabaseCallsforReload(filterOption: selectedFilterValue)
+    }
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // hides the keyboard.
