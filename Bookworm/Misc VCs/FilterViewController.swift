@@ -25,7 +25,6 @@ class FilterViewController: UIViewController {
         setFiltersButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
         
-        
         categoryFilter.setTitle(categorySegment0, forSegmentAt: 0)
         categoryFilter.setTitle(categorySegment1, forSegmentAt: 1)
         categoryFilter.setTitle(categorySegment2, forSegmentAt: 2)
@@ -33,7 +32,20 @@ class FilterViewController: UIViewController {
     }
     
     @IBAction func setFiltersButtonPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
         
+        // 0 = Listing
+        // 1 = Requests
+        // 2 = Both
+        if categoryFilter.isEnabledForSegment(at: 0) {
+            print("Listing!")
+        } else if categoryFilter.isEnabledForSegment(at: 1) {
+            print("Request!")
+        } else {
+            print("Both!")
+        }
+        
+        
+        // Dismiss view controller
+        self.dismiss(animated: true, completion: nil)
     }
 }

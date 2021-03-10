@@ -20,6 +20,8 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Added functionality to the "remove" buttons in wishlist/inventory (it now updates the database)
   * Joel
   * Peter
+    * Created new node values for database, such as timestamp.
+    * Populated HomeView filtering by date and time.
   * Urvashi 
   * Mohammed
 
@@ -28,6 +30,8 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * add UI elements to wishlist/inventory (ie activity indicator)
   * Joel
   * Peter
+    * Work on Matched View Controller
+    * Implement filtering for request or listing in HomeView
   * Urvashi 
   * Mohammed
   

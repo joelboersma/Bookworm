@@ -8,6 +8,14 @@
 import UIKit
 import Firebase
 
+enum filterOptions {
+    case listing
+    case request
+    case both
+    case distance
+}
+
+
 class ListingsTableViewCell: UITableViewCell {
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
@@ -51,6 +59,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     var ref = Database.database().reference()
     
+    var filter = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,17 +78,18 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     override func viewDidAppear(_ animated: Bool) {
         // For getting database data and reloadData for listingsTableView
-        books.removeAll()
-        makeDatabaseCallsforReload()
+        self.books.removeAll()
+        self.makeDatabaseCallsforReload()
     }
     
     func makeDatabaseCallsforReload() {
         let storageRef = Storage.storage().reference()
         
         self.wait()
+        
         self.ref.child("Posts").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
-            var user = results?["User"] ?? ""
+            let user = results?["User"] ?? ""
             let condition = results?["Condition"] ?? ""
             let isbn = results?["ISBN"] ?? ""
             let edition = results?["Edition"] ?? ""
@@ -118,10 +129,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
                     
-                    self.books.append(databaseData)
-                    
                     DispatchQueue.main.async {
                         
+                        self.books.append(databaseData)
                         // Sort by date and time.
                         self.books.sort(by: {$0.timeStamp > $1.timeStamp})
                         self.listingsTableView.reloadData()
