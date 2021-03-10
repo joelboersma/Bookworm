@@ -47,7 +47,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func addBookToDataSource(bookInfo: NSDictionary, isbn: String, condition: String, postID: String){
-
+        print("here")
         guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String else{
             print("error getting book data")
             return
@@ -109,7 +109,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
                             //create book instance, add to array
                             if let bookInfo = snapshot.value as? NSDictionary {
                                 //get book condition
-                                self.ref.child("Books").child(isbn).child("Sellers").child(userID).child(postIDKey).observeSingleEvent(of: .value, with: { (snapshot) in
+                                self.ref.child("Books").child(isbn).child("Sellers").child(userID).child("Posts").child(postIDKey).observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let postInfo = snapshot.value as? NSDictionary, let condition = postInfo.value(forKey: "Condition") as? String{
                                         
                                         self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, condition: condition, postID: postIDKey)

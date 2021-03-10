@@ -187,8 +187,11 @@ class AddRequestListingViewController: UIViewController {
                 //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
                 self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
                 
-                // Append user + post info to "Buyers" node
-                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child(uniquePostID).setValue(["User_Name": userFullName,"Post_Timestamp": date, "User_Location": bookZipCode])
+                // Append user info to "Buyers" node
+                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
+                    
+                // Append post info to "Buyers" node
+                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date])
                 
                 }) { (error) in
                 print("Error adding request to \"Books\" node")

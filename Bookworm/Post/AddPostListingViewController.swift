@@ -184,8 +184,11 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
                 //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
                 self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": authors, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
                 
-                // Append user + post info to "Buyers" node
-                self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).child(uniquePostID).setValue(["User_Name": userFullName, "Post_Timestamp": date, "User_Location": bookZipCode, "Condition": self.bookCondition])
+                // Append user info to "Sellers" node
+                self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
+                    
+                // Append post info to "Sellers" node
+                self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date, "Condition": self.bookCondition])
                 
             }) { (error) in
                 print("Error adding post to \"Books\" node")

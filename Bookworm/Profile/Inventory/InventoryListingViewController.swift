@@ -88,20 +88,33 @@ class InventoryListingViewController: UIViewController {
         //database- remove book from user's inventory in "Inventories"
         self.ref.child("Inventories/\(userID)/\(self.bookPostID)").removeValue()
         
-        //database- remove user from "Sellers" of the book in "Books"
-        self.ref.child("Books/\(self.bookISBN)/Sellers/\(userID)/\(self.bookPostID)").removeValue()
+        //database- remove post from user's node in "Books" -> "Sellers" -> User ID
+        self.ref.child("Books/\(self.bookISBN)/Sellers/\(userID)/Posts/\(self.bookPostID)").removeValue()
         
-        //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
-        ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
+        //database- if user has no more posts of the book, remove the user entirely from the book
+        ref.child("Books/\(self.bookISBN)/Sellers/\(userID)").observeSingleEvent(of: .value, with: { (snapshot) in
           // Get user value
             let numChildren = snapshot.childrenCount
-            
+
             if numChildren == 1 {
-                self.ref.child("Books/\(self.bookISBN)").removeValue()
+                self.ref.child("Books/\(self.bookISBN)/Sellers/\(userID)").removeValue()
             }
+            //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+            self.ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
+              // Get user value
+                let numChildren = snapshot.childrenCount
+
+                if numChildren == 1 {
+                    self.ref.child("Books/\(self.bookISBN)").removeValue()
+                }
+              }) { (error) in
+                print(error.localizedDescription)
+            }
+
           }) { (error) in
             print(error.localizedDescription)
         }
+
         
         //database- remove book image from storage
         let imageRef = self.storageRef.child(self.bookCover)
