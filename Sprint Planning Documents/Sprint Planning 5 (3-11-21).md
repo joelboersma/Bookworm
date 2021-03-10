@@ -15,8 +15,9 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Completed Tasks
   * Christina 
-    * Populate Wishlist and Inventory tableviews
-    * Populate wishlist's and inventory's book info views
+    * Populated Wishlist and Inventory tableviews
+    * Populated wishlist's and inventory's book info views
+    * Added functionality to the "remove" buttons in wishlist/inventory (it now updates the database)
   * Joel
   * Peter
   * Urvashi 
@@ -24,7 +25,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Planned Tasks
   * Christina
-    * removal of posts from database 
+    * add UI elements to wishlist/inventory (ie activity indicator)
   * Joel
   * Peter
   * Urvashi 
