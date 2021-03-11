@@ -47,6 +47,8 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
     var bookCoverImageM: Data? = nil
     var bookCoverImageL: Data? = nil
     
+    var authorString: String = ""
+    
     var bookConditionPickerData: [String] = [String]()
     
     override func viewDidLoad() {
@@ -77,12 +79,15 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         if bookAuthor.isEmpty && bookAuthors.isEmpty {
             authorLabel.text = "Author: "
+            authorString = " "
         }
         else if bookAuthor.isEmpty && !bookAuthors.isEmpty {
             authorLabel.text = "Authors: " + bookAuthors.joined(separator: ", ")
+            authorString = bookAuthors.joined(separator: ", ")
         }
         else {
             authorLabel.text = "Author: " + bookAuthor
+            authorString = bookAuthor
         }
         
         publishDateLabel.text = "Publish Date: " + bookPublishDate
@@ -168,21 +173,15 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
             let userFirstName = userData?["FirstName"] ?? ""
             let userLastName = userData?["LastName"] ?? ""
             let userFullName = userFirstName + " " + userLastName
-            var authors = ""
+
             //change zip code to city and push new post onto database "Posts"
             self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
-            
-            if self.bookAuthor.isEmpty && !self.bookAuthors.isEmpty {
-                authors = self.bookAuthors.joined(separator: ", ")
-            }
-            else {
-                authors = self.bookAuthor
-            }
+        
             
             // add user as a "seller" of this book under database's "Books"
             self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
                 //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
-                self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": authors, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
+                self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.authorString, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
                 
                 // Append user info to "Sellers" node
                 self.ref.child("Books").child(self.bookISBN).child("Sellers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
@@ -222,7 +221,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func createNewListing(userID: String, uniquePostID: String, date: String, timestamp: String){
         // make push call to database
-        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
+        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.authorString, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Seller", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
     }
     
     //    func getCityFromPostalCode(postalCode: String){
