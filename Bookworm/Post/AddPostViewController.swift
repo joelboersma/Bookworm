@@ -262,8 +262,23 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         } catch {
             print(error)
         }
+        let ordinalNumberEndings = ["st", "nd", "rd", "th"]
+        var recognizedTextArray = recognizedText.components(separatedBy: " ")
+        let decimalDigits = CharacterSet.decimalDigits
+        for (ind, str) in recognizedTextArray.enumerated() {
+            let currStr = str.lowercased()
+            if currStr.contains("edition") {
+                recognizedTextArray[ind] = ""
+                if ind > 0 {
+                    if recognizedTextArray[ind - 1].rangeOfCharacter(from: decimalDigits) != nil || ordinalNumberEndings.filter({recognizedTextArray[ind - 1].lowercased().suffix(2).contains($0)}).count != 0 {
+                        recognizedTextArray[ind - 1] = ""
+                    }
+                }
+            }
+        }
         
-        searchBar.text = recognizedText
+        let searchInputArray = recognizedTextArray.filter({$0 != ""})
+        searchBar.text = searchInputArray.joined(separator: " ")
         searchBarSearchButtonClicked(searchBar)
         self.tapGestureRecognizer.isEnabled = false
         
@@ -277,7 +292,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
                     self.recognizedText = ""
                     for observation in requestResults {
                         guard let candidiate = observation.topCandidates(1).first else { return }
-                        print(candidiate.string)
+//                        print(candidiate.string)
                         self.recognizedText += candidiate.string
                         self.recognizedText += " "
                     }
@@ -287,14 +302,6 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         recognizeTextRequest.recognitionLevel = .accurate
         recognizeTextRequest.usesLanguageCorrection = true
     }
-    
-//    @IBAction func cancelButtonPressed(_ sender: Any) {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
-//        vc.selectedIndex = 2
-//        let tabBarController = [vc]
-//        self.navigationController?.setViewControllers(tabBarController, animated: true)
-//    }
     
     func wait() {
         self.activityIndicator.startAnimating()

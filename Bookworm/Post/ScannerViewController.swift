@@ -139,7 +139,7 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
                     self.recognizedText = ""
                     for observation in requestResults {
                         guard let candidiate = observation.topCandidates(1).first else { return }
-                        print(candidiate.string)
+//                        print(candidiate.string)
                         self.recognizedText += candidiate.string
                         self.recognizedText += " "
                     }
