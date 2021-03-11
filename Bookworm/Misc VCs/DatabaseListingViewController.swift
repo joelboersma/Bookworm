@@ -18,7 +18,6 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     @IBOutlet weak var bookImageView: UIImageView!
     @IBOutlet weak var bookAuthorLabel: UITextField!
     @IBOutlet weak var bookPublishingDateLabel: UITextField!
-    @IBOutlet weak var bookEditionLabel: UITextField!
     @IBOutlet weak var bookISBNLabel: UITextField!
     @IBOutlet weak var addToWishlistButton: UIButton!
     @IBOutlet weak var popupView: UIView!
@@ -71,12 +70,6 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         self.bookTitleLabel.text = bookTitle
         self.bookAuthorLabel.text = "Author: \(bookAuthor)"
         self.bookPublishingDateLabel.text = "Publish Date: \(bookPublishDate)"
-        
-        if (bookEdition != ""){
-            self.bookEditionLabel.text = "Edition: \(bookEdition)"
-        } else {
-            self.bookEditionLabel.text = "Edition: N/A"
-        }
         
         self.bookISBNLabel.text = "ISBN: \(bookISBN)"
         

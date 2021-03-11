@@ -16,7 +16,6 @@ class WishListListingViewController: UIViewController {
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookAuthorLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
-    @IBOutlet weak var bookEditionLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
     @IBOutlet weak var bookTitleLabel: UILabel!
     
@@ -47,7 +46,6 @@ class WishListListingViewController: UIViewController {
     
     func fillInPopup(){
         bookTitleLabel.text = self.bookTitle
-        bookEditionLabel.text = "Edition: " + self.bookEdition
         bookISBNLabel.text = "ISBN: " + self.bookISBN
         bookAuthorLabel.text = "Authors: " + self.bookAuthors
         bookPublishDateLabel.text = "Publish Date: " + self.bookPublishDate

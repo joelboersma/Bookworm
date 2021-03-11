@@ -16,7 +16,6 @@ class AddRequestListingViewController: UIViewController {
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookAuthorLabel: UITextField!
     @IBOutlet weak var bookPublishDateLabel: UITextField!
-    @IBOutlet weak var bookEditionLabel: UITextField!
     @IBOutlet weak var bookISBNLabel: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addRequestButton: UIButton!

@@ -22,7 +22,6 @@ class InventoryListingViewController: UIViewController {
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookAuthorLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
-    @IBOutlet weak var bookEditionLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
     @IBOutlet weak var bookConditionLabel: UILabel!
     
@@ -56,7 +55,6 @@ class InventoryListingViewController: UIViewController {
     
     func fillInPopup(){
         bookTitleLabel.text = self.bookTitle
-        bookEditionLabel.text = "Edition: " + self.bookEdition
         bookISBNLabel.text = "ISBN: " + self.bookISBN
         bookAuthorLabel.text = "Authors: " + self.bookAuthors
         bookPublishDateLabel.text = "Publish Date: " + self.bookPublishDate

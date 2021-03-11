@@ -26,7 +26,6 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var authorLabel: UITextField!
     @IBOutlet weak var publishDateLabel: UITextField!
-    @IBOutlet weak var editionLabel: UITextField!
     @IBOutlet weak var isbnLabel: UITextField!
     
     @IBOutlet weak var bookConditionPickerView: UIPickerView!
