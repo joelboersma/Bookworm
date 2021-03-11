@@ -11,6 +11,7 @@
 		1D7474B525E9BFE700946263 /* MatchesEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */; };
 		1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */; };
 		1D8E88ED25ECE5B2004D3AC1 /* AddPostListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8E88EC25ECE5B2004D3AC1 /* AddPostListingViewController.swift */; };
+		1DC2885B25FDD7ED00AA0ABA /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC2885A25FDD7ED00AA0ABA /* Animate.swift */; };
 		1DCAEAC625E24AA1000C9047 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */; };
 		25190E5125DF9BCD007573D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */; };
 		25190E7925E39CDA007573D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25190E7825E39CDA007573D6 /* ProfileViewController.swift */; };
@@ -45,6 +46,7 @@
 		1D7474B425E9BFE700946263 /* MatchesEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesEntryViewController.swift; sourceTree = "<group>"; };
 		1D8E88E825ECD199004D3AC1 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		1D8E88EC25ECE5B2004D3AC1 /* AddPostListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostListingViewController.swift; sourceTree = "<group>"; };
+		1DC2885A25FDD7ED00AA0ABA /* Animate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
 		1DCAEAC525E24AA1000C9047 /* MatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
 		25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		25190E7825E39CDA007573D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				4B2FB1CD25DF596A00661D51 /* AppDelegate.swift */,
 				25190E5025DF9BCD007573D6 /* GoogleService-Info.plist */,
 				4B2FB1CF25DF596A00661D51 /* SceneDelegate.swift */,
+				1DC2885A25FDD7ED00AA0ABA /* Animate.swift */,
 				4B2FB1D325DF596A00661D51 /* Main.storyboard */,
 				4B2FB1D625DF596B00661D51 /* Assets.xcassets */,
 				4B2FB1D825DF596B00661D51 /* LaunchScreen.storyboard */,
@@ -371,6 +374,7 @@
 				1DCAEAC625E24AA1000C9047 /* MatchesViewController.swift in Sources */,
 				8461B29225E6E5260076C299 /* FilterViewController.swift in Sources */,
 				1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */,
+				1DC2885B25FDD7ED00AA0ABA /* Animate.swift in Sources */,
 				25190E8225E41C88007573D6 /* WishListListingViewController.swift in Sources */,
 				4B2FB1CE25DF596A00661D51 /* AppDelegate.swift in Sources */,
 				25F3D9E525EDC4FD008D4463 /* HomeViewController.swift in Sources */,
@@ -529,7 +533,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UQCW8P856X;
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -591,7 +595,7 @@
 					"\"nanopb\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "peter-kim";
+				PRODUCT_BUNDLE_IDENTIFIER = syamhaque;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -606,7 +610,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UQCW8P856X;
+				DEVELOPMENT_TEAM = WSM4GMUTKD;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = Bookworm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -668,7 +672,7 @@
 					"\"nanopb\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "peter-kim";
+				PRODUCT_BUNDLE_IDENTIFIER = syamhaqu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

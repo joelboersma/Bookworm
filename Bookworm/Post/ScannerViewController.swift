@@ -16,13 +16,15 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var popUpView: UIView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     var captureSession: AVCaptureSession?
     var previewLayer: AVCaptureVideoPreviewLayer?
-    var recognizeTextRequest = VNRecognizeTextRequest()
-    var recognizedText = ""
+//    var recognizeTextRequest = VNRecognizeTextRequest()
+//    var recognizedText = ""
     var captureTimer = Timer()
     var timePassed = false
+    var animate = Animate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,18 +64,18 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
             return
         }
         
-        let videoDataOutput = AVCaptureVideoDataOutput()
-        
-        if captureSession?.canAddOutput(videoDataOutput) != nil {
-            captureSession?.addOutput(videoDataOutput)
-            
-            videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-            videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
-        }
-        else {
-            captureFailed()
-            return
-        }
+//        let videoDataOutput = AVCaptureVideoDataOutput()
+//
+//        if captureSession?.canAddOutput(videoDataOutput) != nil {
+//            captureSession?.addOutput(videoDataOutput)
+//
+//            videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+//            videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
+//        }
+//        else {
+//            captureFailed()
+//            return
+//        }
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession ?? AVCaptureSession())
         previewLayer?.frame = imageView.layer.bounds
@@ -84,7 +86,7 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
         activityIndicator.stopAnimating()
         
         captureSession?.startRunning()
-        recognizeTextHandler()
+//        recognizeTextHandler()
     }
 
     func captureFailed() {
@@ -118,37 +120,37 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
 //        controller.dismiss(animated: true)
 //    }
     
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        if timePassed {
-            let imageRequestHandler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .down)
-
-            do {
-                try imageRequestHandler.perform([recognizeTextRequest])
-            } catch {
-                print(error)
-                return
-            }
-            timePassed = false
-        }
-    }
-    
-    func recognizeTextHandler() {
-        recognizeTextRequest = VNRecognizeTextRequest(completionHandler: { (request, error) in
-            if let results = request.results, !results.isEmpty {
-                if let requestResults = request.results as? [VNRecognizedTextObservation] {
-                    self.recognizedText = ""
-                    for observation in requestResults {
-                        guard let candidiate = observation.topCandidates(1).first else { return }
-//                        print(candidiate.string)
-                        self.recognizedText += candidiate.string
-                        self.recognizedText += " "
-                    }
-                }
-            }
-        })
-        recognizeTextRequest.recognitionLevel = .accurate
-        recognizeTextRequest.usesLanguageCorrection = true
-    }
+//    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+//        if timePassed {
+//            let imageRequestHandler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .down)
+//
+//            do {
+//                try imageRequestHandler.perform([recognizeTextRequest])
+//            } catch {
+//                print(error)
+//                return
+//            }
+//            timePassed = false
+//        }
+//    }
+//
+//    func recognizeTextHandler() {
+//        recognizeTextRequest = VNRecognizeTextRequest(completionHandler: { (request, error) in
+//            if let results = request.results, !results.isEmpty {
+//                if let requestResults = request.results as? [VNRecognizedTextObservation] {
+//                    self.recognizedText = ""
+//                    for observation in requestResults {
+//                        guard let candidiate = observation.topCandidates(1).first else { return }
+////                        print(candidiate.string)
+//                        self.recognizedText += candidiate.string
+//                        self.recognizedText += " "
+//                    }
+//                }
+//            }
+//        })
+//        recognizeTextRequest.recognitionLevel = .accurate
+//        recognizeTextRequest.usesLanguageCorrection = true
+//    }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         captureSession?.stopRunning()
@@ -159,25 +161,37 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
             self.wait()
             
             OpenLibraryAPI.getAllInfoForISBN(stringValue, bookCoverSize: .M) { (response, error) in
-                print(stringValue)
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(identifier: "addPostListingVC")
-                guard let addPostListingVC = vc as? AddPostListingViewController else {
-                    assertionFailure("couldn't find vc")
-                    return
+                if response != nil {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(identifier: "addPostListingVC")
+                    guard let addPostListingVC = vc as? AddPostListingViewController else {
+                        assertionFailure("couldn't find vc")
+                        return
+                    }
+                    
+                    if let bookInfo = response {
+                        if bookInfo["title"] != nil || bookInfo["publishDate"] != nil || bookInfo["authors"] != nil {
+                            addPostListingVC.bookTitle = bookInfo["title"] as? String ?? ""
+                            addPostListingVC.bookPublishDate = bookInfo["publishDate"] as? String ?? ""
+        //                    addPostListingVC.bookAuthor = bookInfo["author"] as? String ?? ""
+                            addPostListingVC.bookAuthors = bookInfo["authors"] as? [String] ?? []
+                            addPostListingVC.bookISBN = bookInfo["isbn"] as? String ?? ""
+                            addPostListingVC.bookCoverImageM = bookInfo["imageData"] as? Data
+                            addPostListingVC.delegate = self
+                            self.present(addPostListingVC, animated: true, completion: nil)
+                        }
+                        else {
+                            self.errorLabel.text = "Invalid barcode."
+                            self.animate.animateLabelInOut(self.errorLabel, 0.5, 0.5, 0.0, 2)
+                            self.viewDidAppear(true)
+                        }
+                    }
+                    self.start()
                 }
-                
-                if let bookInfo = response {
-                    addPostListingVC.bookTitle = bookInfo["title"] as? String ?? ""
-                    addPostListingVC.bookPublishDate = bookInfo["publishDate"] as? String ?? ""
-//                    addPostListingVC.bookAuthor = bookInfo["author"] as? String ?? ""
-                    addPostListingVC.bookAuthors = bookInfo["authors"] as? [String] ?? []
-                    addPostListingVC.bookISBN = bookInfo["isbn"] as? String ?? ""
-                    addPostListingVC.bookCoverImageM = bookInfo["imageData"] as? Data
-                    addPostListingVC.delegate = self
-                    self.present(addPostListingVC, animated: true, completion: nil)
+                else if error != nil {
+                    self.errorLabel.text = "Book couldn't be found."
+                    self.animate.animateLabelInOut(self.errorLabel, 0.5, 0.5, 0.0, 2)
                 }
-                self.start()
             }
         }
     }
