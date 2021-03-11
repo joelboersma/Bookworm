@@ -15,9 +15,10 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Completed Tasks
   * Christina 
-    * Populated Wishlist and Inventory tableviews
+    * Pulled data from database to populate Wishlist and Inventory tableviews
     * Populated wishlist's and inventory's book info views
     * Added functionality to the "remove" buttons in wishlist/inventory (it now updates the database)
+    * Created Books, Inventories, Wishlists nodes on database, implemented pushing request/post information to these nodes
   * Joel
   * Peter
     * Created new node values for database, such as timestamp.
@@ -29,6 +30,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 ## Planned Tasks
   * Christina
     * add UI elements to wishlist/inventory (ie activity indicator)
+    * Add functionality to "Add to Wishlist" button on home screen book info view
   * Joel
   * Peter
     * Work on Matched View Controller
