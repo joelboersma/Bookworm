@@ -29,8 +29,9 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
 ## Planned Tasks
   * Christina
-    * add UI elements to wishlist/inventory (ie activity indicator)
+    * Add UI elements to wishlist/inventory (ie activity indicator)
     * Add functionality to "Add to Wishlist" button on home screen book info view
+    * Update book condition picker 
   * Joel
   * Peter
     * Work on Matched View Controller
