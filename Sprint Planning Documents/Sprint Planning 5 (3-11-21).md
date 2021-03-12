@@ -21,9 +21,9 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Created Books, Inventories, Wishlists nodes on database, implemented pushing request/post information to these nodes ([865e2e8](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/865e2e888b63c1c3abbb018e3e374e72abbda23e), [2ddfa71](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/2ddfa7156bfb994fd1961602b6d8be8a5aa96c6d), [2bd21d5](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/2bd21d503dcbebaa96e0a7e863b7b1a4acc5804d), [ec7c0dc](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/ec7c0dc4aa859ca7096053aa96d9573fa72b75fe))
   * Joel
   * Peter
-    * Created new node values for database, such as timestamp.
-    * Populated HomeView filtering by date and time.
-    * Implemented filtering for request and listing in HomeView
+    * Created new node values for database, such as timestamp, books to post ([6b8d82e](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/6b8d82e8a23274907d7519b7200f6dc2b79d518e))
+    * Populated HomeView filtering by date and time ([965ae5d](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/965ae5d12bf79b31c3ac83ef42811c6145602efd))
+    * Implemented filtering for request and listing in HomeView ([bf5d9a7](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/bf5d9a72d014b3662ded25d35cfc95ad3fa91f52))
   * Urvashi 
     * pulling buyerseller phone number and populating messages based on post ([3d56abf](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/3d56abf49cc4ca124eb6c8b6acbf763a5798ad7a))
   * Mohammed
@@ -36,6 +36,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
   * Joel
   * Peter
     * Work on Matched View Controller
+    * Implement search feature in HomeVC
   * Urvashi 
     * Conditional text rendering (buyer/seller) on dblistingvc
   * Mohammed
