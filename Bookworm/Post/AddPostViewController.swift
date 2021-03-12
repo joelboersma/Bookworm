@@ -285,8 +285,9 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         }
         
         let searchInputArray = recognizedTextArray.filter({$0 != ""})
-        searchBar.text = searchInputArray.joined(separator: " ")
-        searchBarSearchButtonClicked(searchBar)
+        let searchText = searchInputArray.joined(separator: " ")
+        searchBar.text = searchText
+        searchBar(searchBar, textDidChange: searchText)
         self.tapGestureRecognizer.isEnabled = false
         
         controller.dismiss(animated: true)
