@@ -48,7 +48,6 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     // https://openlibrary.org/dev/docs/api/search
     
     var books: [Book] = []
-    var latestSearchResponse: [[String : Any]] = [[:]]
     var currentQuery = ""
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -160,6 +159,11 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
         return true
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // Hide keyboard
+        view.endEditing(true)
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         currentQuery = searchText
         books.removeAll()
@@ -176,11 +180,6 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
             resultsTableView.isHidden = false
             getResults(num: 25, query: searchText)
         }
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // Hide keyboard
-        view.endEditing(true)
     }
     
     // table view scrolling
