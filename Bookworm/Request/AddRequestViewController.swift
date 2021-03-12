@@ -77,27 +77,34 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
             if let unwrappedError = error {
                 print("search error")
                 print(unwrappedError)
+                self.start()
                 return
             }
             guard let unwrappedResponse = response else {
                 print("no response")
+                self.start()
                 return
             }
             guard let responseWorks = unwrappedResponse["docs"] as? [[String:Any]] else {
                 print("bad docs response")
+                self.start()
                 return
             }
             
             if responseWorks.count == 0 {
                 self.noSearchResultsLabel.text = "No Results Found"
+                self.start()
                 return
             }
-            var queryBooks: [Book] = []
+            
             for work in responseWorks {
-                if query != self.currentQuery { return }
+                if query != self.currentQuery {
+                    self.start()
+                    return
+                }
                 else if self.books.count >= num {
                     print("search done: " + query)
-//                    self.books = queryBooks
+                    self.start()
                     self.resultsTableView.reloadData()
                     break
                 }
@@ -108,7 +115,10 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                     // Optional: publish date, cover
                     // Publish date should be retrieved when user clicks on UITableView cell
                     for isbn in isbns {
-                        if query != self.currentQuery { return }
+                        if query != self.currentQuery {
+                            self.start()
+                            return
+                        }
                         else if self.books.count >= num {
                             break
                         }
@@ -116,20 +126,21 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
                         self.books.append(book)
                         self.resultsTableView.reloadData()
                         
-                        //get medium sized cover for the add request listing view
-                        OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .M) { response, error in
-                            if let unwrappedError = error {
-                                print("error finding cover")
-                                print(unwrappedError)
-                            }
-                            else if let coverResponse = response {
-                                guard let imageData: Data = coverResponse["imageData"] as? Data else {
-                                    print("bad image data")
-                                    return
+                        // Get medium sized cover for the add request listing view
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .M) { response, error in
+                                if let unwrappedError = error {
+                                    print(unwrappedError)
                                 }
-                                book.coverImageM = imageData
+                                else if let coverResponse = response {
+                                    guard let imageData: Data = coverResponse["imageData"] as? Data else {
+                                        print("bad image data")
+                                        return
+                                    }
+                                    book.coverImageM = imageData
+                                    self.resultsTableView.reloadData()
+                                }
                             }
-                            self.resultsTableView.reloadData()
                         }
                     }
                 }
@@ -150,16 +161,17 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
         currentQuery = searchText
         books.removeAll()
         resultsTableView.reloadData()
         noSearchResultsLabel.text = ""
         if searchText.filter({!$0.isWhitespace}).isEmpty {
+            self.start()
             bigSearchLabel.isHidden = false
             resultsTableView.isHidden = true
         }
         else {
+            self.wait()
             bigSearchLabel.isHidden = true
             resultsTableView.isHidden = false
             getResults(num: 25, query: searchText)
@@ -226,13 +238,13 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     
     func wait() {
         self.activityIndicator.startAnimating()
-        self.view.alpha = 0.2
-        self.view.isUserInteractionEnabled = false
+//        self.view.alpha = 0.2
+//        self.view.isUserInteractionEnabled = false
     }
     func start() {
         self.activityIndicator.stopAnimating()
-        self.view.alpha = 1
-        self.view.isUserInteractionEnabled = true
+//        self.view.alpha = 1
+//        self.view.isUserInteractionEnabled = true
     }
 }
 
