@@ -1403,10 +1403,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="313" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="321" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="319" y="0.0" width="35" height="30"/>
+                                                <rect key="frame" x="327" y="0.0" width="27" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1866,7 +1866,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zyk-SJ-wG4">
-                                <rect key="frame" x="0.0" y="149" width="414" height="620"/>
+                                <rect key="frame" x="0.0" y="149" width="414" height="615"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addPostBookCell" rowHeight="105" id="utb-Yx-6Zi" customClass="AddPostBookCell" customModule="Bookworm" customModuleProvider="target">
@@ -1926,6 +1926,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by Title, Author, ISBN, etc." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xk-AK-WLH">
+                                <rect key="frame" x="30" y="249" width="354" height="95.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Term" translatesAutoresizingMaskIntoConstraints="NO" id="uVb-D3-UbI">
                                 <rect key="frame" x="20" y="93" width="374" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -1941,7 +1947,7 @@
                                     <constraint firstAttribute="width" constant="50" id="l4U-8A-74Z"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NO_SEARCH_RESULTS_LABEL&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZVI-Hi-Gt9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NO_SEARCH_RESULTS_LABEL&gt;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZVI-Hi-Gt9">
                                 <rect key="frame" x="41.5" y="435" width="331.5" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" systemColor="placeholderTextColor"/>
@@ -1957,7 +1963,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZmG-6g-neh">
-                                <rect key="frame" x="0.0" y="769" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="764" width="414" height="49"/>
                                 <items>
                                     <barButtonItem title="Scan Barcode" id="K69-Bz-032">
                                         <connections>
@@ -1978,7 +1984,10 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="eN5-Ik-3z9" firstAttribute="centerY" secondItem="lOj-Me-g1v" secondAttribute="centerY" id="4S9-Ll-rFP"/>
+                            <constraint firstItem="2Xk-AK-WLH" firstAttribute="top" secondItem="uVb-D3-UbI" secondAttribute="bottom" constant="100" id="7NS-RK-2yl"/>
+                            <constraint firstItem="2Xk-AK-WLH" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="8Uu-W4-zGB"/>
                             <constraint firstItem="ZmG-6g-neh" firstAttribute="top" secondItem="Zyk-SJ-wG4" secondAttribute="bottom" id="C2e-ep-noZ"/>
+                            <constraint firstItem="2Xk-AK-WLH" firstAttribute="leading" secondItem="lOj-Me-g1v" secondAttribute="leading" constant="30" id="Hex-P1-ksz"/>
                             <constraint firstItem="vpk-Lc-VkV" firstAttribute="leading" secondItem="8c0-nc-2wL" secondAttribute="leading" constant="129" id="K7b-uH-PLy"/>
                             <constraint firstItem="uVb-D3-UbI" firstAttribute="top" secondItem="vpk-Lc-VkV" secondAttribute="bottom" id="MlZ-Xk-QOg"/>
                             <constraint firstItem="ZmG-6g-neh" firstAttribute="leading" secondItem="8c0-nc-2wL" secondAttribute="leading" id="NJK-jQ-zz7"/>
@@ -1989,6 +1998,7 @@
                             <constraint firstItem="Zyk-SJ-wG4" firstAttribute="leading" secondItem="ZmG-6g-neh" secondAttribute="leading" id="Yht-p9-uKZ"/>
                             <constraint firstItem="Zyk-SJ-wG4" firstAttribute="top" secondItem="uVb-D3-UbI" secondAttribute="bottom" id="atI-Gb-4iZ"/>
                             <constraint firstItem="vpk-Lc-VkV" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="dKB-TA-bNc"/>
+                            <constraint firstAttribute="trailing" secondItem="2Xk-AK-WLH" secondAttribute="trailing" constant="30" id="eTY-kS-ieR"/>
                             <constraint firstItem="Zyk-SJ-wG4" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="hLD-PY-kVf"/>
                             <constraint firstItem="ZVI-Hi-Gt9" firstAttribute="centerY" secondItem="lOj-Me-g1v" secondAttribute="centerY" id="m7k-DB-kRs"/>
                             <constraint firstItem="Zyk-SJ-wG4" firstAttribute="leading" secondItem="8c0-nc-2wL" secondAttribute="leading" id="nqM-NS-km1"/>
@@ -2005,6 +2015,7 @@
                     <tabBarItem key="tabBarItem" title="Post" image="camera" catalog="system" selectedImage="camera" id="JdN-Nd-7cz"/>
                     <connections>
                         <outlet property="activityIndicator" destination="eN5-Ik-3z9" id="tp9-GV-zgr"/>
+                        <outlet property="bigSearchLabel" destination="2Xk-AK-WLH" id="DeV-Nl-igz"/>
                         <outlet property="noSearchResultsLabel" destination="ZVI-Hi-Gt9" id="hqQ-FR-qxb"/>
                         <outlet property="resultsTableView" destination="Zyk-SJ-wG4" id="44e-qs-jRw"/>
                         <outlet property="searchBar" destination="uVb-D3-UbI" id="vCH-mi-oib"/>
@@ -2029,7 +2040,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Lz-Vo-4cS">
-                                <rect key="frame" x="124" y="86" width="166.5" height="36"/>
+                                <rect key="frame" x="124" y="57" width="166.5" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="Ic9-iO-gAU"/>
                                 </constraints>
@@ -2038,7 +2049,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MfN-7K-KiK">
-                                <rect key="frame" x="0.0" y="198" width="414" height="615"/>
+                                <rect key="frame" x="0.0" y="149" width="414" height="664"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addRequestBookCell" rowHeight="105" id="hSZ-sf-UMG" customClass="AddRequestBookCell" customModule="Bookworm" customModuleProvider="target">
@@ -2099,7 +2110,7 @@
                                 </prototypes>
                             </tableView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Term" translatesAutoresizingMaskIntoConstraints="NO" id="wxv-yA-sR6">
-                                <rect key="frame" x="20" y="142" width="374" height="56"/>
+                                <rect key="frame" x="20" y="93" width="374" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>
@@ -2113,10 +2124,16 @@
                                     <constraint firstAttribute="width" constant="50" id="ohS-D1-Glg"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NO_SEARCH_RESULTS_LABEL&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tza-R3-lJv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NO_SEARCH_RESULTS_LABEL&gt;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tza-R3-lJv">
                                 <rect key="frame" x="41.5" y="435" width="331.5" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" systemColor="placeholderTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by Title, Author, ISBN, etc." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4v-C0-1jN">
+                                <rect key="frame" x="30" y="249" width="354" height="95.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -2124,17 +2141,21 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="7Lz-Vo-4cS" firstAttribute="top" secondItem="1Tr-JM-0Ex" secondAttribute="top" constant="42" id="7Fz-v0-i9U"/>
+                            <constraint firstItem="7Lz-Vo-4cS" firstAttribute="top" secondItem="1Tr-JM-0Ex" secondAttribute="top" constant="13" id="7Fz-v0-i9U"/>
+                            <constraint firstItem="e4v-C0-1jN" firstAttribute="leading" secondItem="1Tr-JM-0Ex" secondAttribute="leading" constant="30" id="8Ki-Db-w9u"/>
+                            <constraint firstItem="e4v-C0-1jN" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="8w9-m1-huX"/>
                             <constraint firstItem="CNw-26-BGL" firstAttribute="centerY" secondItem="y7p-67-WjE" secondAttribute="centerY" id="Gmb-hd-Xs1"/>
                             <constraint firstItem="tza-R3-lJv" firstAttribute="centerY" secondItem="y7p-67-WjE" secondAttribute="centerY" id="JUQ-UY-wOx"/>
                             <constraint firstItem="tza-R3-lJv" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="LfX-az-aua"/>
                             <constraint firstItem="MfN-7K-KiK" firstAttribute="top" secondItem="wxv-yA-sR6" secondAttribute="bottom" symbolic="YES" id="Ner-JU-ulz"/>
                             <constraint firstItem="7Lz-Vo-4cS" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="TxE-H1-gnA"/>
                             <constraint firstItem="CNw-26-BGL" firstAttribute="centerX" secondItem="y7p-67-WjE" secondAttribute="centerX" id="X6l-hc-5Z1"/>
-                            <constraint firstItem="wxv-yA-sR6" firstAttribute="top" secondItem="7Lz-Vo-4cS" secondAttribute="bottom" constant="20" id="dMQ-wx-QmS"/>
+                            <constraint firstItem="e4v-C0-1jN" firstAttribute="top" secondItem="wxv-yA-sR6" secondAttribute="bottom" constant="100" id="cot-4G-IwX"/>
+                            <constraint firstItem="wxv-yA-sR6" firstAttribute="top" secondItem="7Lz-Vo-4cS" secondAttribute="bottom" id="dMQ-wx-QmS"/>
                             <constraint firstItem="1Tr-JM-0Ex" firstAttribute="bottom" secondItem="MfN-7K-KiK" secondAttribute="bottom" id="p2U-bF-riU"/>
                             <constraint firstItem="1Tr-JM-0Ex" firstAttribute="trailing" secondItem="wxv-yA-sR6" secondAttribute="trailing" constant="20" id="ph3-EA-lwc"/>
                             <constraint firstItem="MfN-7K-KiK" firstAttribute="top" secondItem="wxv-yA-sR6" secondAttribute="bottom" symbolic="YES" id="qF5-Fw-Aah"/>
+                            <constraint firstItem="1Tr-JM-0Ex" firstAttribute="trailing" secondItem="e4v-C0-1jN" secondAttribute="trailing" constant="30" id="qWp-3g-RXH"/>
                             <constraint firstItem="1Tr-JM-0Ex" firstAttribute="trailing" secondItem="MfN-7K-KiK" secondAttribute="trailing" id="sae-Na-CX4"/>
                             <constraint firstItem="wxv-yA-sR6" firstAttribute="leading" secondItem="1Tr-JM-0Ex" secondAttribute="leading" constant="20" id="tne-Ce-lcz"/>
                             <constraint firstItem="MfN-7K-KiK" firstAttribute="leading" secondItem="1Tr-JM-0Ex" secondAttribute="leading" id="z6E-7j-t2r"/>
@@ -2146,6 +2167,7 @@
                     <tabBarItem key="tabBarItem" title="Request" image="rectangle.and.pencil.and.ellipsis.rtl" catalog="system" id="Vw4-sd-D4o"/>
                     <connections>
                         <outlet property="activityIndicator" destination="CNw-26-BGL" id="Nts-iQ-Hnd"/>
+                        <outlet property="bigSearchLabel" destination="e4v-C0-1jN" id="nWu-sh-Nhf"/>
                         <outlet property="noSearchResultsLabel" destination="tza-R3-lJv" id="L5a-6P-s5R"/>
                         <outlet property="resultsTableView" destination="MfN-7K-KiK" id="zYK-5O-cBF"/>
                         <outlet property="searchBar" destination="wxv-yA-sR6" id="ThJ-39-u1W"/>

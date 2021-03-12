@@ -59,10 +59,12 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var noSearchResultsLabel: UILabel!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet weak var bigSearchLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        resultsTableView.isHidden = true
         resultsTableView.dataSource = self
         resultsTableView.delegate = self
         searchBar.delegate = self
@@ -90,7 +92,17 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // Clear "No Results Found Label
+        if let text = searchBar.searchTextField.text {
+            if text.filter({!$0.isWhitespace}).isEmpty {
+                bigSearchLabel.isHidden = false
+                resultsTableView.isHidden = true
+                noSearchResultsLabel.text = ""
+                return
+            }
+        }
+        
+        bigSearchLabel.isHidden = true
+        resultsTableView.isHidden = false
         noSearchResultsLabel.text = ""
             
         // Hide keyboard
