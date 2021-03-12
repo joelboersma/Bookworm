@@ -25,6 +25,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
     * Populated HomeView filtering by date and time.
     * Implemented filtering for request and listing in HomeView
   * Urvashi 
+    * pulling buyerseller phone number and populating messages based on post ([3d56abf](https://github.com/ECS189E/project-w21-steve-give-us-jobs/commit/3d56abf49cc4ca124eb6c8b6acbf763a5798ad7a))
   * Mohammed
 
 ## Planned Tasks
@@ -36,6 +37,7 @@ https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
   * Peter
     * Work on Matched View Controller
   * Urvashi 
+    * Conditional text rendering (buyer/seller) on dblistingvc
   * Mohammed
   
 ## Issues
