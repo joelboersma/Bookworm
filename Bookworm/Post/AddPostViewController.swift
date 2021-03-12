@@ -153,19 +153,19 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
                             
                             
                             self.books.append(book)
-                            OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .S) { response, error in
-                                if let unwrappedError = error {
-                                    print("error finding cover")
-                                    print(unwrappedError)
-                                }
-                                else if let coverResponse = response {
-                                    let coverS = coverResponse["imageData"] as? Data
-                                    book.coverImageS = coverS
-                                    
-                                }
-                                self.resultsTableView.reloadData()
-
-                            }
+//                            OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .S) { response, error in
+//                                if let unwrappedError = error {
+//                                    print("error finding cover")
+//                                    print(unwrappedError)
+//                                }
+//                                else if let coverResponse = response {
+//                                    let coverS = coverResponse["imageData"] as? Data
+//                                    book.coverImageS = coverS
+//                                    
+//                                }
+//                                self.resultsTableView.reloadData()
+//
+//                            }
                             
                             //get medium sized cover for the add request listing view
                             OpenLibraryAPI.cover(key: .ISBN, value: isbn, size: .M) { response, error in
