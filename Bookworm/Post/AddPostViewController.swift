@@ -61,6 +61,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
     @IBOutlet weak var noSearchResultsLabel: UILabel!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var bigSearchLabel: UILabel!
+    @IBOutlet weak var bigScanLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,11 +185,13 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         if searchText.filter({!$0.isWhitespace}).isEmpty {
             self.start()
             bigSearchLabel.isHidden = false
+            bigScanLabel.isHidden = false
             resultsTableView.isHidden = true
         }
         else {
             self.wait()
             bigSearchLabel.isHidden = true
+            bigScanLabel.isHidden = true
             resultsTableView.isHidden = false
             getResults(num: 25, query: searchText)
         }

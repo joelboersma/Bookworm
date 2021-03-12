@@ -1403,10 +1403,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="321" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="313" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="327" y="0.0" width="27" height="30"/>
+                                                <rect key="frame" x="319" y="0.0" width="35" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1926,7 +1926,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by Title, Author, ISBN, etc." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xk-AK-WLH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by Title, Author, ISBN, etc." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xk-AK-WLH">
                                 <rect key="frame" x="30" y="249" width="354" height="95.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -1978,12 +1978,20 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan Here!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQA-SX-SjR">
+                                <rect key="frame" x="30" y="676.5" width="354" height="62.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="52"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8c0-nc-2wL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="eN5-Ik-3z9" firstAttribute="centerY" secondItem="lOj-Me-g1v" secondAttribute="centerY" id="4S9-Ll-rFP"/>
+                            <constraint firstItem="LQA-SX-SjR" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="6G2-hf-6OG"/>
+                            <constraint firstItem="LQA-SX-SjR" firstAttribute="leading" secondItem="lOj-Me-g1v" secondAttribute="leading" constant="30" id="6fd-NP-nNr"/>
                             <constraint firstItem="2Xk-AK-WLH" firstAttribute="top" secondItem="uVb-D3-UbI" secondAttribute="bottom" constant="100" id="7NS-RK-2yl"/>
                             <constraint firstItem="2Xk-AK-WLH" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="8Uu-W4-zGB"/>
                             <constraint firstItem="ZmG-6g-neh" firstAttribute="top" secondItem="Zyk-SJ-wG4" secondAttribute="bottom" id="C2e-ep-noZ"/>
@@ -2002,8 +2010,10 @@
                             <constraint firstItem="Zyk-SJ-wG4" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="hLD-PY-kVf"/>
                             <constraint firstItem="ZVI-Hi-Gt9" firstAttribute="centerY" secondItem="lOj-Me-g1v" secondAttribute="centerY" id="m7k-DB-kRs"/>
                             <constraint firstItem="Zyk-SJ-wG4" firstAttribute="leading" secondItem="8c0-nc-2wL" secondAttribute="leading" id="nqM-NS-km1"/>
+                            <constraint firstItem="ZmG-6g-neh" firstAttribute="top" secondItem="LQA-SX-SjR" secondAttribute="bottom" constant="25" id="phg-R4-CqI"/>
                             <constraint firstItem="uVb-D3-UbI" firstAttribute="leading" secondItem="8c0-nc-2wL" secondAttribute="leading" constant="20" id="qky-fP-5pF"/>
                             <constraint firstItem="eN5-Ik-3z9" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="tN3-Fl-rYJ"/>
+                            <constraint firstAttribute="trailing" secondItem="LQA-SX-SjR" secondAttribute="trailing" constant="30" id="tY9-um-gE6"/>
                             <constraint firstItem="ZVI-Hi-Gt9" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="uU4-H2-vrW"/>
                             <constraint firstItem="uVb-D3-UbI" firstAttribute="centerX" secondItem="lOj-Me-g1v" secondAttribute="centerX" id="wJS-FH-ish"/>
                             <constraint firstItem="ZmG-6g-neh" firstAttribute="trailing" secondItem="8c0-nc-2wL" secondAttribute="trailing" id="zji-24-DTX"/>
@@ -2015,6 +2025,7 @@
                     <tabBarItem key="tabBarItem" title="Post" image="camera" catalog="system" selectedImage="camera" id="JdN-Nd-7cz"/>
                     <connections>
                         <outlet property="activityIndicator" destination="eN5-Ik-3z9" id="tp9-GV-zgr"/>
+                        <outlet property="bigScanLabel" destination="LQA-SX-SjR" id="2pB-sw-NEV"/>
                         <outlet property="bigSearchLabel" destination="2Xk-AK-WLH" id="DeV-Nl-igz"/>
                         <outlet property="noSearchResultsLabel" destination="ZVI-Hi-Gt9" id="hqQ-FR-qxb"/>
                         <outlet property="resultsTableView" destination="Zyk-SJ-wG4" id="44e-qs-jRw"/>
@@ -2130,7 +2141,7 @@
                                 <color key="textColor" systemColor="placeholderTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by Title, Author, ISBN, etc." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4v-C0-1jN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by Title, Author, ISBN, etc." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4v-C0-1jN">
                                 <rect key="frame" x="30" y="249" width="354" height="95.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
