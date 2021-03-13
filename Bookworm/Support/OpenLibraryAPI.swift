@@ -95,7 +95,6 @@ struct OpenLibraryAPI {
         
         let session = URLSession(configuration: configuration())
         var request = URLRequest(url: url)
-        print(request)
         request.httpMethod = "GET"
         
         session.dataTask(with: request) { data, response, error in
@@ -152,7 +151,6 @@ struct OpenLibraryAPI {
             return
         }
         
-        print(query)
         ApiCall(endpoint: "/search.json?q=\(query)", completion: completion)
     }
     
@@ -244,8 +242,6 @@ struct OpenLibraryAPI {
                             return
                         }
                         else if let coverResponse = coverResponse {
-                            print(coverResponse)
-                            
                             if let imageData = coverResponse["imageData"] as? Data {
                                 worksInfo["imageData"] = imageData
                             }
@@ -278,7 +274,6 @@ struct OpenLibraryAPI {
                                 else if let _authorResponse = authorResponse,
                                         let authorName = _authorResponse["name"] as? String {
                                     authorNames.append(authorName)
-                                    print(authorName)
                                 }
                                 else {
                                     print("bad author response")
@@ -347,8 +342,6 @@ struct OpenLibraryAPI {
                             }
                         }
                         else if let coverResponse = coverResponse {
-                            print(coverResponse)
-                            
                             if let imageData = coverResponse["imageData"] as? Data {
                                 bookInfo["imageData"] = imageData
                             }
@@ -371,7 +364,6 @@ struct OpenLibraryAPI {
                                 print("\(authorsJson.count) author(s)")
                                 for a in authorsJson {
                                     if let key = a["key"] as? String {
-                                        print(key)
                                         author(key) { authorResponse, authorError in
                                             if let _authorError = authorError {
                                                 // author error
@@ -380,7 +372,6 @@ struct OpenLibraryAPI {
                                             else if let _authorResponse = authorResponse,
                                                     let authorName = _authorResponse["name"] as? String {
                                                 authorNames.append(authorName)
-                                                print(authorName)
                                             }
                                             else {
                                                 print("bad author response")
