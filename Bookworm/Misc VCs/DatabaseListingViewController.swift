@@ -45,6 +45,19 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         addToWishlistButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
         
+        addToWishlistButton.setTitle("Add to Wishlist", for: .normal)
+        
+        switch userDescription {
+        case "Buyer":
+            contactSellerButton.backgroundColor = .systemOrange
+            contactSellerButton.setTitle("Contact Buyer", for: .normal)
+        case "Seller":
+            contactSellerButton.backgroundColor = .systemBlue
+            contactSellerButton.setTitle("Contact Seller", for: .normal)
+        default:
+            print("invalid user description: " + userDescription)
+        }
+        
         fillInBookInfo()
         // Do any additional setup after loading the view.
     }

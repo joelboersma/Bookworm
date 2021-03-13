@@ -621,7 +621,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jYW-rp-kES">
                                         <rect key="frame" x="0.0" y="0.0" width="314" height="30"/>
-                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
                                         <state key="normal" title="Inventory">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
@@ -631,7 +631,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOb-OH-PPa">
                                         <rect key="frame" x="0.0" y="38" width="314" height="30"/>
-                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                         <state key="normal" title="Wish List">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
@@ -1039,7 +1039,7 @@
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5f-nN-IBn">
                                         <rect key="frame" x="10" y="495" width="354" height="30"/>
-                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="msC-GQ-apt"/>
                                         </constraints>
@@ -1421,10 +1421,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="317" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="348" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="323" y="0.0" width="31" height="30"/>
+                                                <rect key="frame" x="354" y="0.0" width="0.0" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1536,7 +1536,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uq7-a9-wLM">
                                                 <rect key="frame" x="0.0" y="0.0" width="358" height="30"/>
-                                                <color key="backgroundColor" systemColor="labelColor"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor"/>
                                                 <state key="normal" title="Remove from Inventory">
                                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                                 </state>
@@ -1884,7 +1884,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zyk-SJ-wG4">
-                                <rect key="frame" x="0.0" y="149" width="414" height="620"/>
+                                <rect key="frame" x="0.0" y="149" width="414" height="615"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addPostBookCell" rowHeight="105" id="utb-Yx-6Zi" customClass="AddPostBookCell" customModule="Bookworm" customModuleProvider="target">
@@ -1981,7 +1981,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZmG-6g-neh">
-                                <rect key="frame" x="0.0" y="769" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="764" width="414" height="49"/>
                                 <items>
                                     <barButtonItem title="Scan Barcode" id="K69-Bz-032">
                                         <connections>
@@ -1997,7 +1997,7 @@
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan Here!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQA-SX-SjR">
-                                <rect key="frame" x="30" y="681.5" width="354" height="62.5"/>
+                                <rect key="frame" x="30" y="676.5" width="354" height="62.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="52"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
@@ -2261,7 +2261,7 @@
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VA2-Vz-Rnj">
                                         <rect key="frame" x="10" y="509" width="354" height="30"/>
-                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
                                         <state key="normal" title="Add Listing">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
@@ -2410,7 +2410,7 @@
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kym-PA-eB7">
                                         <rect key="frame" x="10" y="495" width="354" height="30"/>
-                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="VIK-FM-vTh"/>
                                         </constraints>
@@ -2535,6 +2535,12 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
