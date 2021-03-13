@@ -19,7 +19,6 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @IBOutlet weak var popupView: UIView!
     
-    @IBOutlet weak var uplaodImagesButton: UIButton!
     @IBOutlet weak var addListingButton: UIButton!
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -55,7 +54,6 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         // format buttons + view
         popupView.layer.cornerRadius = 10
-        uplaodImagesButton.layer.cornerRadius = 5
         addListingButton.layer.cornerRadius = 5
         
         // connect data

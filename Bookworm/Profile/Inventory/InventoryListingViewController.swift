@@ -14,7 +14,6 @@ protocol ReloadAfterBookRemovalDelegate {
 
 class InventoryListingViewController: UIViewController {
 
-    @IBOutlet weak var uploadImageButton: UIButton!
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var removefromInventoryButton: UIButton!
@@ -44,7 +43,6 @@ class InventoryListingViewController: UIViewController {
         super.viewDidLoad()
 
         // format buttons + view
-        uploadImageButton.layer.cornerRadius = 5
         removefromInventoryButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
         
