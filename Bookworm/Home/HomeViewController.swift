@@ -15,6 +15,7 @@ class ListingsTableViewCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var buyerSellerLabel: UILabel!
     @IBOutlet weak var postDateLabel: UILabel!
+    @IBOutlet weak var buyerSellerColorView: UIView!
     
     var storageRef = Storage.storage().reference()
     
@@ -31,8 +32,10 @@ class ListingsTableViewCell: UITableViewCell {
         //display condition label if user is selling
         if book.userDescription == "Buyer"{
             self.conditionLabel.text = ""
+            self.buyerSellerColorView.backgroundColor = .systemOrange
         } else{
             self.conditionLabel.text = "Condition: \(book.condition)"
+            self.buyerSellerColorView.backgroundColor = .systemBlue
         }
         
     }
@@ -191,7 +194,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         }
         let book = books[indexPath.row]
         cell.fillInBookCell(book: book)
-        cell.layer.cornerRadius = 10
+//        cell.layer.cornerRadius = 10
         return cell
     }
     

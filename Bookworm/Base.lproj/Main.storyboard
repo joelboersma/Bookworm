@@ -477,15 +477,23 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZA-aX-Tdp" userLabel="Buyer/Seller Color View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="97"/>
+                                                    <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="WWM-ym-7xQ" firstAttribute="leading" secondItem="RhW-c4-IKd" secondAttribute="trailing" constant="10" id="1dc-8S-mHJ"/>
+                                                <constraint firstItem="mZA-aX-Tdp" firstAttribute="top" secondItem="A2Z-qQ-plJ" secondAttribute="top" id="21b-85-9op"/>
+                                                <constraint firstItem="RhW-c4-IKd" firstAttribute="leading" secondItem="mZA-aX-Tdp" secondAttribute="trailing" constant="12" id="57M-KQ-H5Q"/>
+                                                <constraint firstAttribute="bottom" secondItem="mZA-aX-Tdp" secondAttribute="bottom" id="5Tl-Lz-Hi9"/>
                                                 <constraint firstItem="WWM-ym-7xQ" firstAttribute="top" secondItem="A2Z-qQ-plJ" secondAttribute="top" constant="10" id="LiW-WF-uu3"/>
                                                 <constraint firstAttribute="trailing" secondItem="TOK-Uw-KdA" secondAttribute="trailing" constant="20" id="TpL-Vu-DMo"/>
                                                 <constraint firstItem="RhW-c4-IKd" firstAttribute="top" secondItem="A2Z-qQ-plJ" secondAttribute="top" constant="10" id="Z5m-Gr-Pf0"/>
                                                 <constraint firstAttribute="bottom" secondItem="RhW-c4-IKd" secondAttribute="bottom" constant="10" id="aKt-je-Atv"/>
                                                 <constraint firstAttribute="trailing" secondItem="WWM-ym-7xQ" secondAttribute="trailing" constant="20" id="cPJ-XT-xLG"/>
                                                 <constraint firstItem="TOK-Uw-KdA" firstAttribute="top" secondItem="WWM-ym-7xQ" secondAttribute="bottom" constant="5" id="lh5-dX-0tU"/>
+                                                <constraint firstItem="mZA-aX-Tdp" firstAttribute="leading" secondItem="A2Z-qQ-plJ" secondAttribute="leading" id="sKV-OY-tQB"/>
                                                 <constraint firstItem="TOK-Uw-KdA" firstAttribute="leading" secondItem="RhW-c4-IKd" secondAttribute="trailing" constant="10" id="sfM-Eh-4Xr"/>
                                                 <constraint firstItem="RhW-c4-IKd" firstAttribute="leading" secondItem="A2Z-qQ-plJ" secondAttribute="leading" constant="20" id="wtz-fy-w9q"/>
                                             </constraints>
@@ -493,6 +501,7 @@
                                         <connections>
                                             <outlet property="bookCoverImage" destination="RhW-c4-IKd" id="92O-LV-oEd"/>
                                             <outlet property="bookTitleLabel" destination="WWM-ym-7xQ" id="jdz-Xt-9GM"/>
+                                            <outlet property="buyerSellerColorView" destination="mZA-aX-Tdp" id="jsn-Mu-lPD"/>
                                             <outlet property="conditionLabel" destination="osE-8O-Opu" id="MFs-A3-C0f"/>
                                             <outlet property="locationLabel" destination="AZq-7f-AGT" id="tJz-sc-7sJ"/>
                                             <outlet property="transactionLabel" destination="HYn-o8-gB5" id="fNF-tP-LXF"/>
@@ -770,24 +779,33 @@
                                                         <constraint firstItem="fyJ-O0-KE9" firstAttribute="height" secondItem="lYY-FG-lGr" secondAttribute="height" id="pJI-QT-Bpm"/>
                                                     </constraints>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HiF-Hu-tHY" userLabel="Buyer/Seller Color View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="97"/>
+                                                    <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="HiF-Hu-tHY" secondAttribute="bottom" id="7DO-ru-CY7"/>
                                                 <constraint firstAttribute="trailing" secondItem="XjS-hG-bd2" secondAttribute="trailing" constant="20" id="Cgb-gn-0Jc"/>
                                                 <constraint firstAttribute="bottom" secondItem="V9f-cl-INL" secondAttribute="bottom" constant="10" id="Cj0-ZB-R0Q"/>
                                                 <constraint firstItem="oPO-NW-Yxz" firstAttribute="top" secondItem="XjS-hG-bd2" secondAttribute="bottom" constant="5" id="K4d-sn-YPH"/>
                                                 <constraint firstItem="bD0-9q-t6P" firstAttribute="leading" secondItem="XjS-hG-bd2" secondAttribute="leading" id="Oiw-ps-g6S"/>
+                                                <constraint firstItem="V9f-cl-INL" firstAttribute="leading" secondItem="HiF-Hu-tHY" secondAttribute="trailing" constant="12" id="bd0-Vk-jEU"/>
                                                 <constraint firstItem="V9f-cl-INL" firstAttribute="leading" secondItem="Vav-rZ-yqN" secondAttribute="leading" constant="20" id="cEb-1W-lhG"/>
                                                 <constraint firstItem="oPO-NW-Yxz" firstAttribute="trailing" secondItem="XjS-hG-bd2" secondAttribute="trailing" id="cdO-3e-AgQ"/>
                                                 <constraint firstItem="XjS-hG-bd2" firstAttribute="leading" secondItem="V9f-cl-INL" secondAttribute="trailing" constant="10" id="giD-bg-bbA"/>
                                                 <constraint firstItem="XjS-hG-bd2" firstAttribute="top" secondItem="Vav-rZ-yqN" secondAttribute="top" constant="10" id="hU7-E6-o5c"/>
                                                 <constraint firstItem="bD0-9q-t6P" firstAttribute="top" secondItem="XjS-hG-bd2" secondAttribute="bottom" constant="5" id="iSw-4V-JsX"/>
+                                                <constraint firstItem="HiF-Hu-tHY" firstAttribute="leading" secondItem="Vav-rZ-yqN" secondAttribute="leading" id="jkH-tj-XyB"/>
                                                 <constraint firstItem="oPO-NW-Yxz" firstAttribute="leading" secondItem="bD0-9q-t6P" secondAttribute="trailing" constant="5" id="kcF-Xg-zni"/>
                                                 <constraint firstItem="V9f-cl-INL" firstAttribute="top" secondItem="Vav-rZ-yqN" secondAttribute="top" constant="10" id="lar-zO-EHj"/>
+                                                <constraint firstItem="HiF-Hu-tHY" firstAttribute="top" secondItem="Vav-rZ-yqN" secondAttribute="top" id="tDs-At-Plv"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="bookCoverImage" destination="V9f-cl-INL" id="1g5-yO-0rC"/>
                                             <outlet property="bookTitleLabel" destination="XjS-hG-bd2" id="emX-np-nfC"/>
+                                            <outlet property="buyerSellerColorView" destination="HiF-Hu-tHY" id="pLW-3d-rx4"/>
                                             <outlet property="buyerSellerLabel" destination="lYY-FG-lGr" id="XT5-EJ-W69"/>
                                             <outlet property="conditionLabel" destination="T2t-Bp-nti" id="j5m-P4-bxv"/>
                                             <outlet property="locationLabel" destination="oPO-NW-Yxz" id="3nX-Lb-Yxf"/>
@@ -831,7 +849,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1426.1538461538462" y="103.7914691943128"/>
+            <point key="canvasLocation" x="1426.0869565217392" y="103.125"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pJ2-JD-MVP">
@@ -1403,10 +1421,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="313" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="317" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="319" y="0.0" width="35" height="30"/>
+                                                <rect key="frame" x="323" y="0.0" width="31" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1866,7 +1884,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zyk-SJ-wG4">
-                                <rect key="frame" x="0.0" y="149" width="414" height="615"/>
+                                <rect key="frame" x="0.0" y="149" width="414" height="620"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addPostBookCell" rowHeight="105" id="utb-Yx-6Zi" customClass="AddPostBookCell" customModule="Bookworm" customModuleProvider="target">
@@ -1963,7 +1981,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZmG-6g-neh">
-                                <rect key="frame" x="0.0" y="764" width="414" height="49"/>
+                                <rect key="frame" x="0.0" y="769" width="414" height="44"/>
                                 <items>
                                     <barButtonItem title="Scan Barcode" id="K69-Bz-032">
                                         <connections>
@@ -1979,7 +1997,7 @@
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan Here!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQA-SX-SjR">
-                                <rect key="frame" x="30" y="676.5" width="354" height="62.5"/>
+                                <rect key="frame" x="30" y="681.5" width="354" height="62.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="52"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>

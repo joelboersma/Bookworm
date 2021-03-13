@@ -16,6 +16,7 @@ class MatchesTableViewCell: UITableViewCell {
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var transactionLabel: UILabel!
+    @IBOutlet weak var buyerSellerColorView: UIView!
 }
 
 class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
