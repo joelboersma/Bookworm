@@ -531,17 +531,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOa-aB-vef">
-                                <rect key="frame" x="356" y="54" width="58" height="34"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="History">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="changeTableButtonPressed:" destination="yjg-uV-lp3" eventType="touchUpInside" id="C21-8T-lRN"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aMj-te-P0n"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -549,11 +538,9 @@
                             <constraint firstItem="DLo-co-RgT" firstAttribute="leading" secondItem="aMj-te-P0n" secondAttribute="leading" constant="30" id="9ml-VT-gX4"/>
                             <constraint firstItem="DLo-co-RgT" firstAttribute="top" secondItem="aMj-te-P0n" secondAttribute="top" constant="42" id="Asj-vC-FI4"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="bottom" secondItem="aMj-te-P0n" secondAttribute="bottom" id="JLo-AP-l4k"/>
-                            <constraint firstItem="cOa-aB-vef" firstAttribute="trailing" secondItem="OCb-n7-wtP" secondAttribute="trailing" id="YUK-Vi-w7i"/>
                             <constraint firstItem="aMj-te-P0n" firstAttribute="trailing" secondItem="OCb-n7-wtP" secondAttribute="trailing" id="Z7q-XM-7Bj"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="top" secondItem="DLo-co-RgT" secondAttribute="bottom" constant="10" id="eJq-yw-Zdh"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="leading" secondItem="aMj-te-P0n" secondAttribute="leading" id="gee-uZ-uLT"/>
-                            <constraint firstItem="cOa-aB-vef" firstAttribute="top" secondItem="aMj-te-P0n" secondAttribute="top" constant="10" id="hek-hX-MHO"/>
                             <constraint firstItem="aMj-te-P0n" firstAttribute="trailing" secondItem="DLo-co-RgT" secondAttribute="trailing" constant="30" id="kRZ-Jh-p8e"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="centerX" secondItem="OIq-sT-cU2" secondAttribute="centerX" id="r5b-c1-eSR"/>
                             <constraint firstItem="DLo-co-RgT" firstAttribute="centerX" secondItem="OIq-sT-cU2" secondAttribute="centerX" id="xQN-1e-jXC"/>
@@ -562,7 +549,6 @@
                     <tabBarItem key="tabBarItem" title="Matches" image="link" catalog="system" id="Ffv-Yp-RsV"/>
                     <connections>
                         <outlet property="filterButton" destination="c9e-hp-7lc" id="GG0-Bt-Kt9"/>
-                        <outlet property="historyButton" destination="cOa-aB-vef" id="HwH-bT-6mm"/>
                         <outlet property="matchesTableView" destination="OCb-n7-wtP" id="riz-iu-g9Q"/>
                         <outlet property="titleLabel" destination="C9o-9M-Sfs" id="Xqq-SY-pKx"/>
                     </connections>
@@ -1715,11 +1701,6 @@
                                             <action selector="xButtonPressed" destination="tnP-8t-gAf" eventType="touchUpInside" id="SeJ-wU-nyG"/>
                                         </connections>
                                     </button>
-                                    <textField hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sold to/Bought by label if history" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QlG-xY-IVD">
-                                        <rect key="frame" x="10" y="485" width="354" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;BOOK_TITLE&gt;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="15" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gFp-de-IAf">
                                         <rect key="frame" x="30" y="25" width="314" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -1734,23 +1715,19 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="5M2-iJ-NNE" firstAttribute="top" secondItem="3xD-yW-Eit" secondAttribute="bottom" constant="20" id="8pI-zl-64C"/>
-                                    <constraint firstAttribute="trailing" secondItem="QlG-xY-IVD" secondAttribute="trailing" constant="10" id="9Mk-55-u7I"/>
                                     <constraint firstItem="l0V-bH-jMq" firstAttribute="top" secondItem="gFp-de-IAf" secondAttribute="bottom" constant="30" id="9Pa-Hf-URM"/>
                                     <constraint firstAttribute="trailing" secondItem="Kk1-fH-aRe" secondAttribute="trailing" constant="10" id="E75-I4-q13"/>
                                     <constraint firstItem="l0V-bH-jMq" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="30" id="EEe-Pc-zxJ"/>
                                     <constraint firstAttribute="height" constant="550" id="Jmw-XB-VH7"/>
-                                    <constraint firstItem="QlG-xY-IVD" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="KL4-5W-ZH1"/>
                                     <constraint firstItem="vAX-yd-f2E" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="M0H-eD-2EM"/>
                                     <constraint firstItem="5M2-iJ-NNE" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="NEn-Lv-dRE"/>
                                     <constraint firstItem="gFp-de-IAf" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="30" id="Nup-Xq-Uha"/>
                                     <constraint firstItem="l0V-bH-jMq" firstAttribute="centerX" secondItem="OTY-4b-FgS" secondAttribute="centerX" id="P8t-Sb-c6v"/>
                                     <constraint firstAttribute="trailing" secondItem="vAX-yd-f2E" secondAttribute="trailing" constant="10" id="QII-VW-JE6"/>
                                     <constraint firstAttribute="trailing" secondItem="3xD-yW-Eit" secondAttribute="trailing" constant="10" id="cBa-iq-Evd"/>
-                                    <constraint firstAttribute="bottom" secondItem="QlG-xY-IVD" secondAttribute="bottom" constant="25" id="cbj-Rp-Xpn"/>
                                     <constraint firstItem="vAX-yd-f2E" firstAttribute="top" secondItem="l0V-bH-jMq" secondAttribute="bottom" constant="30" id="dQp-ay-Oq6"/>
                                     <constraint firstItem="3xD-yW-Eit" firstAttribute="top" secondItem="vAX-yd-f2E" secondAttribute="bottom" constant="10" id="kPV-5f-caN"/>
                                     <constraint firstItem="3xD-yW-Eit" firstAttribute="leading" secondItem="OTY-4b-FgS" secondAttribute="leading" constant="10" id="rYO-3O-pmG"/>
-                                    <constraint firstItem="QlG-xY-IVD" firstAttribute="top" secondItem="3xD-yW-Eit" secondAttribute="bottom" constant="10" id="rmF-4N-BME"/>
                                     <constraint firstAttribute="trailing" secondItem="l0V-bH-jMq" secondAttribute="trailing" constant="30" id="sig-z0-Rrv"/>
                                     <constraint firstItem="gFp-de-IAf" firstAttribute="top" secondItem="OTY-4b-FgS" secondAttribute="top" constant="25" id="w0D-x2-AR8"/>
                                     <constraint firstAttribute="bottom" secondItem="5M2-iJ-NNE" secondAttribute="bottom" constant="25" id="x8l-FV-gvX"/>
@@ -1775,7 +1752,6 @@
                         <outlet property="contactButton" destination="vAX-yd-f2E" id="wvl-GS-cBy"/>
                         <outlet property="popupView" destination="OTY-4b-FgS" id="bAb-Rv-x5s"/>
                         <outlet property="transactionButton" destination="5M2-iJ-NNE" id="7Fg-vp-3PL"/>
-                        <outlet property="transactionLabel" destination="QlG-xY-IVD" id="jSj-Tt-c11"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jJJ-Yr-YG0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

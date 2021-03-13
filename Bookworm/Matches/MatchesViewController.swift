@@ -21,21 +21,17 @@ class MatchesTableViewCell: UITableViewCell {
 
 class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var historyButton: UIButton!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var matchesTableView: UITableView!
-    var changeTableID = 1
     let locationManager = CLLocationManager()
     var placeholderCurrentTitles: [String] = []
-    var placeholderHistoryTitles: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //format buttons
-        historyButton.layer.cornerRadius = 5
         filterButton.layer.cornerRadius = 5
         
         self.navigationController?.isNavigationBarHidden = true
@@ -56,10 +52,6 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         placeholderCurrentTitles.append("ECS 150 Textbook")
         placeholderCurrentTitles.append("FMS 001 Textbook")
         
-        placeholderHistoryTitles.append("ECS 251 Textbook")
-        placeholderHistoryTitles.append("EEC 270 Textbook")
-        placeholderHistoryTitles.append("EEC 7 Textbook")
-        
         matchesTableView.dataSource = self
         matchesTableView.delegate = self
         matchesTableView.reloadData()
@@ -68,22 +60,6 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
 //        print("latitude: \(location.latitude) longitude: \(location.longitude)")
-    }
-    
-    @IBAction func changeTableButtonPressed(_ sender: UIButton) {
-        switch changeTableID {
-        case 0:
-            sender.setTitle("History", for: .normal)
-            titleLabel.text = "Current"
-            changeTableID += 1
-        case 1:
-            sender.setTitle("Current", for: .normal)
-            titleLabel.text = "History"
-            changeTableID -= 1
-        default:
-            print("Can't change button title")
-        }
-        matchesTableView.reloadData()
     }
     
     @IBAction func filterButtonPressed() {
@@ -99,14 +75,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch changeTableID {
-        case 0:
-            return placeholderHistoryTitles.count
-        case 1:
-            return placeholderCurrentTitles.count
-        default:
-            return 0
-        }
+        return placeholderCurrentTitles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,14 +83,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         
         assert(indexPath.section == 0)
         
-        switch changeTableID {
-        case 0:
-            cell?.bookTitleLabel.text = placeholderHistoryTitles[indexPath.row]
-        case 1:
-            cell?.bookTitleLabel.text = placeholderCurrentTitles[indexPath.row]
-        default:
-            print("Can't load table data")
-        }
+        cell?.bookTitleLabel.text = placeholderCurrentTitles[indexPath.row]
         
         return cell ?? UITableViewCell(style: .default, reuseIdentifier: "matchesCell")
     }
@@ -134,15 +96,6 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         guard let matchesEntryVC = vc as? MatchesEntryViewController else {
             assertionFailure("couldn't find vc")
             return
-        }
-        
-        switch changeTableID {
-        case 0:
-            matchesEntryVC.isCurrentTable = false
-        case 1:
-            matchesEntryVC.isCurrentTable = true
-        default:
-            print("Can't load table entry")
         }
         
         present(matchesEntryVC, animated: true, completion: nil)

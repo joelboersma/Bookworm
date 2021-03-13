@@ -17,19 +17,8 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
     @IBOutlet weak var transactionLabel: UITextField!
     @IBOutlet weak var popupView: UIView!
     
-    var isCurrentTable = true
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after lsoading the view.
-        if isCurrentTable {
-            transactionLabel.isHidden = true
-            transactionButton.isHidden = false
-        }
-        else {
-            transactionLabel.isHidden = false
-            transactionButton.isHidden = true
-        }
         
         //format buttons + view
         contactButton.layer.cornerRadius = 5
