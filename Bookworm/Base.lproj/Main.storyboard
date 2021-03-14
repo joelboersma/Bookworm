@@ -936,10 +936,17 @@
                                     <constraint firstAttribute="width" constant="50" id="W5k-13-Jed"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NO_ITEMS_LABEL&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bO-Ws-4jK">
+                                <rect key="frame" x="52.666666666666657" y="404" width="284.66666666666674" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" systemColor="placeholderTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="doo-Aq-1F5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="1bO-Ws-4jK" firstAttribute="centerY" secondItem="vng-ek-YaJ" secondAttribute="centerY" id="1Te-4p-BuZ"/>
                             <constraint firstItem="doo-Aq-1F5" firstAttribute="trailing" secondItem="eR5-qs-ntm" secondAttribute="trailing" constant="10" id="Bh0-s4-Z2z"/>
                             <constraint firstItem="a9I-n2-hTA" firstAttribute="centerY" secondItem="vng-ek-YaJ" secondAttribute="centerY" id="Se0-SK-F08"/>
                             <constraint firstItem="doo-Aq-1F5" firstAttribute="bottom" secondItem="IK7-mm-M2l" secondAttribute="bottom" constant="49" id="Whi-Qz-mJh"/>
@@ -947,6 +954,7 @@
                             <constraint firstItem="eR5-qs-ntm" firstAttribute="top" secondItem="doo-Aq-1F5" secondAttribute="top" constant="10" id="aeq-DB-chW"/>
                             <constraint firstItem="IK7-mm-M2l" firstAttribute="leading" secondItem="doo-Aq-1F5" secondAttribute="leading" id="aoo-an-RKc"/>
                             <constraint firstItem="a9I-n2-hTA" firstAttribute="centerX" secondItem="vng-ek-YaJ" secondAttribute="centerX" id="cY6-Jt-jsc"/>
+                            <constraint firstItem="1bO-Ws-4jK" firstAttribute="centerX" secondItem="vng-ek-YaJ" secondAttribute="centerX" id="nfR-Dv-f7F"/>
                             <constraint firstItem="oZH-HW-j55" firstAttribute="centerX" secondItem="vng-ek-YaJ" secondAttribute="centerX" id="ozf-hE-LSq"/>
                             <constraint firstItem="doo-Aq-1F5" firstAttribute="trailing" secondItem="IK7-mm-M2l" secondAttribute="trailing" id="p9w-gB-Q1r"/>
                             <constraint firstItem="oZH-HW-j55" firstAttribute="top" secondItem="doo-Aq-1F5" secondAttribute="top" constant="49" id="x1l-Ar-A0h"/>
@@ -954,6 +962,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="a9I-n2-hTA" id="E6W-vW-Vdh"/>
+                        <outlet property="noItemsLabel" destination="1bO-Ws-4jK" id="Aqo-HK-4th"/>
                         <outlet property="wishListTableView" destination="IK7-mm-M2l" id="G9g-cP-o0J"/>
                     </connections>
                 </viewController>
@@ -1044,19 +1053,11 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;BOOK_CONDITION&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6pJ-ai-YLK">
-                                                        <rect key="frame" x="8" y="127.99999999999999" width="168.33333333333334" height="20.333333333333329"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="r1O-Vr-xyZ" secondAttribute="trailing" constant="232" id="Dsj-aR-ucR"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="leading" secondItem="HAl-Cf-s9N" secondAttribute="leading" id="E32-Of-leP"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="leading" secondItem="Huh-6H-J1B" secondAttribute="leadingMargin" id="QfT-V4-T9e"/>
-                                                    <constraint firstItem="6pJ-ai-YLK" firstAttribute="top" secondItem="adv-zL-bQm" secondAttribute="bottom" constant="19.670000000000002" id="abZ-Es-3Re"/>
-                                                    <constraint firstItem="6pJ-ai-YLK" firstAttribute="leading" secondItem="adv-zL-bQm" secondAttribute="leading" id="fqk-C8-nwq"/>
                                                     <constraint firstItem="adv-zL-bQm" firstAttribute="top" secondItem="HAl-Cf-s9N" secondAttribute="bottom" constant="19.666666666666671" id="gkJ-VZ-NwW"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="top" secondItem="Huh-6H-J1B" secondAttribute="topMargin" id="ivs-Ub-ZIT"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="leading" secondItem="adv-zL-bQm" secondAttribute="leading" id="jLW-dB-L3r"/>
@@ -1110,7 +1111,6 @@
                     <connections>
                         <outlet property="activityIndicator" destination="sD4-Ld-X5X" id="yhD-C1-tbm"/>
                         <outlet property="bookAuthorLabel" destination="r1O-Vr-xyZ" id="QNI-mv-qbs"/>
-                        <outlet property="bookConditionLabel" destination="6pJ-ai-YLK" id="Y3U-lH-fsM"/>
                         <outlet property="bookCoverImage" destination="kec-ou-2f5" id="b6P-yH-5yD"/>
                         <outlet property="bookISBNLabel" destination="adv-zL-bQm" id="v9c-gT-AlY"/>
                         <outlet property="bookPublishDateLabel" destination="HAl-Cf-s9N" id="ddK-y5-DDb"/>
@@ -1194,6 +1194,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;NO_ITEMS_LABEL&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wq9-aG-GsX">
+                                <rect key="frame" x="52.666666666666657" y="404" width="284.66666666666674" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" systemColor="placeholderTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vF2-Xp-pMP">
                                 <rect key="frame" x="360" y="54" width="20" height="20"/>
                                 <constraints>
@@ -1227,11 +1233,14 @@
                             <constraint firstItem="xq5-J9-ssL" firstAttribute="trailing" secondItem="0V6-Ex-huc" secondAttribute="trailing" id="UNK-B2-xHg"/>
                             <constraint firstItem="0V6-Ex-huc" firstAttribute="top" secondItem="WOs-T9-9AT" secondAttribute="bottom" constant="20" id="Y8z-Qi-Duo"/>
                             <constraint firstItem="vF2-Xp-pMP" firstAttribute="top" secondItem="xq5-J9-ssL" secondAttribute="top" constant="10" id="ZFb-Tt-UtM"/>
+                            <constraint firstItem="wq9-aG-GsX" firstAttribute="centerY" secondItem="Cxt-4i-Gdk" secondAttribute="centerY" id="kkE-K3-Mkd"/>
+                            <constraint firstItem="wq9-aG-GsX" firstAttribute="centerX" secondItem="Cxt-4i-Gdk" secondAttribute="centerX" id="urv-9k-ZyA"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="ONL-pi-yZH" id="S89-5t-cDk"/>
                         <outlet property="inventoryTableView" destination="0V6-Ex-huc" id="FyJ-cI-jT5"/>
+                        <outlet property="noItemsLabel" destination="wq9-aG-GsX" id="rb6-41-LHs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qjI-mn-hi8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1345,6 +1354,13 @@
                                             <constraint firstAttribute="height" constant="164" id="3oy-Wr-YUY"/>
                                         </constraints>
                                     </imageView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="BEa-xZ-D7a">
+                                        <rect key="frame" x="150" y="239" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Zt7-Ef-9Cs"/>
+                                            <constraint firstAttribute="width" constant="50" id="xqW-Gg-LcJ"/>
+                                        </constraints>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -1364,8 +1380,10 @@
                                     <constraint firstAttribute="trailing" secondItem="60d-Qq-VTk" secondAttribute="trailing" constant="10" id="W7L-Um-tB7"/>
                                     <constraint firstAttribute="trailing" secondItem="eTj-EH-OXH" secondAttribute="trailing" constant="10" id="ZYl-4n-WVN"/>
                                     <constraint firstAttribute="bottom" secondItem="60d-Qq-VTk" secondAttribute="bottom" constant="54.333333333333314" id="apq-13-EdE"/>
+                                    <constraint firstItem="BEa-xZ-D7a" firstAttribute="centerY" secondItem="XeY-9C-rg7" secondAttribute="centerY" id="eAb-rY-lDH"/>
                                     <constraint firstAttribute="height" constant="528" id="eGs-Q2-c6q"/>
                                     <constraint firstItem="60d-Qq-VTk" firstAttribute="leading" secondItem="XeY-9C-rg7" secondAttribute="leading" constant="10" id="m0g-3J-yG0"/>
+                                    <constraint firstItem="BEa-xZ-D7a" firstAttribute="centerX" secondItem="XeY-9C-rg7" secondAttribute="centerX" id="mga-3z-elr"/>
                                     <constraint firstAttribute="trailing" secondItem="lWe-zm-4Hk" secondAttribute="trailing" constant="30" id="nO7-Py-Tdb"/>
                                     <constraint firstItem="7Yb-fy-cbq" firstAttribute="top" secondItem="XeY-9C-rg7" secondAttribute="top" constant="25" id="nXt-YZ-2vR"/>
                                     <constraint firstAttribute="trailing" secondItem="Iby-fZ-Ppt" secondAttribute="trailing" constant="10" id="pIF-wJ-Wnw"/>
@@ -1385,6 +1403,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityindicator" destination="BEa-xZ-D7a" id="23R-ZY-5Wg"/>
                         <outlet property="addToWishlistButton" destination="sXy-bt-dzu" id="VNO-V0-S5J"/>
                         <outlet property="bookAuthorLabel" destination="uJg-LA-fAY" id="k7l-XV-pxY"/>
                         <outlet property="bookISBNLabel" destination="YBz-oz-Gpg" id="mXr-h8-Sa8"/>
@@ -1429,10 +1448,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="313" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="317" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="319" y="0.0" width="11" height="30"/>
+                                                <rect key="frame" x="323" y="0.0" width="7" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -2490,7 +2509,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x3J-DM-IHR">
                                         <rect key="frame" x="10" y="483.66666666666663" width="330" height="30"/>
                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                        <state key="normal" title="Add Request">
+                                        <state key="normal" title="Add to Wishlist">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
                                         <connections>

@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 import Firebase
 import MessageUI
+import CoreLocation
+
+protocol ReloadDelegate {
+    func reload()
+}
 
 class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
@@ -21,10 +26,12 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     @IBOutlet weak var bookImageView: UIImageView!
     @IBOutlet weak var addToWishlistButton: UIButton!
     @IBOutlet weak var popupView: UIView!
+    @IBOutlet weak var activityindicator: UIActivityIndicatorView!
     
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
    
+    var delegate: ReloadDelegate?
     var userDescription: String = ""
     var bookAuthor: String = ""
     var bookTitle: String = ""
@@ -89,7 +96,119 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     }
     
     @IBAction func addToWishlistClicked(_ sender: Any) {
+        self.wait()
+        let currentDateTime = Date()
+        let timestamp = String(currentDateTime.timeIntervalSince1970)
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .short
+        let date = formatter.string(from: currentDateTime)
+        let uniquePostID = UUID().uuidString
+
+        // save image to Firebase storage with uniqueBookID.jpg as image path
+        let imageRef = storageRef.child("\(uniquePostID).jpg")
+        
+        let bookCoverRef = storageRef.child(bookCoverImage)
+        bookCoverRef.downloadURL { url, error in
+            guard let imageURL = url, error == nil else {
+                print(error ?? "")
+                return
+            }
+            
+            guard let bookCoverData = NSData(contentsOf: imageURL) as Data? else {
+                assertionFailure("Error in getting Data")
+                return
+            }
+            
+            imageRef.putData(bookCoverData, metadata: nil) { (metadata, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let metadata = metadata {
+                    print(metadata)
+                }
+
+                // Grab user ID from logged in user
+                guard let userID = Auth.auth().currentUser?.uid else {
+                    assertionFailure("Couldn't unwrap userID")
+                    return
+                }
+                
+                //add book isbn to user's wishlist
+                self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN])
+                
+                
+                // Grab zipcode from user
+                self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let userData = snapshot.value as? [String: String]
+                    let bookZipCode = userData?["ZipCode"] ?? ""
+                    let userFirstName = userData?["FirstName"] ?? ""
+                    let userLastName = userData?["LastName"] ?? ""
+                    let userFullName = userFirstName + " " + userLastName
+                    
+                    //add new post to "Posts" in database
+                    // make push call to database
+                    self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
+                
+                    
+                    // add user as a "Buyer" of this book under database's "Books"
+                    self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
+                        //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
+                        self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
+                        
+                        // Append user info to "Buyer" node
+                        self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
+                            
+                        // Append post info to "Buyer" node
+                        self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date])
+                    
+                        
+                    }) { (error) in
+                        print("Error adding post to \"Books\" node")
+                        print(error.localizedDescription)
+                    }
+                })
+                self.start()
+                self.dismiss(animated: true, completion: nil)
+                self.delegate?.reload()
+            }
+            
+        }
+        
     }
+    
+    
+    func createNewListing(userID: String, uniquePostID: String, date: String, timestamp: String, bookLocation: String){
+        // make push call to database
+        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": "", "User": userID, "Date_Posted": date, "Location": bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
+    }
+    
+    //    func getCityFromPostalCode(postalCode: String){
+    func getCityFromPostalCode(postalCode: String, userID: String, uniquePostID: String, date: String, timestamp: String) {
+        
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(postalCode) { results, error in
+            
+            // Placemark gives an array of best/closest results. First value of array most accurate.
+            if let placemark = results?[0] {
+                let locality = placemark.locality ?? ""
+                let state = placemark.administrativeArea ?? ""
+                print(locality)
+                print(state)
+                
+                
+                let bookLocation = "\(locality), \(state)"
+                print()
+                self.createNewListing(userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp, bookLocation: bookLocation)
+                
+            }
+            if let error = error {
+                print(error)
+            }
+        }
+    }
+    
+    
     
     @IBAction func contactSellerButtonClicked(_ sender: Any) {
         let controller = MFMessageComposeViewController()
@@ -120,5 +239,16 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     
     @IBAction func didPressX(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    func wait() {
+        self.activityindicator.startAnimating()
+        self.view.alpha = 0.2
+        self.view.isUserInteractionEnabled = false
+    }
+    
+    func start() {
+        self.activityindicator.stopAnimating()
+        self.view.alpha = 1
+        self.view.isUserInteractionEnabled = true
     }
 }

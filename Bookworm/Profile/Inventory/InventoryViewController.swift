@@ -25,6 +25,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var inventoryTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var noItemsLabel: UILabel!
     
     var inventoryBooks: [InventoryBook] = []
     let storageRef = Storage.storage().reference()
@@ -38,6 +39,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
         inventoryTableView.delegate = self
         inventoryTableView.reloadData()
         loadInventory()
+        noItemsLabel.text = ""
 
     }
     
@@ -92,7 +94,7 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
 
             //get wishlist content, fill in table view
             guard let wishlist = snapshot.value as? NSDictionary else {
-                print("user's inventory is empty")
+                self.noItemsLabel.text = "No Books in Inventory"
                 return
             }
             for postID in wishlist{

@@ -17,7 +17,7 @@ class WishListListingViewController: UIViewController {
     @IBOutlet weak var bookAuthorLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
-    @IBOutlet weak var bookConditionLabel: UILabel!
+//    @IBOutlet weak var bookConditionLabel: UILabel!
     @IBOutlet weak var removeFromWishlistButton: UIButton!
     
     var bookAuthors: String = ""
@@ -42,7 +42,9 @@ class WishListListingViewController: UIViewController {
         popupView.layer.cornerRadius = 10
         wait()
         fillInPopup()
-        start()    }
+        start()
+        
+    }
     
     func fillInPopup(){
         bookTitleLabel.text = self.bookTitle

@@ -24,6 +24,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var wishListTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var noItemsLabel: UILabel!
     
     var wishListBooks: [WishListBook] = []
     let storageRef = Storage.storage().reference()
@@ -36,6 +37,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         wishListTableView.delegate = self
         wishListTableView.reloadData()
         loadWishList()
+        noItemsLabel.text = ""
     }
     
     @IBAction func didPressX(_ sender: Any) {
@@ -49,6 +51,8 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func addBookToDataSource(bookInfo: NSDictionary, isbn: String, postID: String){
+//        self.wait()
+
         guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String else{
             print("error getting book data")
             return
@@ -74,6 +78,8 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
             let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, postID: postID)
             self.wishListBooks.append(book)
             self.wishListTableView.reloadData()
+//            self.start()
+
         }
     }
     
@@ -84,10 +90,9 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
         ref.child("Wishlists").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-
             //get wishlist content, fill in table view
             guard let wishlist = snapshot.value as? NSDictionary else {
-                print("user's wishlist is empty")
+                self.noItemsLabel.text = "No Books in Wishlist"
                 return
             }
             for postID in wishlist{
@@ -106,7 +111,6 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                             } else{
                                 print("couldnt acess book information")
                             }
-                            
                         }) { (error) in
                             print("error loading book info")
 //                            print(error.localizedDescription)
