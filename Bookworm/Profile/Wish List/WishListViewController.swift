@@ -12,7 +12,10 @@ class WishListTableViewCell: UITableViewCell{
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookAuthorLabel: UILabel!
-
+    @IBOutlet weak var bookPublishDateLabel: UILabel!
+    @IBOutlet weak var bookISBNLabel: UILabel!
+    @IBOutlet weak var bookConditionLabel: UILabel!
+    
     func fillInWishListCell(book: WishListBook){
         self.bookCoverImage.image = UIImage(data: book.bookCoverData)
         self.bookTitleLabel.text = book.title

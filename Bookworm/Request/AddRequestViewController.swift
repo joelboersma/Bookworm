@@ -12,6 +12,7 @@ class AddRequestBookCell: UITableViewCell {
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookAuthorsLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
+    @IBOutlet weak var bookISBNLabel: UILabel!
     
     func fillInBookCell (book: Book){
         
@@ -38,6 +39,8 @@ class AddRequestBookCell: UITableViewCell {
 
         //fill in book author
         self.bookAuthorsLabel.text = "Authors: " + book.authors.joined(separator: ", ")
+        
+        self.bookISBNLabel.text = "ISBN: " + book.isbn
     }
 }
 
