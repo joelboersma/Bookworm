@@ -118,7 +118,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func xButtonPressed(_ sender: Any) {
+    @IBAction func didPressX(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 }

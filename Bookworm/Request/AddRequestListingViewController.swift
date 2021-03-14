@@ -12,14 +12,14 @@ import CoreLocation
 
 class AddRequestListingViewController: UIViewController {
     
+    @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookCoverImage: UIImageView!
-    @IBOutlet weak var bookAuthorLabel: UITextField!
-    @IBOutlet weak var bookPublishDateLabel: UITextField!
-    @IBOutlet weak var bookISBNLabel: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var bookAuthorLabel: UILabel!
+    @IBOutlet weak var bookPublishDateLabel: UILabel!
+    @IBOutlet weak var bookISBNLabel: UILabel!
     @IBOutlet weak var addRequestButton: UIButton!
-    @IBOutlet weak var popupView: UIView!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
     var bookAuthors: [String] = []

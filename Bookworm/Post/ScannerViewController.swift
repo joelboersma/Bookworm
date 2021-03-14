@@ -22,15 +22,15 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
     var previewLayer: AVCaptureVideoPreviewLayer?
 //    var recognizeTextRequest = VNRecognizeTextRequest()
 //    var recognizedText = ""
-    var captureTimer = Timer()
-    var timePassed = false
+//    var captureTimer = Timer()
+//    var timePassed = false
     var animate = Animate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         popUpView.layer.cornerRadius = 10
         
-        captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
+//        captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
         
         captureSession = AVCaptureSession()
 
@@ -199,27 +199,34 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
     func addPostListingVCDismissed() {
         if captureSession?.isRunning == false {
             captureSession?.startRunning()
-            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
+//            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if captureSession?.isRunning == false {
             captureSession?.startRunning()
-            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
+//            captureTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCalled), userInfo: nil, repeats: true)
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         if captureSession?.isRunning == true {
             captureSession?.stopRunning()
-            captureTimer.invalidate()
+//            captureTimer.invalidate()
         }
     }
     
-    @objc func timerCalled() {
-        timePassed = true
+    @IBAction func didPressX(_ sender: Any) {
+        if captureSession?.isRunning == true {
+            captureSession?.stopRunning()
+        }
+        self.dismiss(animated: true, completion: nil)
     }
+    
+//    @objc func timerCalled() {
+//        timePassed = true
+//    }
     
     //following two functions taken from hw solutions
     func wait() {

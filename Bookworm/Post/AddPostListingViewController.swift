@@ -16,18 +16,14 @@ protocol AddPostListingViewControllerDelegate {
 
 class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    
     @IBOutlet weak var popupView: UIView!
-    
-    @IBOutlet weak var addListingButton: UIButton!
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var authorLabel: UITextField!
-    @IBOutlet weak var publishDateLabel: UITextField!
-    @IBOutlet weak var isbnLabel: UITextField!
-    
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var publishDateLabel: UILabel!
+    @IBOutlet weak var isbnLabel: UILabel!
     @IBOutlet weak var bookConditionPickerView: UIPickerView!
+    @IBOutlet weak var addListingButton: UIButton!
     
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
@@ -242,4 +238,7 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     
+    @IBAction func didPressX(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }

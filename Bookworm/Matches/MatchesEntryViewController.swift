@@ -13,7 +13,6 @@ import MessageUI
 class MatchesEntryViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var contactButton: UIButton!
-    @IBOutlet weak var transactionButton: UIButton!
     @IBOutlet weak var transactionLabel: UITextField!
     @IBOutlet weak var popupView: UIView!
     
@@ -22,7 +21,6 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
         
         //format buttons + view
         contactButton.layer.cornerRadius = 5
-        transactionButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
     }
     
@@ -41,7 +39,7 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func xButtonPressed() {
+    @IBAction func didPressX(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     

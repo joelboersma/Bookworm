@@ -9,16 +9,16 @@ import UIKit
 import Firebase
 
 class WishListListingViewController: UIViewController {
-
-    @IBOutlet weak var removeFromWishlistButton: UIButton!
+    
     @IBOutlet weak var popupView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookCoverImage: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var bookAuthorLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
-    @IBOutlet weak var bookTitleLabel: UILabel!
-    
+    @IBOutlet weak var bookConditionLabel: UILabel!
+    @IBOutlet weak var removeFromWishlistButton: UIButton!
     
     var bookAuthors: String = ""
     var bookCoverData: Data = Data()

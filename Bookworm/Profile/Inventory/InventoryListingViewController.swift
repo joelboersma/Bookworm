@@ -15,14 +15,14 @@ protocol ReloadAfterBookRemovalDelegate {
 class InventoryListingViewController: UIViewController {
 
     @IBOutlet weak var popupView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var removefromInventoryButton: UIButton!
-    @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
+    @IBOutlet weak var bookCoverImage: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var bookAuthorLabel: UILabel!
-    @IBOutlet weak var bookISBNLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
+    @IBOutlet weak var bookISBNLabel: UILabel!
     @IBOutlet weak var bookConditionLabel: UILabel!
+    @IBOutlet weak var removefromInventoryButton: UIButton!
     
     var bookAuthors: String = ""
     var bookCoverData: Data = Data()
@@ -64,11 +64,6 @@ class InventoryListingViewController: UIViewController {
     @IBAction func didPressX(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    @IBAction func didPressUploadImage(_ sender: Any) {
-    
-    }
-    
     
     @IBAction func didPressRemove(_ sender: Any) {
         // Grab user ID from logged in user

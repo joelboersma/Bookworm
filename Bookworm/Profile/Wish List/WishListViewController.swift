@@ -23,7 +23,6 @@ class WishListTableViewCell: UITableViewCell{
 class WishListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReloadAfterBookRemovalDelegate  {
 
     @IBOutlet weak var wishListTableView: UITableView!
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var wishListBooks: [WishListBook] = []
