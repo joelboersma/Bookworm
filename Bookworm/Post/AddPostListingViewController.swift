@@ -91,17 +91,11 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
         isbnLabel.text = "ISBN: " + bookISBN
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isBeingDismissed {
             DispatchQueue.global(qos: .userInitiated).async { self.delegate?.addPostListingVCDismissed() }
         }
-    }
-    
-    @IBAction func didPressUploadImages(_ sender: Any) {
-        
-        
-        
     }
     
     @IBAction func didPressAddListing(_ sender: Any) {
