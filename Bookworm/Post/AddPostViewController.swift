@@ -244,7 +244,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
         present(addPostListingVC,animated: true)
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let book = books[indexPath.row]
         let addPost = UIContextualAction(style: .normal, title: "Add Post") { (action, view, completion) in
             self.addPostHandler(book)
