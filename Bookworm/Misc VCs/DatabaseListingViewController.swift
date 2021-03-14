@@ -12,13 +12,13 @@ import MessageUI
 
 class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
+    @IBOutlet weak var bookAuthorLabel: UILabel!
+    @IBOutlet weak var bookPublishingDateLabel: UILabel!
+    @IBOutlet weak var bookISBNLabel: UILabel!
     @IBOutlet weak var contactSellerButton: UIButton!
     @IBOutlet weak var xButton: UIButton!
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookImageView: UIImageView!
-    @IBOutlet weak var bookAuthorLabel: UITextField!
-    @IBOutlet weak var bookPublishingDateLabel: UITextField!
-    @IBOutlet weak var bookISBNLabel: UITextField!
     @IBOutlet weak var addToWishlistButton: UIButton!
     @IBOutlet weak var popupView: UIView!
     
