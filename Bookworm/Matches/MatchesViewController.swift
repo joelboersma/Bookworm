@@ -122,7 +122,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.global(qos: .userInitiated).async {
                         
                         guard let userID = Auth.auth().currentUser?.uid else {
                             assertionFailure("Couldn't unwrap userID")
@@ -132,36 +132,46 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                         var wishListISBNs: [String] = []
                         var inventoryISBNs:  [String] = []
                         
-//                        self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
-//                            let results = snapshot.value as? [String : String]
-//                            let isbn = results?["ISBN"] ?? ""
-//                            wishListISBNs.append(isbn)
-//                            print(wishListISBNs)
-//                        })
-//
-//
-//                        self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
-//                            let results = snapshot.value as? [String : String]
-//                            let isbn = results?["ISBN"] ?? ""
-//                            inventoryISBNs.append(isbn)
-//                            print(inventoryISBNs)
-//                        })
-//
-//                        print("wishListISBNs")
-//                        print(wishListISBNs)
-//                        print("inventoryISBNs")
-//                        print(inventoryISBNs)
+                        let semaphore = DispatchSemaphore(value: 0)
+                        
+                        self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
+                            let results = snapshot.value as? [String : String]
+                            let isbn = results?["ISBN"] ?? ""
+                            wishListISBNs.append(isbn)
+                            print("wishListISBNs: \(wishListISBNs)")
+                            semaphore.signal()
+                        })
+
+                        self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
+                            let results = snapshot.value as? [String : String]
+                            let isbn = results?["ISBN"] ?? ""
+                            inventoryISBNs.append(isbn)
+                            print("inventoryISBNs: \(inventoryISBNs)")
+                            semaphore.signal()
+                        })
+
+                        semaphore.wait()
+                        semaphore.wait()
+                        
+                        print("wishListISBNs")
+                        print(wishListISBNs)
+                        print("inventoryISBNs")
+                        print(inventoryISBNs)
+                        
                         
                         //hardcoded for now
-                        wishListISBNs.append("9781472263667")
-                        wishListISBNs.append("9780984782857")
-                        inventoryISBNs.append("9780141182704")
+//                        wishListISBNs.append("9781472263667")
+//                        wishListISBNs.append("9780984782857")
+//                        inventoryISBNs.append("9780141182704")
                         
-                        self.books.append(databaseData)
-                        // Sort by date and time.
-                        self.books.sort(by: {$0.timeStamp > $1.timeStamp})
-                        self.books = self.books.filter { (wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")}
-                        self.matchesTableView.reloadData()
+                        DispatchQueue.main.async {
+                            self.books.append(databaseData)
+                            // Sort by date and time.
+                            self.books.sort(by: {$0.timeStamp > $1.timeStamp})
+                            self.books = self.books.filter { (wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")}
+                            self.matchesTableView.reloadData()
+                        }
+                        
                     }
                     
                 })

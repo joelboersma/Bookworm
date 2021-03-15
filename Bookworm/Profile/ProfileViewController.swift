@@ -157,6 +157,15 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
                 
                 self.dbLocation = "\(locality), \(state)"
                 self.locationLabel.text = "\(self.dbLocation)"
+                
+                // Grab user ID from logged in user
+                guard let userID = Auth.auth().currentUser?.uid else {
+                    assertionFailure("Couldn't unwrap userID")
+                    return
+                }
+
+                //update user's ZipCode under users -> userID -> zipcode
+                self.ref.child("Users").child(userID).updateChildValues(["ZipCode": postalCode])
             }
             if let error = error {
                 print(error)
