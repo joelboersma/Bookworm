@@ -99,6 +99,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         // For getting database data and reloadData for listingsTableView
         self.books.removeAll()
         self.distances.removeAll()
+        self.ref.child("Posts").removeAllObservers()
         self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
     
@@ -182,7 +183,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             }
             
         })
-        
+                
     }
     
     func reload(index: Int) {
@@ -209,7 +210,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         filterValue = selectedFilterValue
         self.books.removeAll()
         self.distances.removeAll()
-        self.makeDatabaseCallsforReload(filterOption: selectedFilterValue)
+        self.ref.child("Posts").removeAllObservers()
+        makeDatabaseCallsforReload(filterOption: selectedFilterValue)
     }
     
     
