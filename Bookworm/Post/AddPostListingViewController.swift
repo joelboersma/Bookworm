@@ -85,6 +85,25 @@ class AddPostListingViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         publishDateLabel.text = "Publish Date: " + bookPublishDate
         isbnLabel.text = "ISBN: " + bookISBN
+        
+        OpenLibraryAPI.ISBN(bookISBN, completion: { response, error in
+            if let unwrappedError = error {
+                print("search error")
+                print(unwrappedError)
+                return
+            }
+            guard let unwrappedResponse = response else {
+                print("no response")
+                return
+            }
+            
+            if let publishDate = unwrappedResponse["publish_date"] as? String {
+                self.publishDateLabel.text = "Publish Date: " + publishDate
+                self.bookPublishDate = publishDate
+            } else {
+                self.publishDateLabel.text = "Publish Date: None found"
+            }
+        })
     }
     
     override func viewDidDisappear(_ animated: Bool) {
