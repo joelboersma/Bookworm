@@ -185,7 +185,7 @@ class AddRequestListingViewController: UIViewController, UIPickerViewDelegate, U
         }
         
         //add book isbn to user's wishlist
-        ref.self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN])
+        ref.self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN, "Condition": self.bookCondition])
         
 
         // Grab zipcode from user, change zipcode to city

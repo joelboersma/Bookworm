@@ -20,7 +20,7 @@ class WishListTableViewCell: UITableViewCell{
         self.bookCoverImage.image = UIImage(data: book.bookCoverData)
         self.bookTitleLabel.text = book.title
         self.bookAuthorLabel.text = book.authors.joined(separator: ", ")
-        self.bookConditionLabel.text = ""
+        self.bookConditionLabel.text = "" 
         self.bookISBNLabel.text = ""
         self.bookPublishDateLabel.text = ""
     }
@@ -57,7 +57,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         loadWishList()
     }
     
-    func addBookToDataSource(bookInfo: NSDictionary, isbn: String, postID: String){
+    func addBookToDataSource(bookInfo: NSDictionary, isbn: String, postID: String, condition: String){
 //        self.wait()
 
         guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String else{
@@ -82,7 +82,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             
-            let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, postID: postID)
+            let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, postID: postID, condition: condition)
             self.wishListBooks.append(book)
             self.wishListTableView.reloadData()
 //            self.start()
@@ -107,15 +107,14 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                     print("post id couldn't be unwrapped")
                     return
                 }
-                
-                if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
+                if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"], let condition = isbnNode["Condition"]{
                     // look up isbn in Books node for book info -> fill in table view cell
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in
                             
                             if let bookInfo = snapshot.value as? NSDictionary {
                                 
-                                self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, postID: postIDKey)
+                                self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, postID: postIDKey, condition: condition)
                             } else{
                                 print("couldnt acess book information")
                             }
@@ -167,6 +166,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         wishListListingVC.bookPublishDate = book.publishDate
         wishListListingVC.bookPostID = book.postID
         wishListListingVC.bookCover = book.bookCover
+        wishListListingVC.bookCondition = book.condition
         
         present(wishListListingVC, animated: true, completion: nil)
     
