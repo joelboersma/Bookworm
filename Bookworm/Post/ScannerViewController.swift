@@ -104,7 +104,7 @@ class ScannerViewController: UIViewController, AddPostListingViewControllerDeleg
 //
 //    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
 //        let image = scan.imageOfPage(at: 0)
-//        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+//        let handler = VNImageRequestHandler(cgImage: image.cgImage?, options: [:])
 //        do {
 //            try handler.perform([recognizeTextRequest])
 //        } catch {

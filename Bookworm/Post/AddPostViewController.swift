@@ -409,7 +409,8 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
     
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
         let image = scan.imageOfPage(at: 0)
-        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+        guard let cgimage = image.cgImage else {return}
+        let handler = VNImageRequestHandler(cgImage: cgimage, options: [:])
         do {
             try handler.perform([recognizeTextRequest])
         } catch {

@@ -8,25 +8,29 @@
 import UIKit
 import Firebase
 import MessageUI
+import CoreLocation
+import MapKit
 
 class ListingsTableViewCell: UITableViewCell {
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var conditionLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var buyerSellerLabel: UILabel!
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var buyerSellerColorView: UIView!
     
     var storageRef = Storage.storage().reference()
     
-    func fillInBookCell (book: BookCell){
+    func fillInBookCell (book: BookCell, distance: String){
         
         let image = UIImage(data: book.bookCoverData as Data)
         self.bookCoverImage.image = image
         
         self.bookTitleLabel.text = book.title
         self.locationLabel.text = book.location
+        self.distanceLabel.text = distance
         self.buyerSellerLabel.text = "\(book.userDescription): \(book.buyerSeller)"
         self.postDateLabel.text = "Posted: " + book.postDate
         
@@ -43,7 +47,7 @@ class ListingsTableViewCell: UITableViewCell {
     
 }
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate, MFMessageComposeViewControllerDelegate, ReloadDelegate  {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate, MFMessageComposeViewControllerDelegate, ReloadDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -51,7 +55,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var books: [BookCell] = []
-    
+    var distances: [String] = []
+    let locationManager = CLLocationManager()
+    var locationUpdateTimer = Timer()
+    var currLocation: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
     var ref = Database.database().reference()
     
     // 0 = Listing
@@ -72,11 +79,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         
         self.activityIndicator.stopAnimating()
         filterButton.layer.cornerRadius = 5
+        
+        // Ask for Authorisation from the User.
+        self.locationManager.requestAlwaysAuthorization()
+
+        // For use in foreground.
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            self.locationManager.requestLocation()
+        }
+        
+        locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         // For getting database data and reloadData for listingsTableView
         self.books.removeAll()
+        self.distances.removeAll()
         self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
     
@@ -145,6 +167,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                         // Default is both
                         // Sort by date and time.
                         self.books.sort(by: {$0.timeStamp > $1.timeStamp})
+                        self.books.forEach({_ in self.distances.append("")})
+                        for (index, book) in self.books.enumerated() {
+                            self.getDistance(book.location) { (distance) in
+                                self.distances[index] = distance
+                                self.listingsTableView.reloadData()
+                            }
+                        }
                         self.listingsTableView.reloadData()
                         self.start()
                     }
@@ -156,9 +185,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         
     }
     
-    
     func reload(index: Int) {
         books.remove(at: index)
+        distances.remove(at: index)
         self.listingsTableView.reloadData()
     }
     
@@ -175,13 +204,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         
         present(filterVC, animated: true, completion: nil)
     }
-    
-
-    
+        
     func filterVCDismissed(selectedFilterValue: Int) {
         filterValue = selectedFilterValue
         self.books.removeAll()
-        makeDatabaseCallsforReload(filterOption: selectedFilterValue)
+        self.distances.removeAll()
+        self.makeDatabaseCallsforReload(filterOption: selectedFilterValue)
     }
     
     
@@ -201,7 +229,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             return UITableViewCell.init()
         }
         let book = books[indexPath.row]
-        cell.fillInBookCell(book: book)
+        let distance = distances[indexPath.row]
+        cell.fillInBookCell(book: book, distance: distance)
 //        cell.layer.cornerRadius = 10
         return cell
     }
@@ -265,6 +294,61 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func getDistance(_ location: String, completion: @escaping(String) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(location) { (placemarks, error) in
+            if error != nil {
+                print("Geocoder Address String failed with error")
+                return
+            }
+            if let placemark = placemarks?.first {
+                guard let cellLocation: CLLocationCoordinate2D = placemark.location?.coordinate else { return }
+                let request = MKDirections.Request()
+
+                // source and destination are the relevant MKMapItems
+                let source = MKPlacemark(coordinate: self.currLocation)
+                let destination = MKPlacemark(coordinate: cellLocation)
+                request.source = MKMapItem(placemark: source)
+                request.destination = MKMapItem(placemark: destination)
+
+                // Specify the transportation type
+                request.transportType = MKDirectionsTransportType.automobile;
+
+                // If open to getting more than one route,
+                // requestsAlternateRoutes = true; else requestsAlternateRoutes = false;
+                request.requestsAlternateRoutes = true
+
+                let directions = MKDirections(request: request)
+
+                directions.calculate { (response, error) in
+                    if let response = response, let route = response.routes.first {
+                        completion(MKDistanceFormatter().string(fromDistance: route.distance))
+                    }
+                }
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        self.currLocation = location
+//        self.books.removeAll()
+//        self.distances.removeAll()
+//        self.makeDatabaseCallsforReload(filterOption: filterValue)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+    
+    @objc func locationUpdate() {
+        self.locationManager.requestLocation()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        locationUpdateTimer.invalidate()
     }
     
     func wait() {

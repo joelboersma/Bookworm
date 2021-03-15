@@ -127,9 +127,10 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        CLGeocoder().reverseGeocodeLocation(manager.location ?? CLLocation.init()) { (placemarks, error) in
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(manager.location ?? CLLocation.init()) { (placemarks, error) in
             if error != nil {
-                print("Reverse geocoder failed with error" + error!.localizedDescription)
+                print("Reverse geocoder failed with error")
                 return
             }
 

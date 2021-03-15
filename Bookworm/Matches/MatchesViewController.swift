@@ -59,12 +59,6 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         filterButton.layer.cornerRadius = 5
         
         self.navigationController?.isNavigationBarHidden = true
-        
-        // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
-
-        // For use in foreground.
-        self.locationManager.requestWhenInUseAuthorization()
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
