@@ -43,7 +43,7 @@ class ListingsTableViewCell: UITableViewCell {
 }
 
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate, ReloadDelegate  {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate  {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -170,14 +170,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         present(filterVC, animated: true, completion: nil)
     }
     
-    func reload() {
-        self.wait()
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
-        let tabBarController = [vc]
-        self.navigationController?.setViewControllers(tabBarController, animated: false)
-        self.start()
-    }
+
     
     func filterVCDismissed(selectedFilterValue: Int) {
         filterValue = selectedFilterValue
@@ -226,7 +219,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         dblistingVC.bookISBN = book.isbn
         dblistingVC.bookPublishDate = book.publishDate
         dblistingVC.bookCoverImage = book.bookCover
-        dblistingVC.delegate = self
         
         present(dblistingVC, animated: true, completion: nil)
     }

@@ -11,9 +11,7 @@ import Firebase
 import MessageUI
 import CoreLocation
 
-protocol ReloadDelegate {
-    func reload()
-}
+
 
 class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
@@ -31,7 +29,6 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
    
-    var delegate: ReloadDelegate?
     var userDescription: String = ""
     var bookAuthor: String = ""
     var bookTitle: String = ""
@@ -51,7 +48,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         contactSellerButton.layer.cornerRadius = 5
         addToWishlistButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
-        
+    
         addToWishlistButton.setTitle("Add to Wishlist", for: .normal)
         
         switch userDescription {
@@ -68,6 +65,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         fillInBookInfo()
         // Do any additional setup after loading the view.
     }
+    
     
     func fillInBookInfo() {
         let bookCoverRef = storageRef.child(bookCoverImage)
@@ -168,9 +166,11 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
                         print(error.localizedDescription)
                     }
                 })
-                self.start()
                 self.dismiss(animated: true, completion: nil)
-                self.delegate?.reload()
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
+                let tabBarController = [vc]
+                self.navigationController?.setViewControllers(tabBarController, animated: false)
             }
             
         }
