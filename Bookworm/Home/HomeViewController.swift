@@ -36,9 +36,13 @@ class ListingsTableViewCell: UITableViewCell {
         
         //display condition label if user is selling
         if book.userDescription == "Buyer"{
-            self.conditionLabel.text = ""
+            if book.condition == ""{
+                self.conditionLabel.text = "Condition: N/A"
+            } else{
+                self.conditionLabel.text = "Condition: \(book.condition)"
+            }
             self.buyerSellerColorView.backgroundColor = .systemOrange
-        } else{
+        } else {
             self.conditionLabel.text = "Condition: \(book.condition)"
             self.buyerSellerColorView.backgroundColor = .systemBlue
         }
