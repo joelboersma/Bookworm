@@ -107,6 +107,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in
                             
                             if let bookInfo = snapshot.value as? NSDictionary {
+                                
                                 self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, postID: postIDKey)
                             } else{
                                 print("couldnt acess book information")

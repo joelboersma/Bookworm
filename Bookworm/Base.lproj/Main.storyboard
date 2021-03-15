@@ -1053,16 +1053,27 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;BOOK_CONDITION&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPO-Lb-JXV">
+                                                        <rect key="frame" x="8" y="129" width="168.33333333333334" height="20.333333333333343"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <constraints>
+                                                    <constraint firstItem="WhB-mG-dQC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="adv-zL-bQm" secondAttribute="trailing" symbolic="YES" id="0ji-Zu-tVA"/>
+                                                    <constraint firstItem="iPO-Lb-JXV" firstAttribute="top" secondItem="adv-zL-bQm" secondAttribute="bottom" constant="20.670000000000002" id="2v5-i8-pcv"/>
                                                     <constraint firstAttribute="trailing" secondItem="r1O-Vr-xyZ" secondAttribute="trailing" constant="232" id="Dsj-aR-ucR"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="leading" secondItem="HAl-Cf-s9N" secondAttribute="leading" id="E32-Of-leP"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="leading" secondItem="Huh-6H-J1B" secondAttribute="leadingMargin" id="QfT-V4-T9e"/>
+                                                    <constraint firstItem="iPO-Lb-JXV" firstAttribute="leading" secondItem="adv-zL-bQm" secondAttribute="leading" id="b5v-kG-3OB"/>
                                                     <constraint firstItem="adv-zL-bQm" firstAttribute="top" secondItem="HAl-Cf-s9N" secondAttribute="bottom" constant="19.666666666666671" id="gkJ-VZ-NwW"/>
+                                                    <constraint firstItem="KX5-Il-kVJ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iPO-Lb-JXV" secondAttribute="trailing" symbolic="YES" id="i9C-sB-c4c"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="top" secondItem="Huh-6H-J1B" secondAttribute="topMargin" id="ivs-Ub-ZIT"/>
                                                     <constraint firstItem="r1O-Vr-xyZ" firstAttribute="leading" secondItem="adv-zL-bQm" secondAttribute="leading" id="jLW-dB-L3r"/>
                                                     <constraint firstAttribute="bottom" secondItem="r1O-Vr-xyZ" secondAttribute="bottom" constant="77.666666666666671" id="jm9-2U-2Ic"/>
                                                     <constraint firstItem="HAl-Cf-s9N" firstAttribute="top" secondItem="r1O-Vr-xyZ" secondAttribute="bottom" constant="19.666666666666671" id="uSw-kO-a4v"/>
+                                                    <constraint firstItem="WhB-mG-dQC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HAl-Cf-s9N" secondAttribute="trailing" symbolic="YES" id="z3u-mR-8Oe"/>
                                                 </constraints>
                                                 <viewLayoutGuide key="contentLayoutGuide" id="WhB-mG-dQC"/>
                                                 <viewLayoutGuide key="frameLayoutGuide" id="KX5-Il-kVJ"/>
@@ -1111,6 +1122,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="sD4-Ld-X5X" id="yhD-C1-tbm"/>
                         <outlet property="bookAuthorLabel" destination="r1O-Vr-xyZ" id="QNI-mv-qbs"/>
+                        <outlet property="bookConditionLabel" destination="iPO-Lb-JXV" id="dTu-11-dhb"/>
                         <outlet property="bookCoverImage" destination="kec-ou-2f5" id="b6P-yH-5yD"/>
                         <outlet property="bookISBNLabel" destination="adv-zL-bQm" id="v9c-gT-AlY"/>
                         <outlet property="bookPublishDateLabel" destination="HAl-Cf-s9N" id="ddK-y5-DDb"/>
@@ -1448,10 +1460,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="317" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="313" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="323" y="0.0" width="7" height="30"/>
+                                                <rect key="frame" x="319" y="0.0" width="11" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1934,7 +1946,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zyk-SJ-wG4">
-                                <rect key="frame" x="0.0" y="149" width="390" height="563"/>
+                                <rect key="frame" x="0.0" y="149" width="390" height="568"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addPostBookCell" rowHeight="105" id="utb-Yx-6Zi" customClass="AddPostBookCell" customModule="Bookworm" customModuleProvider="target">
@@ -1955,19 +1967,19 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2tH-Eq-LvE">
                                                     <rect key="frame" x="130" y="10" width="240" height="59"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;BOOK_TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bwc-bT-YEz">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="&lt;BOOK_TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bwc-bT-YEz">
                                                             <rect key="frame" x="0.0" y="0.0" width="124" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;AUTHORS&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJk-mL-tM9">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="&lt;AUTHORS&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJk-mL-tM9">
                                                             <rect key="frame" x="0.0" y="25.333333333333332" width="73.333333333333329" height="14.333333333333332"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;PUBLISH_DATE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="92M-4X-YP6">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="&lt;PUBLISH_DATE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="92M-4X-YP6">
                                                             <rect key="frame" x="0.0" y="44.666666666666664" width="103.33333333333333" height="14.333333333333336"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
@@ -2031,7 +2043,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmG-6g-neh">
-                                <rect key="frame" x="0.0" y="712" width="390" height="49"/>
+                                <rect key="frame" x="0.0" y="717" width="390" height="44"/>
                                 <items>
                                     <barButtonItem title="Scan Barcode" id="K69-Bz-032">
                                         <connections>
@@ -2047,7 +2059,7 @@
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan Here!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQA-SX-SjR">
-                                <rect key="frame" x="30" y="624.66666666666663" width="330" height="62.333333333333371"/>
+                                <rect key="frame" x="30" y="629.66666666666663" width="330" height="62.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="52"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
@@ -2149,19 +2161,19 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0yi-eB-nDi">
                                                     <rect key="frame" x="130" y="10" width="240" height="59"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;BOOK_TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoQ-e2-Ox9">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="&lt;BOOK_TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoQ-e2-Ox9">
                                                             <rect key="frame" x="0.0" y="0.0" width="124" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;AUTHORS&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hc-WV-q00">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="&lt;AUTHORS&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hc-WV-q00">
                                                             <rect key="frame" x="0.0" y="25.333333333333332" width="73.333333333333329" height="14.333333333333332"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;PUBLISH_DATE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NUq-Sm-o7V">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="&lt;PUBLISH_DATE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NUq-Sm-o7V">
                                                             <rect key="frame" x="0.0" y="44.666666666666664" width="103.33333333333333" height="14.333333333333336"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
@@ -2573,6 +2585,7 @@
                         <outlet property="activityIndicator" destination="Tnx-kq-Zqb" id="ga8-ER-hgk"/>
                         <outlet property="addRequestButton" destination="x3J-DM-IHR" id="qla-2q-ngu"/>
                         <outlet property="bookAuthorLabel" destination="hjK-yH-7M9" id="cfz-DF-SWv"/>
+                        <outlet property="bookConditionPickerView" destination="pMS-Ur-MCa" id="aDf-Lj-2rc"/>
                         <outlet property="bookCoverImage" destination="8ea-XV-OXI" id="Yuy-VL-DgL"/>
                         <outlet property="bookISBNLabel" destination="jV4-zW-mRV" id="XpX-dM-pBk"/>
                         <outlet property="bookPublishDateLabel" destination="4PB-Gq-8GL" id="g7C-GI-Qnb"/>
