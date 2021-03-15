@@ -7,18 +7,23 @@
 
 import UIKit
 import Firebase
+import CoreLocation
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var greetingLabel: UITextField!
+    @IBOutlet weak var locationLabel: UILabel!
     
     //get references to all buttons (for formatting)
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var inventoryButton: UIButton!
     @IBOutlet weak var wishListButton: UIButton!
+    @IBOutlet weak var changeLocationButton: UIButton!
     @IBOutlet weak var deleteAccountButton: UIButton!
     
     var ref = Database.database().reference()
+    var dbLocation = ""
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,18 +34,34 @@ class ProfileViewController: UIViewController {
         logoutButton.layer.cornerRadius = 5
         inventoryButton.layer.cornerRadius = 5
         wishListButton.layer.cornerRadius = 5
+        changeLocationButton.layer.cornerRadius = 5
         deleteAccountButton.layer.cornerRadius = 5
         
         // set greeting label to first name
         let user = Auth.auth().currentUser
-        ref.child("Users").child(user?.uid ?? "").child("FirstName").observeSingleEvent(of: .value, with: { (snapshot) in
+        self.ref.child("Users").child(user?.uid ?? "").observeSingleEvent(of: .value, with: { (snapshot) in
+            let userData = snapshot.value as? [String: String]
             
-            if let firstName = snapshot.value as? String{
+            if let firstName = userData?["FirstName"] {
                 self.greetingLabel.text = "Hello, \(firstName)"
             }
+            else {
+                self.greetingLabel.text = "Hello!"
+            }
+            
+            if let postalCode = userData?["ZipCode"] {
+                self.changeLocationLabel(postalCode: postalCode)
+            }
+            else {
+                self.locationLabel.text = ""
+            }
         })
-        
-        
+//        ref.child("Users").child(user?.uid ?? "").child("FirstName").observeSingleEvent(of: .value, with: { (snapshot) in
+//
+//            if let firstName = snapshot.value as? String{
+//                self.greetingLabel.text = "Hello, \(firstName)"
+//            }
+//        })
     }
     
     func returnToLoginView(){
@@ -76,6 +97,58 @@ class ProfileViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
+    @IBAction func didPressChangeLocation(_ sender: Any) {
+        let alert = UIAlertController(title: "How do you wish to change your location?", message: nil, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Use Current Location", style: .default, handler: { (action) in
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager.startUpdatingLocation()
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Use Map", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        CLGeocoder().reverseGeocodeLocation(manager.location ?? CLLocation.init()) { (placemarks, error) in
+            if error != nil {
+                print("Reverse geocoder failed with error" + error!.localizedDescription)
+                return
+            }
+
+            if placemarks?.count ?? 0 > 0 {
+                let pm = placemarks?[0]
+                self.changeLocationLabel(postalCode: pm?.postalCode ?? self.dbLocation)
+                
+            }
+            else {
+                print("Problem with the data received from geocoder")
+            }
+            self.locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func changeLocationLabel(postalCode: String) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(postalCode) { results, error in
+            
+            // Placemark gives an array of best/closest results. First value of array most accurate.
+            if let placemark = results?[0] {
+                let locality = placemark.locality ?? ""
+                let state = placemark.administrativeArea ?? ""
+                
+                self.dbLocation = "\(locality), \(state)"
+                self.locationLabel.text = "\(self.dbLocation)"
+            }
+            if let error = error {
+                print(error)
+            }
+        }
+    }
     
     @IBAction func didPressDeleteAccount(_ sender: Any) {
         let user = Auth.auth().currentUser
