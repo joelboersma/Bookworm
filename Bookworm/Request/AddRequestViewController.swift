@@ -250,7 +250,7 @@ class AddRequestViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func addRequestHandler(_ book: Book) {
-        let alert = UIAlertController(title: "Choose book condition for your request.", message: "\n\n", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Choose book condition for your request", message: "\n\n", preferredStyle: .alert)
         let picker = UIPickerView(frame: CGRect(x: 9.5, y: 60, width: 250, height: 60))
         picker.dataSource = self
         picker.delegate = self

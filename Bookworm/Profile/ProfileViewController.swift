@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     var ref = Database.database().reference()
     var dbLocation = ""
+    var dbLocationZip = ""
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
@@ -50,6 +51,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
             }
             
             if let postalCode = userData?["ZipCode"] {
+                self.dbLocationZip = postalCode
                 self.changeLocationLabel(postalCode: postalCode)
             }
             else {
@@ -100,14 +102,25 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func didPressChangeLocation(_ sender: Any) {
         let alert = UIAlertController(title: "How do you wish to change your location?", message: nil, preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "Use Current Location", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Current Location", style: .default, handler: { (action) in
             if CLLocationManager.locationServicesEnabled() {
                 self.locationManager.delegate = self
                 self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 self.locationManager.startUpdatingLocation()
             }
         }))
-        alert.addAction(UIAlertAction(title: "Use Map", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Enter ZipCode", style: .default, handler: { (action) in
+            let locationAlert = UIAlertController(title: "Enter the desired zipcode", message: nil, preferredStyle: .alert)
+            locationAlert.addTextField { (textfield) in
+                textfield.placeholder = "\(self.dbLocationZip)"
+            }
+            locationAlert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action) in
+                let textfield = locationAlert.textFields?[0]
+                self.changeLocationLabel(postalCode:textfield?.text ?? "\(self.dbLocationZip)")
+            }))
+            locationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(locationAlert, animated: true)
+        }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         self.present(alert, animated: true)
