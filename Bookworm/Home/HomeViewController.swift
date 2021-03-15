@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import MessageUI
 
 class ListingsTableViewCell: UITableViewCell {
     @IBOutlet weak var bookCoverImage: UIImageView!
@@ -43,7 +44,7 @@ class ListingsTableViewCell: UITableViewCell {
 }
 
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate  {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate, MFMessageComposeViewControllerDelegate  {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -221,6 +222,42 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         dblistingVC.bookCoverImage = book.bookCover
         
         present(dblistingVC, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let book = books[indexPath.row]
+        let contact = UIContextualAction(style: .normal, title: "Contact") { (action, view, completion) in
+            self.contactHandler(book)
+            self.listingsTableView.setEditing(false, animated: true)
+        }
+        contact.backgroundColor = .systemGreen
+        return UISwipeActionsConfiguration(actions: [contact])
+    }
+    
+    func contactHandler(_ book: BookCell) {
+        let controller = MFMessageComposeViewController()
+        controller.messageComposeDelegate = self
+        
+        if(book.userDescription == "Buyer"){
+            controller.body = "Hello " + book.buyerSeller + ", I saw your request for " + book.title + " on Book Worm and I have a copy! Are you interested?"
+        }else{
+            controller.body = "Hello " + book.buyerSeller + ", I am interested in your listing for " + book.title + " on Book Worm."
+        }
+
+        self.ref.child("Users/\(book.buyerSellerID)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let buyerSellerData = snapshot.value as? [String: String]
+            let buyerSellerContact = buyerSellerData?["PhoneNumber"] ?? ""
+            controller.recipients = [buyerSellerContact]
+            if MFMessageComposeViewController.canSendText() {
+                self.present(controller, animated: true, completion: nil)
+            }
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func wait() {

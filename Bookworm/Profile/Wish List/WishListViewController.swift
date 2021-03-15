@@ -23,7 +23,7 @@ class WishListTableViewCell: UITableViewCell{
     }
 }
 
-class WishListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReloadAfterBookRemovalDelegate  {
+class WishListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReloadAfterBookRemovalDelegate {
 
     @IBOutlet weak var wishListTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -166,6 +166,69 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         
         present(wishListListingVC, animated: true, completion: nil)
     
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let book = wishListBooks[indexPath.row]
+        let deleteCell = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+            self.deleteCellHandler(book)
+            self.wishListTableView.setEditing(false, animated: true)
+            self.reloadAfterBookRemoval()
+        }
+        deleteCell.backgroundColor = .systemRed
+        return UISwipeActionsConfiguration(actions: [deleteCell])
+    }
+    
+    func deleteCellHandler(_ book: WishListBook) {
+        // Grab user ID from logged in user
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return
+        }
+        
+        //database- remove post from "Posts"
+        self.ref.child("Posts/\(book.postID)").removeValue()
+        
+        //database- remove book from user's wishlist in "Wishlists"
+        self.ref.child("Wishlists/\(userID)/\(book.postID)").removeValue()
+
+        //database- remove post from user's node in "Books" -> "Buyers" -> User ID
+        self.ref.child("Books/\(book.isbn)/Buyers/\(userID)/Posts/\(book.postID)").removeValue()
+
+        
+        //database- if user has no more posts of the book, remove the user entirely from the book
+        ref.child("Books/\(book.isbn)/Buyers/\(userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+          // Get user value
+            let numChildren = snapshot.childrenCount
+
+            if numChildren == 1 {
+                self.ref.child("Books/\(book.isbn)/Buyers/\(userID)").removeValue()
+            }
+            //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+            self.ref.child("Books/\(book.isbn)").observeSingleEvent(of: .value, with: { (snapshot) in
+              // Get user value
+                let numChildren = snapshot.childrenCount
+
+                if numChildren == 1 {
+                    self.ref.child("Books/\(book.isbn)").removeValue()
+                }
+              }) { (error) in
+                print(error.localizedDescription)
+            }
+
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+
+        
+        //database- remove book image from storage
+        let imageRef = self.storageRef.child(book.bookCover)
+        print("book cover" + book.bookCover)
+        imageRef.delete{ error in
+            if let error = error {
+              print("faild to delete image")
+            }
+          }
     }
     
     func wait() {

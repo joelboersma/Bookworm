@@ -249,7 +249,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let book = books[indexPath.row]
-        let addPost = UIContextualAction(style: .normal, title: "Add Post") { (action, view, completion) in
+        let addPost = UIContextualAction(style: .normal, title: "Post") { (action, view, completion) in
             self.addPostHandler(book)
             self.resultsTableView.setEditing(false, animated: true)
         }
@@ -357,9 +357,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
             }) { (error) in
                 print("Error adding post to \"Books\" node")
                 print(error.localizedDescription)
-            }
-            
-            
+            }            
         })
     }
     
