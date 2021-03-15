@@ -2670,7 +2670,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x3J-DM-IHR">
                                         <rect key="frame" x="10" y="483.66666666666663" width="330" height="30"/>
                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                        <state key="normal" title="Add to Wishlist">
+                                        <state key="normal" title="Add Request">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
                                         <connections>
