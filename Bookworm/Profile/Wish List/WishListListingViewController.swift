@@ -17,7 +17,7 @@ class WishListListingViewController: UIViewController {
     @IBOutlet weak var bookAuthorLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
-//    @IBOutlet weak var bookConditionLabel: UILabel!
+    @IBOutlet weak var bookConditionLabel: UILabel!
     @IBOutlet weak var removeFromWishlistButton: UIButton!
     
     var bookAuthors: String = ""
@@ -26,6 +26,7 @@ class WishListListingViewController: UIViewController {
     var bookPublishDate: String = ""
     var bookEdition: String = ""
     var bookTitle: String = ""
+    var bookCondition: String = ""
     var bookPostID: String = ""
     var bookCover: String = ""
     
@@ -52,6 +53,7 @@ class WishListListingViewController: UIViewController {
         bookAuthorLabel.text = "Authors: " + self.bookAuthors
         bookPublishDateLabel.text = "Publish Date: " + self.bookPublishDate
         bookCoverImage.image = UIImage(data: self.bookCoverData)
+        bookConditionLabel.text = "" 
         
     }
     

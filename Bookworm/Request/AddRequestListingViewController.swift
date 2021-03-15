@@ -10,7 +10,8 @@ import Firebase
 import CoreLocation
 
 
-class AddRequestListingViewController: UIViewController {
+class AddRequestListingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var bookTitleLabel: UILabel!
@@ -20,6 +21,7 @@ class AddRequestListingViewController: UIViewController {
     @IBOutlet weak var bookPublishDateLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
     @IBOutlet weak var addRequestButton: UIButton!
+    @IBOutlet weak var bookConditionPickerView: UIPickerView!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
     var bookAuthors: [String] = []
@@ -35,8 +37,23 @@ class AddRequestListingViewController: UIViewController {
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
     
+    var bookConditionPickerData: [String] = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        // connect data
+        self.bookConditionPickerView.delegate = self
+        self.bookConditionPickerView.dataSource = self
+        
+        // put book conditions into array
+        bookConditionPickerData = ["Poor", "Fair", "Good", "Great", "New"]
+        
+        // if user doesn't touch UIPicker, default saved valuee is Poor
+        self.bookCondition = bookConditionPickerData[0] as String
+        
+        
         //format button + view
         addRequestButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
@@ -190,7 +207,7 @@ class AddRequestListingViewController: UIViewController {
                 self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
                     
                 // Append post info to "Buyers" node
-                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date])
+                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date, "Condition": self.bookCondition])
                 
                 }) { (error) in
                 print("Error adding request to \"Books\" node")
@@ -200,6 +217,22 @@ class AddRequestListingViewController: UIViewController {
 
         self.dismiss(animated: true, completion: nil)
 
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return bookConditionPickerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return bookConditionPickerData[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent  component: Int) {
+        bookCondition = bookConditionPickerData[row] as String
     }
     
     @IBAction func didPressX(_ sender: Any) {

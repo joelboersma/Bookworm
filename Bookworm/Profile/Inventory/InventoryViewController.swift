@@ -13,15 +13,21 @@ class InventoryTableViewCell: UITableViewCell{
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookAuthorLabel: UILabel!
+    @IBOutlet weak var bookPublishDateLabel: UILabel!
+    @IBOutlet weak var bookISBNLabel: UILabel!
+    @IBOutlet weak var bookConditionLabel: UILabel!
     
     func fillInInventoryCell(book: InventoryBook){
         self.bookCoverImage.image = UIImage(data: book.bookCoverData)
         self.bookTitleLabel.text = book.title
         self.bookAuthorLabel.text = book.authors.joined(separator: ", ")
+        self.bookConditionLabel.text = ""
+        self.bookISBNLabel.text = ""
+        self.bookPublishDateLabel.text = ""
     }
 }
 
-class InventoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReloadAfterBookRemovalDelegate  {
+class InventoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReloadAfterBookRemovalDelegate {
     
     @IBOutlet weak var inventoryTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -177,6 +183,64 @@ class InventoryViewController: UIViewController, UITableViewDelegate, UITableVie
         
         present(inventoryListingVC, animated: true, completion: nil)
 
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let book = inventoryBooks[indexPath.row]
+        let deleteCell = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+            self.deleteCellHandler(book)
+            self.inventoryTableView.setEditing(false, animated: true)
+            self.reloadAfterBookRemoval()
+        }
+        deleteCell.backgroundColor = .systemRed
+        return UISwipeActionsConfiguration(actions: [deleteCell])
+    }
+    
+    func deleteCellHandler(_ book: InventoryBook) {
+        // Grab user ID from logged in user
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return
+        }
+        
+        
+        //database- remove post from "Posts"
+        self.ref.child("Posts/\(book.postID)").removeValue()
+        
+        //database- remove book from user's inventory in "Inventories"
+        self.ref.child("Inventories/\(userID)/\(book.postID)").removeValue()
+        
+        //database- remove post from user's node in "Books" -> "Sellers" -> User ID
+        self.ref.child("Books/\(book.isbn)/Sellers/\(userID)/Posts/\(book.postID)").removeValue()
+        
+        //database- if user has no more posts of the book, remove the user entirely from the book
+        ref.child("Books/\(book.isbn)/Sellers/\(userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+          // Get user value
+            let numChildren = snapshot.childrenCount
+
+            if numChildren == 1 {
+                self.ref.child("Books/\(book.isbn)/Sellers/\(userID)").removeValue()
+            }
+            //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+            self.ref.child("Books/\(book.isbn)").observeSingleEvent(of: .value, with: { (snapshot) in
+              // Get user value
+                let numChildren = snapshot.childrenCount
+
+                if numChildren == 1 {
+                    self.ref.child("Books/\(book.isbn)").removeValue()
+                }
+              }) { (error) in
+                print(error.localizedDescription)
+            }
+
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+
+        
+        //database- remove book image from storage
+        let imageRef = self.storageRef.child(book.bookCover)
+        imageRef.delete(completion: nil)
     }
     
     func wait() {

@@ -11,12 +11,13 @@ import UIKit
 import Firebase
 
 class MatchesTableViewCell: UITableViewCell {
+    @IBOutlet weak var buyerSellerColorView: UIView!
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
-    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var transactionLabel: UILabel!
-    @IBOutlet weak var buyerSellerColorView: UIView!
+    @IBOutlet weak var conditionLabel: UILabel!
 }
 
 class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {

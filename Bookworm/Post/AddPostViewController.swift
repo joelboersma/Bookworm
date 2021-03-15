@@ -16,6 +16,7 @@ class AddPostBookCell: UITableViewCell {
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookAuthorsLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
+    @IBOutlet weak var bookISBNLabel: UILabel!
     
     func fillInBookCell (book: Book){
         
@@ -42,6 +43,8 @@ class AddPostBookCell: UITableViewCell {
 
         //fill in book author
         self.bookAuthorsLabel.text = "Authors: " + book.authors.joined(separator: ", ")
+        
+        self.bookISBNLabel.text = "ISBN: " + book.isbn
     }
 }
 
@@ -246,7 +249,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let book = books[indexPath.row]
-        let addPost = UIContextualAction(style: .normal, title: "Add Post") { (action, view, completion) in
+        let addPost = UIContextualAction(style: .normal, title: "Post") { (action, view, completion) in
             self.addPostHandler(book)
             self.resultsTableView.setEditing(false, animated: true)
         }
@@ -354,9 +357,7 @@ class AddPostViewController: UIViewController, UISearchBarDelegate, UITableViewD
             }) { (error) in
                 print("Error adding post to \"Books\" node")
                 print(error.localizedDescription)
-            }
-            
-            
+            }            
         })
     }
     
