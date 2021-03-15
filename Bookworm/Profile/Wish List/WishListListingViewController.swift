@@ -103,12 +103,11 @@ class WishListListingViewController: UIViewController {
         
         //database- remove book image from storage
         let imageRef = self.storageRef.child(bookCover)
-        print("book cover" + bookCover)
         imageRef.delete{ error in
-            if let error = error {
-              print("faild to delete image")
+            if error != nil {
+              print("failed to delete image")
             }
-          }
+        }
         
         //call delegate which will reload inventory data
         self.delegate?.reloadAfterBookRemoval()

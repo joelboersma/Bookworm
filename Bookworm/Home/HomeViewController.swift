@@ -43,7 +43,7 @@ class ListingsTableViewCell: UITableViewCell {
 }
 
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate  {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate, ReloadDelegate  {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -62,7 +62,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.navigationController?.isNavigationBarHidden = true
         
         self.searchBar.delegate = self
@@ -156,6 +156,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         
     }
     
+    
+    func reload(index: Int) {
+        books.remove(at: index)
+        self.listingsTableView.reloadData()
+    }
+    
     @IBAction func filterButtonClicked(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "filterVC")
@@ -219,6 +225,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         dblistingVC.bookISBN = book.isbn
         dblistingVC.bookPublishDate = book.publishDate
         dblistingVC.bookCoverImage = book.bookCover
+        dblistingVC.bookIndex = indexPath.row
+        dblistingVC.delegate = self
         
         present(dblistingVC, animated: true, completion: nil)
     }

@@ -11,7 +11,9 @@ import Firebase
 import MessageUI
 import CoreLocation
 
-
+protocol ReloadDelegate {
+    func reload(index: Int)
+}
 
 class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
@@ -28,6 +30,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
+    var delegate: ReloadDelegate?
    
     var userDescription: String = ""
     var bookAuthor: String = ""
@@ -38,6 +41,8 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     var bookEdition: String = ""
     var bookISBN: String = ""
     var bookCoverImage: String = ""
+    var userID: String = ""
+    var bookIndex: Int?
     
 
     
@@ -49,7 +54,8 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         addToWishlistButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
     
-        addToWishlistButton.setTitle("Add to Wishlist", for: .normal)
+//        addToWishlistButton.setTitle("Add to Wishlist", for: .normal)
+        setButtonTitle()
         
         switch userDescription {
         case "Buyer":
@@ -66,6 +72,25 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         // Do any additional setup after loading the view.
     }
     
+    func setButtonTitle() {
+        // Grab user ID from logged in user
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return
+        }
+        
+        self.userID = userID
+        if userID == self.buyerSellerID {
+            if self.userDescription == "Buyer"{
+                addToWishlistButton.setTitle("Remove from Wishlist", for: .normal)
+            } else if self.userDescription == "Seller"{
+                addToWishlistButton.setTitle("Remove from Inventory", for: .normal)
+            }
+        } else {
+            addToWishlistButton.setTitle("Add to Wishlist", for: .normal)
+        }
+
+    }
     
     func fillInBookInfo() {
         let bookCoverRef = storageRef.child(bookCoverImage)
@@ -94,6 +119,19 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     }
     
     @IBAction func addToWishlistClicked(_ sender: Any) {
+        switch addToWishlistButton.currentTitle{
+            case "Add to Wishlist":
+                addToWishlist()
+            case "Remove from Wishlist":
+                removeItem(from: "Wishlists", userStatus: "Buyers")
+            case "Remove from Inventory":
+                removeItem(from: "Inventories", userStatus: "Sellers")
+            default:
+                print("Invalid button title")
+        }
+    }
+    
+    func addToWishlist(){
         self.wait()
         let currentDateTime = Date()
         let timestamp = String(currentDateTime.timeIntervalSince1970)
@@ -159,24 +197,20 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
                             
                         // Append post info to "Buyer" node
                         self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date])
-                    
                         
                     }) { (error) in
                         print("Error adding post to \"Books\" node")
                         print(error.localizedDescription)
                     }
                 })
+                
                 self.dismiss(animated: true, completion: nil)
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                guard let vc = storyboard.instantiateViewController(withIdentifier: "tabBarController") as? UITabBarController  else { assertionFailure("Couldn't find tab bar controller."); return }
-                let tabBarController = [vc]
-                self.navigationController?.setViewControllers(tabBarController, animated: false)
+                
             }
             
         }
         
     }
-    
     
     func createNewListing(userID: String, uniquePostID: String, date: String, timestamp: String, bookLocation: String){
         // make push call to database
@@ -198,7 +232,6 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
                 
                 
                 let bookLocation = "\(locality), \(state)"
-                print()
                 self.createNewListing(userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp, bookLocation: bookLocation)
                 
             }
@@ -208,7 +241,62 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         }
     }
     
-    
+    func removeItem(from wishlistOrInventory: String, userStatus sellerOrBuyer: String) {
+        self.wait()
+        let postID = String(self.bookCoverImage.dropLast(4) as Substring)
+        
+        //remove book image from storage
+        let imageRef = self.storageRef.child(self.bookCoverImage)
+        imageRef.delete{ error in
+            if error != nil {
+              print("failed to delete image")
+            }
+            
+            //Remove book from Posts
+            self.ref.child("Posts/\(postID)").removeValue()
+            
+            //Remove book from Inventory or Wishlist
+            self.ref.child("\(wishlistOrInventory)/\(self.userID)/\(postID)").removeValue()
+            
+            //Remove post from User's Seller/Buyer Node
+            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)/Posts/\(postID)").removeValue()
+            
+            //database- if user has no more posts of the book, remove the user entirely from the book
+            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+
+                // Get user value
+                let numChildren = snapshot.childrenCount
+
+                if numChildren == 1 {
+                    self.ref.child("Books/\(self.bookISBN)/Buyers/\(self.userID)").removeValue()
+                }
+                //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+                self.ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
+                  // Get user value
+                    let numChildren = snapshot.childrenCount
+
+                    if numChildren == 1 {
+                        self.ref.child("Books/\(self.bookISBN)").removeValue()
+                    }
+                    
+                    self.start()
+                    if let bookIndex = self.bookIndex {
+                        self.delegate?.reload(index: bookIndex)
+                                            
+                    }
+                    
+                    self.dismiss(animated: true, completion: nil)
+
+                  }) { (error) in
+                    print(error.localizedDescription)
+                }
+                
+              }) { (error) in
+                print(error.localizedDescription)
+            }
+        
+        }
+    }
     
     @IBAction func contactSellerButtonClicked(_ sender: Any) {
         let controller = MFMessageComposeViewController()
