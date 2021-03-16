@@ -1553,7 +1553,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2up-ip-rpm">
-                                <rect key="frame" x="8" y="337.66666666666669" width="374" height="169"/>
+                                <rect key="frame" x="8" y="363.66666666666669" width="374" height="117"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="K0C-RH-HNJ">
                                         <rect key="frame" x="22" y="22" width="330" height="32"/>
@@ -1564,7 +1564,7 @@
                                         </segments>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H4O-W8-qwQ">
-                                        <rect key="frame" x="155.66666666666666" y="125" width="63" height="30"/>
+                                        <rect key="frame" x="155.66666666666666" y="73" width="63" height="30"/>
                                         <color key="backgroundColor" systemColor="labelColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="63" id="jFR-Uz-IUU"/>
@@ -1576,51 +1576,16 @@
                                             <action selector="setFiltersButtonPressed:" destination="3H6-0t-fi6" eventType="touchUpInside" id="g6W-5o-t8c"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GHI-kq-kw5">
-                                        <rect key="frame" x="22" y="61" width="330" height="30"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="within" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBI-RO-M2A">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="324" height="31"/>
-                                                <connections>
-                                                    <action selector="distanceSliderValueChanged:" destination="3H6-0t-fi6" eventType="valueChanged" id="wRE-3r-Ams"/>
-                                                </connections>
-                                            </slider>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="330" y="0.0" width="0.0" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWA-YO-wMV">
-                                        <rect key="frame" x="182" y="96" width="10.333333333333343" height="20.333333333333329"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="GHI-kq-kw5" firstAttribute="top" secondItem="K0C-RH-HNJ" secondAttribute="bottom" constant="8" id="1Eh-AZ-NWh"/>
-                                    <constraint firstItem="GHI-kq-kw5" firstAttribute="leading" secondItem="2up-ip-rpm" secondAttribute="leading" constant="22" id="6m8-uo-VE5"/>
-                                    <constraint firstItem="nWA-YO-wMV" firstAttribute="top" secondItem="GHI-kq-kw5" secondAttribute="bottom" constant="5" id="AVj-eB-tRY"/>
+                                    <constraint firstItem="H4O-W8-qwQ" firstAttribute="top" secondItem="K0C-RH-HNJ" secondAttribute="bottom" constant="20" id="4TQ-9d-sF1"/>
                                     <constraint firstAttribute="bottom" secondItem="H4O-W8-qwQ" secondAttribute="bottom" constant="14" id="FWJ-td-aKG"/>
                                     <constraint firstItem="K0C-RH-HNJ" firstAttribute="top" secondItem="2up-ip-rpm" secondAttribute="top" constant="22" id="KFQ-CV-9vM"/>
                                     <constraint firstAttribute="trailing" secondItem="K0C-RH-HNJ" secondAttribute="trailing" constant="22" id="Okx-wW-aDw"/>
-                                    <constraint firstAttribute="trailing" secondItem="GHI-kq-kw5" secondAttribute="trailing" constant="22" id="RHc-nq-l7n"/>
                                     <constraint firstItem="H4O-W8-qwQ" firstAttribute="centerX" secondItem="2up-ip-rpm" secondAttribute="centerX" id="W9b-1l-N5E"/>
-                                    <constraint firstItem="nWA-YO-wMV" firstAttribute="centerX" secondItem="GHI-kq-kw5" secondAttribute="centerX" id="ZfZ-N7-RUl"/>
                                     <constraint firstItem="K0C-RH-HNJ" firstAttribute="centerX" secondItem="2up-ip-rpm" secondAttribute="centerX" id="gnR-Dr-ekt"/>
-                                    <constraint firstItem="GHI-kq-kw5" firstAttribute="centerX" secondItem="2up-ip-rpm" secondAttribute="centerX" id="plr-2k-IQd"/>
                                     <constraint firstItem="K0C-RH-HNJ" firstAttribute="leading" secondItem="2up-ip-rpm" secondAttribute="leading" constant="22" id="sFB-mu-7zi"/>
-                                    <constraint firstItem="H4O-W8-qwQ" firstAttribute="top" secondItem="GHI-kq-kw5" secondAttribute="bottom" constant="34" id="t07-aZ-60X"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1635,8 +1600,6 @@
                     </view>
                     <connections>
                         <outlet property="categoryFilter" destination="K0C-RH-HNJ" id="HSg-9W-VEv"/>
-                        <outlet property="distanceLabel" destination="nWA-YO-wMV" id="9fY-oi-Tzh"/>
-                        <outlet property="distanceSlider" destination="Luu-TZ-t7W" id="cGi-tK-f0E"/>
                         <outlet property="popupView" destination="2up-ip-rpm" id="nJK-aU-cbw"/>
                         <outlet property="setFiltersButton" destination="H4O-W8-qwQ" id="p3t-Ek-nQC"/>
                     </connections>

@@ -17,8 +17,6 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var setFiltersButton: UIButton!
     @IBOutlet weak var categoryFilter: UISegmentedControl!
     @IBOutlet weak var popupView: UIView!
-    @IBOutlet weak var distanceSlider: UISlider!
-    @IBOutlet weak var distanceLabel: UILabel!
     
     var categorySegment0 = "Listings"
     var categorySegment1 = "Requests"
@@ -41,8 +39,6 @@ class FilterViewController: UIViewController {
         categoryFilter.setTitle(categorySegment0, forSegmentAt: 0)
         categoryFilter.setTitle(categorySegment1, forSegmentAt: 1)
         categoryFilter.setTitle(categorySegment2, forSegmentAt: 2)
-        
-        distanceSlider.value = 5
     }
     
     @IBAction func setFiltersButtonPressed(_ sender: Any) {
@@ -77,7 +73,4 @@ class FilterViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func distanceSliderValueChanged(_ sender: Any) {
-        self.distanceLabel.text = String(Int(distanceSlider.value))
-    }
 }
