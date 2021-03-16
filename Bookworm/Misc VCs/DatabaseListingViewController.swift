@@ -91,9 +91,11 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
             if self.userDescription == "Buyer"{
                 addToWishlistButton.setTitle("Remove Request", for: .normal)
                 addToWishlistButton.backgroundColor = .systemRed
+                contactSellerButton.isHidden = true
             } else if self.userDescription == "Seller"{
                 addToWishlistButton.setTitle("Remove Post", for: .normal)
                 addToWishlistButton.backgroundColor = .systemRed
+                contactSellerButton.isHidden = true
             }
         } else {
             addToWishlistButton.setTitle("Add to Wishlist", for: .normal)

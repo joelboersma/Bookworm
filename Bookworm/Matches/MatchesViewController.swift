@@ -80,6 +80,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     // 1 = Wishlists
     // Default: 2 = Both
     var filterValue = 2
+    var distanceFilter = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
