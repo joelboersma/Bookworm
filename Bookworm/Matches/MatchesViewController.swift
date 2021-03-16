@@ -44,11 +44,7 @@ class MatchesTableViewCell: UITableViewCell {
         
         //display condition label if user is selling
         if book.userDescription == "Buyer"{
-            if book.condition == ""{
-                self.conditionLabel.text = "Condition: N/A"
-            } else{
-                self.conditionLabel.text = "Condition: \(book.condition)"
-            }
+            self.conditionLabel.text = ""
             self.buyerSellerColorView.backgroundColor = .systemOrange
         } else{
             self.conditionLabel.text = "Condition: \(book.condition)"
