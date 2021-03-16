@@ -13,6 +13,7 @@ import CoreLocation
 
 protocol ReloadDelegate {
     func reload(index: Int)
+    func reload(isbn: String, deleteIf buyerOrSeller: String)
 }
 
 class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate {

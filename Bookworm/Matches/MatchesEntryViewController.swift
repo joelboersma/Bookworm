@@ -144,69 +144,130 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
     func removeFromInventoryOrWishlist(_ action: UIAlertAction) {
         switch myUserDescription {
         case .Buyer:
-            removeItem(from: "Inventory", userStatus: "Sellers")
+            removeItem(from: "Inventories", userStatus: "Sellers")
         case .Seller:
-            removeItem(from: "Wishlist", userStatus: "Buyers")
+            removeItem(from: "Wishlists", userStatus: "Buyers")
         }
     }
     
-    // copied/pasted from DataBaseListingVC
     func removeItem(from wishlistOrInventory: String, userStatus sellerOrBuyer: String) {
         self.wait()
-        let postID = String(self.bookCoverImage.dropLast(4) as Substring)
         
-        //remove book image from storage
-        let imageRef = self.storageRef.child(self.bookCoverImage)
-        imageRef.delete{ error in
-            if error != nil {
-              print("failed to delete image")
+        // Grab user ID from logged in user
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return
+        }
+        
+        var postIDstoRemove: [String] = []
+        
+        ref.child(wishlistOrInventory).child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+            //get wishlist content, fill in table view
+            guard let wishlist = snapshot.value as? NSDictionary else {
+                return
             }
-            
-            //Remove book from Posts
-            self.ref.child("Posts/\(postID)").removeValue()
-            
-            //Remove book from Inventory or Wishlist
-            self.ref.child("\(wishlistOrInventory)/\(self.userID)/\(postID)").removeValue()
-            
-            //Remove post from User's Seller/Buyer Node
-            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)/Posts/\(postID)").removeValue()
-            
-            //database- if user has no more posts of the book, remove the user entirely from the book
-            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)").observeSingleEvent(of: .value, with: { (snapshot) in
-
-                // Get user value
-                let numChildren = snapshot.childrenCount
-
-                if numChildren == 1 {
-                    self.ref.child("Books/\(self.bookISBN)/Buyers/\(self.userID)").removeValue()
-                }
-                //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
-                self.ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
-                  // Get user value
-                    let numChildren = snapshot.childrenCount
-
-                    if numChildren == 1 {
-                        self.ref.child("Books/\(self.bookISBN)").removeValue()
-                    }
-                    
-                    self.start()
-                    if let bookIndex = self.bookIndex {
-                        self.delegate?.reload(index: bookIndex)
-                    }
-                    
-                    self.dismiss(animated: true, completion: nil)
-
-                  }) { (error) in
-                    print(error.localizedDescription)
+            for postID in wishlist{
+                guard let postIDKey = postID.key as? String else{
+                    print("post id couldn't be unwrapped")
+                    return
                 }
                 
-              }) { (error) in
-                print(error.localizedDescription)
+                if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
+                    if isbn == self.bookISBN {
+                        //add post ID to array
+                        postIDstoRemove.append(postIDKey)
+                        
+                        //remove all occurences of the book from wishlist or inventory
+                        self.ref.child("\(wishlistOrInventory)/\(userID)/\(postIDKey)").removeValue()
+                        
+                        //remove book image from storage
+                        let imageRef = self.storageRef.child(postIDKey + ".jpg")
+                        imageRef.delete{ error in
+                            if error != nil {
+                              print("failed to delete image")
+                            }
+                        }
+                        
+                    }
+
+                }
             }
+            //remove users posts for the book from "Posts"
+            for postID in postIDstoRemove {
+                self.ref.child("Posts/\(postID)").removeValue()
+            }
+        })
         
-        }
+
+        
+        //remove user as seller or buyer from "Books"
+        self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(userID)").removeValue()
+        self.start()
+        self.delegate?.reload(isbn: self.bookISBN, deleteIf: self.userDescription)
+        self.dismiss(animated: true, completion: nil)
+        
+        
+            
     }
-    
+
+    //TODO - delete if updated removal works
+//    // copied/pasted from DataBaseListingVC
+//    func removeItem(from wishlistOrInventory: String, userStatus sellerOrBuyer: String) {
+//        self.wait()
+//        let postID = String(self.bookCoverImage.dropLast(4) as Substring)
+//
+//        //remove book image from storage
+//        let imageRef = self.storageRef.child(self.bookCoverImage)
+//        imageRef.delete{ error in
+//            if error != nil {
+//              print("failed to delete image")
+//            }
+//
+//            //Remove book from Posts
+//            self.ref.child("Posts/\(postID)").removeValue()
+//
+//            //Remove book from Inventory or Wishlist
+//            self.ref.child("\(wishlistOrInventory)/\(self.userID)/\(postID)").removeValue()
+//
+//            //Remove post from User's Seller/Buyer Node
+//            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)/Posts/\(postID)").removeValue()
+//
+//            //database- if user has no more posts of the book, remove the user entirely from the book
+//            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+//
+//                // Get user value
+//                let numChildren = snapshot.childrenCount
+//
+//                if numChildren == 1 {
+//                    self.ref.child("Books/\(self.bookISBN)/Buyers/\(self.userID)").removeValue()
+//                }
+//                //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+//                self.ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
+//                  // Get user value
+//                    let numChildren = snapshot.childrenCount
+//
+//                    if numChildren == 1 {
+//                        self.ref.child("Books/\(self.bookISBN)").removeValue()
+//                    }
+//
+//                    self.start()
+//                    if let bookIndex = self.bookIndex {
+//                        self.delegate?.reload(index: bookIndex)
+//                    }
+//
+//                    self.dismiss(animated: true, completion: nil)
+//
+//                  }) { (error) in
+//                    print(error.localizedDescription)
+//                }
+//
+//              }) { (error) in
+//                print(error.localizedDescription)
+//            }
+//
+//        }
+//    }
+//
     func wait() {
         self.activityIndicator.startAnimating()
         self.view.alpha = 0.2

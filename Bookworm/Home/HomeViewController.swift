@@ -207,6 +207,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         books.remove(at: index)
         self.listingsTableView.reloadData()
     }
+    func reload(isbn: String, deleteIf sellerOrBuyer: String){
+        return
+    }
     
     @IBAction func filterButtonClicked(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

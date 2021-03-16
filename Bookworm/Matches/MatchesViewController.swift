@@ -106,6 +106,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         self.wishListISBNs.removeAll()
         self.inventoryISBNs.removeAll()
         self.userWishlistInventoryCall()
+        self.ref.child("Posts").removeAllObservers()
         self.makeDatabaseCallsforReload(filterOption: filterValue, distanceFilterOption: distanceFilter)
         locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
     }
@@ -225,6 +226,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         self.wishListISBNs.removeAll()
         self.inventoryISBNs.removeAll()
         userWishlistInventoryCall()
+        self.ref.child("Posts").removeAllObservers()
         makeDatabaseCallsforReload(filterOption: filterValue, distanceFilterOption: distanceFilter)
         locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
     }
@@ -385,7 +387,17 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     }
     
     func reload(index: Int) {
-        books.remove(at: index)
+        return
+    }
+    
+    func reload(isbn: String, deleteIf sellerOrBuyer: String){
+        books = books.filter({book in
+            if book.isbn == isbn && book.userDescription == sellerOrBuyer {
+                return false
+            } else {
+                return true
+            }
+        })
         self.matchesTableView.reloadData()
     }
     
