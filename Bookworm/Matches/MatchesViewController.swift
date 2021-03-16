@@ -68,7 +68,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     var storageRef = Storage.storage().reference()
     let locationManager = CLLocationManager()
     var locationUpdateTimer = Timer()
-    var currLocation: CLLocation = CLLocation(latitude: 0.0, longitude: 0.0)
+    var currLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     var currentUserName = ""
     
     var wishListISBNs: [String] = []
@@ -345,11 +345,32 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                 completion("")
             }
             else if let placemark = placemarks?.first {
-                guard let cellLocation: CLLocation = placemark.location else { return }
-                let distanceInMeters = Measurement(value: cellLocation.distance(from: self.currLocation), unit: UnitLength.meters)
-                let distanceInMiles = distanceInMeters.converted(to: UnitLength.miles)
-                let distanceString = String(format: "%.1f", distanceInMiles.value) + " miles"
-                completion(distanceString)
+                guard let cellLocation: CLLocationCoordinate2D = placemark.location?.coordinate else { return }
+//                let distanceInMeters = Measurement(value: cellLocation.distance(from: self.currLocation), unit: UnitLength.meters)
+//                let distanceInMiles = distanceInMeters.converted(to: UnitLength.miles)
+//                let distanceString = String(format: "%.1f", distanceInMiles.value) + " miles"
+//                completion(distanceString)
+                let request = MKDirections.Request()
+            // source and destination are the relevant MKMapItems
+                let source = MKPlacemark(coordinate: self.currLocation)
+                let destination = MKPlacemark(coordinate: cellLocation)
+                request.source = MKMapItem(placemark: source)
+                request.destination = MKMapItem(placemark: destination)
+
+                // Specify the transportation type
+                request.transportType = MKDirectionsTransportType.automobile;
+
+                // If open to getting more than one route,
+                // requestsAlternateRoutes = true; else requestsAlternateRoutes = false;
+                request.requestsAlternateRoutes = true
+
+                let directions = MKDirections(request: request)
+
+                directions.calculate { (response, error) in
+                    if let response = response, let route = response.routes.first {
+                        completion(MKDistanceFormatter().string(fromDistance: route.distance))
+                    }
+                }
             }
             else {
                 // this shouldn't happen but
@@ -360,7 +381,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocation = manager.location else { return }
+        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         self.currLocation = location
         //        self.books.removeAll()
         //        self.ref.child("Posts").removeAllObservers()
