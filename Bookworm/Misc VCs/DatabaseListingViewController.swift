@@ -15,7 +15,7 @@ protocol ReloadDelegate {
     func reload(index: Int)
 }
 
-class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class DatabaseListingViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var bookAuthorLabel: UILabel!
     @IBOutlet weak var bookPublishingDateLabel: UILabel!
@@ -44,9 +44,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
     var userID: String = ""
     var bookIndex: Int?
     var bookCondition: String = ""
-    
-    var bookConditionPickerData: [String] = [String]()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,13 +66,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         default:
             print("invalid user description: " + userDescription)
         }
-        
-        // put book conditions into array
-        bookConditionPickerData = ["Poor", "Fair", "Good", "Great", "New"]
-        
-        // if user doesn't touch UIPicker, default saved value is Poor
-        self.bookCondition = bookConditionPickerData[0] as String
-        
+                
         fillInBookInfo()
         // Do any additional setup after loading the view.
     }
@@ -143,117 +135,89 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         }
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return bookConditionPickerData.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return bookConditionPickerData[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent  component: Int) {
-        bookCondition = bookConditionPickerData[row] as String
-    }
     
     func addToWishlist(){
-        let conditionAlert = UIAlertController(title: "Book Condition", message: "Please select a book condition\n\n\n\n\n\n", preferredStyle: .alert)
-        conditionAlert.isModalInPresentation = true
-        
-        let conditionPicker = UIPickerView(frame: CGRect(x: 5, y: 20, width: 260, height: 150))
-        conditionAlert.view.addSubview(conditionPicker)
-        conditionPicker.dataSource = self
-        conditionPicker.delegate = self
-        
-        conditionAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        conditionAlert.addAction(UIAlertAction(title: "Done", style: .default, handler: { (UIAlertAction) in
-            self.wait()
-            let currentDateTime = Date()
-            let timestamp = String(currentDateTime.timeIntervalSince1970)
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            formatter.dateStyle = .short
-            let date = formatter.string(from: currentDateTime)
-            let uniquePostID = UUID().uuidString
+        self.wait()
+        let currentDateTime = Date()
+        let timestamp = String(currentDateTime.timeIntervalSince1970)
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .short
+        let date = formatter.string(from: currentDateTime)
+        let uniquePostID = UUID().uuidString
 
-            // save image to Firebase storage with uniqueBookID.jpg as image path
-            let imageRef = self.storageRef.child("\(uniquePostID).jpg")
-            
-            let bookCoverRef = self.storageRef.child(self.bookCoverImage)
-            bookCoverRef.downloadURL { url, error in
-                guard let imageURL = url, error == nil else {
-                    print(error ?? "")
-                    return
-                }
-                
-                guard let bookCoverData = NSData(contentsOf: imageURL) as Data? else {
-                    assertionFailure("Error in getting Data")
-                    return
-                }
-                
-                imageRef.putData(bookCoverData, metadata: nil) { (metadata, error) in
-                    if let error = error {
-                        print(error)
-                    }
-                    if let metadata = metadata {
-                        print(metadata)
-                    }
-
-                    // Grab user ID from logged in user
-                    guard let userID = Auth.auth().currentUser?.uid else {
-                        assertionFailure("Couldn't unwrap userID")
-                        return
-                    }
-                    
-                    //add book isbn to user's wishlist
-                    self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN, "Condition": self.bookCondition])
-                    
-                    
-                    // Grab zipcode from user
-                    self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-                        let userData = snapshot.value as? [String: String]
-                        let bookZipCode = userData?["ZipCode"] ?? ""
-                        let userFirstName = userData?["FirstName"] ?? ""
-                        let userLastName = userData?["LastName"] ?? ""
-                        let userFullName = userFirstName + " " + userLastName
-                        
-                        //add new post to "Posts" in database
-                        // make push call to database
-                        self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
-                    
-                        
-                        // add user as a "Buyer" of this book under database's "Books"
-                        self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
-                            //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
-                            self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
-                            
-                            // Append user info to "Buyer" node
-                            self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
-                                
-                            // Append post info to "Buyer" node
-                            self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date, "Condition": self.bookCondition])
-                            
-                        }) { (error) in
-                            print("Error adding post to \"Books\" node")
-                            print(error.localizedDescription)
-                        }
-                    })
-                    
-                    self.dismiss(animated: true, completion: nil)
-                    
-                }
+        // save image to Firebase storage with uniqueBookID.jpg as image path
+        let imageRef = self.storageRef.child("\(uniquePostID).jpg")
+        
+        let bookCoverRef = self.storageRef.child(self.bookCoverImage)
+        bookCoverRef.downloadURL { url, error in
+            guard let imageURL = url, error == nil else {
+                print(error ?? "")
+                return
             }
-        }))
-        self.present(conditionAlert,animated: true, completion: nil )
-        
+            
+            guard let bookCoverData = NSData(contentsOf: imageURL) as Data? else {
+                assertionFailure("Error in getting Data")
+                return
+            }
+            
+            imageRef.putData(bookCoverData, metadata: nil) { (metadata, error) in
+                if let error = error {
+                    print(error)
+                }
+                if let metadata = metadata {
+                    print(metadata)
+                }
+
+                // Grab user ID from logged in user
+                guard let userID = Auth.auth().currentUser?.uid else {
+                    assertionFailure("Couldn't unwrap userID")
+                    return
+                }
+                
+                //add book isbn to user's wishlist
+                self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN, "Condition": self.bookCondition])
+                
+                
+                // Grab zipcode from user
+                self.ref.child("Users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                    let userData = snapshot.value as? [String: String]
+                    let bookZipCode = userData?["ZipCode"] ?? ""
+                    let userFirstName = userData?["FirstName"] ?? ""
+                    let userLastName = userData?["LastName"] ?? ""
+                    let userFullName = userFirstName + " " + userLastName
+                    
+                    //add new post to "Posts" in database
+                    // make push call to database
+                    self.getCityFromPostalCode(postalCode: bookZipCode, userID: userID, uniquePostID: uniquePostID, date: date, timestamp: timestamp)
+                
+                    
+                    // add user as a "Buyer" of this book under database's "Books"
+                    self.ref.child("Books").child(self.bookISBN).observeSingleEvent(of: .value, with: { (snapshot) in
+                        //Fill in "BookInformation" node (currently does this every time a user is added as buyer/seller)
+                        self.ref.child("Books").child(self.bookISBN).child("Book_Information").setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "Photo_Cover": "\(uniquePostID).jpg"])
+                        
+                        // Append user info to "Buyer" node
+                        self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
+                            
+                        // Append post info to "Buyer" node
+                        self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date])
+                        
+                    }) { (error) in
+                        print("Error adding post to \"Books\" node")
+                        print(error.localizedDescription)
+                    }
+                })
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }
+        }
     }
     
     func createNewListing(userID: String, uniquePostID: String, date: String, timestamp: String, bookLocation: String){
         // make push call to database
-        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
+        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthor, "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": "", "User": userID, "Date_Posted": date, "Location": bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
     }
     
     //    func getCityFromPostalCode(postalCode: String){

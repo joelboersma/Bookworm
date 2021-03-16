@@ -26,7 +26,8 @@ This platform facilitates a “yard sale”- for books. Each user will have a wi
 
 (handler: pdekim)
 
-<img src="https://avatars.githubusercontent.com/u/31204165?s=400&u=58ce474fdfed3527a70a413994fd6b317c6f6aa2&v=4" width="100">
+<img src="https://avatars.githubusercontent.com/
+u/31204165?s=400&u=58ce474fdfed3527a70a413994fd6b317c6f6aa2&v=4" width="100"> My biggest contributions to the project was creating the login flow (from UI, backend authentication using Firebase Auth, storing new user data) as well as handling a large part of the backend functionalities for pushing/pulling data with our Firebase database. I mainly focused on populating user table views with our book data, saving user posts and requests into our database, as well as creating a search bar for HomeViewController and filtering for Home/Matched VCs. Some miscellaneous things I also worked on: book condition scroll picker, chronological ordering of posts, CoreLocation for converting zip-codes to city, UI constraint fixes, and small optimizations to our database schema.
 
 
 ## Christina Luong 
