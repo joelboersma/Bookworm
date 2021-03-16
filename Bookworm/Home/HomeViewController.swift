@@ -431,9 +431,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         geocoder.geocodeAddressString(location) { (placemarks, error) in
             if error != nil {
                 print("Geocoder Address String failed with error")
-                return
+                completion("")
             }
-            if let placemark = placemarks?.first {
+            else if let placemark = placemarks?.first {
                 guard let cellLocation: CLLocationCoordinate2D = placemark.location?.coordinate else { return }
 //                let distanceInMeters = Measurement(value: cellLocation.distance(from: self.currLocation), unit: UnitLength.meters)
 //                let distanceInMiles = distanceInMeters.converted(to: UnitLength.miles)
@@ -460,6 +460,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                         }
                     }
 //                completion(distanceString)
+            }
+            else {
+                // this shouldn't happen but
+                assertionFailure("bad placemark, but no error")
+                completion("")
             }
         }
     }

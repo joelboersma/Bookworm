@@ -342,14 +342,19 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         geocoder.geocodeAddressString(location) { (placemarks, error) in
             if error != nil {
                 print("Geocoder Address String failed with error")
-                return
+                completion("")
             }
-            if let placemark = placemarks?.first {
+            else if let placemark = placemarks?.first {
                 guard let cellLocation: CLLocation = placemark.location else { return }
                 let distanceInMeters = Measurement(value: cellLocation.distance(from: self.currLocation), unit: UnitLength.meters)
                 let distanceInMiles = distanceInMeters.converted(to: UnitLength.miles)
                 let distanceString = String(format: "%.1f", distanceInMiles.value) + " miles"
                 completion(distanceString)
+            }
+            else {
+                // this shouldn't happen but
+                assertionFailure("bad placemark, but no error")
+                completion("")
             }
         }
     }
