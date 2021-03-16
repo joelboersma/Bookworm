@@ -202,6 +202,23 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
         
         //remove user as seller or buyer from "Books"
         self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(userID)").removeValue()
+        
+        //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+        self.ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+        // Get user value
+        let numChildren = snapshot.childrenCount
+    
+        if numChildren == 1 {
+            self.ref.child("Books/\(self.bookISBN)").removeValue()
+        }
+    
+    
+        }) { (error) in
+                        print(error.localizedDescription)
+        }
+    
+            
         self.start()
         self.delegate?.reload(isbn: self.bookISBN, deleteIf: self.userDescription)
         self.dismiss(animated: true, completion: nil)
