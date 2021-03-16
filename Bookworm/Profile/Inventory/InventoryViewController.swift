@@ -21,9 +21,9 @@ class InventoryTableViewCell: UITableViewCell{
         self.bookCoverImage.image = UIImage(data: book.bookCoverData)
         self.bookTitleLabel.text = book.title
         self.bookAuthorLabel.text = book.authors.joined(separator: ", ")
-        self.bookConditionLabel.text = ""
-        self.bookISBNLabel.text = ""
-        self.bookPublishDateLabel.text = ""
+        self.bookConditionLabel.text = "Condition: " + book.condition
+        self.bookISBNLabel.text = "ISBN: " + book.isbn
+        self.bookPublishDateLabel.text = "Publish Date: " + book.publishDate
     }
 }
 

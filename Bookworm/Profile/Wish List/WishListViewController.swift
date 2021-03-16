@@ -14,15 +14,13 @@ class WishListTableViewCell: UITableViewCell{
     @IBOutlet weak var bookAuthorLabel: UILabel!
     @IBOutlet weak var bookPublishDateLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
-    @IBOutlet weak var bookConditionLabel: UILabel!
     
     func fillInWishListCell(book: WishListBook){
         self.bookCoverImage.image = UIImage(data: book.bookCoverData)
         self.bookTitleLabel.text = book.title
         self.bookAuthorLabel.text = book.authors.joined(separator: ", ")
-        self.bookConditionLabel.text = "" 
-        self.bookISBNLabel.text = ""
-        self.bookPublishDateLabel.text = ""
+        self.bookISBNLabel.text = "ISBN: \(book.isbn)"
+        self.bookPublishDateLabel.text = "Publish Date: \(book.publishDate)"
     }
 }
 

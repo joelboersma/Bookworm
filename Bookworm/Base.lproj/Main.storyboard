@@ -953,7 +953,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="7Fg-Y8-b11">
-                                                    <rect key="frame" x="130" y="35" width="103.33333333333331" height="67"/>
+                                                    <rect key="frame" x="130" y="35" width="103.33333333333331" height="49.666666666666657"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;AUTHORS&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jhh-XN-5Y9">
                                                             <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="14.666666666666666"/>
@@ -971,15 +971,6 @@
                                                             <rect key="frame" x="0.0" y="35" width="43" height="14.666666666666664"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="14.5" id="Yia-ZS-hYm"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="&lt;CONDITION&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLx-CI-Ulu">
-                                                            <rect key="frame" x="0.0" y="52.666666666666671" width="83" height="14.333333333333329"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="14.5" id="SdK-w5-9SQ"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
@@ -1005,7 +996,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="bookAuthorLabel" destination="Jhh-XN-5Y9" id="F71-Hr-opW"/>
-                                            <outlet property="bookConditionLabel" destination="KLx-CI-Ulu" id="D9I-Gb-yR8"/>
                                             <outlet property="bookCoverImage" destination="fbM-2o-cQv" id="JRl-Er-Rwd"/>
                                             <outlet property="bookISBNLabel" destination="fPP-8Y-c1e" id="44V-Zs-bUS"/>
                                             <outlet property="bookPublishDateLabel" destination="JBt-ZM-smM" id="x8n-kM-55e"/>
