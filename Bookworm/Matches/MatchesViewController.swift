@@ -44,9 +44,10 @@ class MatchesTableViewCell: UITableViewCell {
 
 class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var filterButton: UIButton!
+    @IBOutlet weak var applyButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var matchesTableView: UITableView!
+    @IBOutlet weak var categoryFilter: UISegmentedControl!
     let locationManager = CLLocationManager()
     var books: [BookCell] = []
     var ref = Database.database().reference()
@@ -54,12 +55,19 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     var wishListISBNs: [String]? = nil
     var inventoryISBNs: [String]? = nil
     
+    var filterValue = 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //format buttons
-        filterButton.layer.cornerRadius = 5
+        applyButton.layer.cornerRadius = 5
+        
+        categoryFilter.selectedSegmentIndex = filterValue
+        categoryFilter.setTitle("Listings", forSegmentAt: 0)
+        categoryFilter.setTitle("Requests", forSegmentAt: 1)
+        categoryFilter.setTitle("Both", forSegmentAt: 2)
         
         self.navigationController?.isNavigationBarHidden = true
 
@@ -77,10 +85,10 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     override func viewDidAppear(_ animated: Bool) {
         // For getting database data and reloadData for listingsTableView
         self.books.removeAll()
-        self.makeDatabaseCallsforReload()//filterOption: filterValue)
+        self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
 
-    func makeDatabaseCallsforReload() {
+    func makeDatabaseCallsforReload(filterOption: Int) {
         let storageRef = Storage.storage().reference()
         
         self.ref.child("Posts").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
@@ -192,16 +200,13 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
 //        print("latitude: \(location.latitude) longitude: \(location.longitude)")
     }
     
-    @IBAction func filterButtonPressed() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "filterVC")
-        guard let filterVC = vc as? FilterViewController else {
-            assertionFailure("couldn't find vc")
-            return
+    @IBAction func applyButtonClick() {
+        if (filterValue != categoryFilter.selectedSegmentIndex) {
+            self.filterValue = categoryFilter.selectedSegmentIndex
+            self.books.removeAll()
+            self.ref.child("Posts").removeAllObservers()
+            makeDatabaseCallsforReload(filterOption: filterValue)
         }
-        filterVC.categorySegment0 = "Inventory"
-        filterVC.categorySegment1 = "Wishlist"
-        present(filterVC, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

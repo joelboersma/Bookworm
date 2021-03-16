@@ -34,7 +34,6 @@
 		4BB674F625EDFF6500FA2F73 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB674F525EDFF6500FA2F73 /* Book.swift */; };
 		4BDCA8BC25E9D32B00EB8BAA /* AddRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDCA8BB25E9D32B00EB8BAA /* AddRequestViewController.swift */; };
 		51D55A6D13C494289640C346 /* Pods_Bookworm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD54A94918BE15FA821E6139 /* Pods_Bookworm.framework */; };
-		8461B29225E6E5260076C299 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461B29125E6E5260076C299 /* FilterViewController.swift */; };
 		846E4BFA25E62E5A0058AB54 /* DatabaseListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */; };
 		A6D94B5B25E2632D004DE869 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */; };
 		A6D94BBD25E8C718004DE869 /* InitialNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */; };
@@ -70,7 +69,6 @@
 		4B60AC7A25E9E4BE0081458A /* OpenLibraryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLibraryAPI.swift; sourceTree = "<group>"; };
 		4BB674F525EDFF6500FA2F73 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		4BDCA8BB25E9D32B00EB8BAA /* AddRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRequestViewController.swift; sourceTree = "<group>"; };
-		8461B29125E6E5260076C299 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListingViewController.swift; sourceTree = "<group>"; };
 		A6D94B5A25E2632D004DE869 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		A6D94BBC25E8C718004DE869 /* InitialNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNewAccountViewController.swift; sourceTree = "<group>"; };
@@ -221,7 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				846E4BF925E62E5A0058AB54 /* DatabaseListingViewController.swift */,
-				8461B29125E6E5260076C299 /* FilterViewController.swift */,
 			);
 			path = "Misc VCs";
 			sourceTree = "<group>";
@@ -372,7 +369,6 @@
 				255CF1F125EE479700457C5A /* AddRequestListingViewController.swift in Sources */,
 				4B2FB1D225DF596A00661D51 /* LoginViewController.swift in Sources */,
 				1DCAEAC625E24AA1000C9047 /* MatchesViewController.swift in Sources */,
-				8461B29225E6E5260076C299 /* FilterViewController.swift in Sources */,
 				1D8E88E925ECD199004D3AC1 /* ScannerViewController.swift in Sources */,
 				1DC2885B25FDD7ED00AA0ABA /* Animate.swift in Sources */,
 				25190E8225E41C88007573D6 /* WishListListingViewController.swift in Sources */,

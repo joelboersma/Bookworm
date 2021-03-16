@@ -51,13 +51,14 @@ class ListingsTableViewCell: UITableViewCell {
     
 }
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate, MFMessageComposeViewControllerDelegate, ReloadDelegate, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate, ReloadDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var filterButton: UIButton!
+    @IBOutlet weak var applyButton: UIButton!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var categoryFilter: UISegmentedControl!
     
     var books: [BookCell] = []
     var distances: [String] = []
@@ -83,9 +84,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         listingsTableView.dataSource = self
         listingsTableView.delegate = self
         
+        categoryFilter.selectedSegmentIndex = filterValue
+        categoryFilter.setTitle("Listings", forSegmentAt: 0)
+        categoryFilter.setTitle("Requests", forSegmentAt: 1)
+        categoryFilter.setTitle("Both", forSegmentAt: 2)
         
         self.activityIndicator.stopAnimating()
-        filterButton.layer.cornerRadius = 5
+        self.applyButton.layer.cornerRadius = 5
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
@@ -204,26 +209,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         self.listingsTableView.reloadData()
     }
     
-    @IBAction func filterButtonClicked(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "filterVC")
-        guard let filterVC = vc as? FilterViewController else {
-            assertionFailure("couldn't find vc")
-            return
+    @IBAction func applyButtonClicked(_ sender: Any) {
+        if (filterValue != categoryFilter.selectedSegmentIndex) {
+            self.filterValue = categoryFilter.selectedSegmentIndex
+            self.books.removeAll()
+            self.distances.removeAll()
+            self.ref.child("Posts").removeAllObservers()
+            makeDatabaseCallsforReload(filterOption: filterValue, searchQuery: currentQuery)
         }
-        
-        filterVC.selectedFilterValue = filterValue
-        filterVC.delegate = self
-        
-        present(filterVC, animated: true, completion: nil)
-    }
-    
-    func filterVCDismissed(selectedFilterValue: Int) {
-        filterValue = selectedFilterValue
-        self.books.removeAll()
-        self.distances.removeAll()
-        self.ref.child("Posts").removeAllObservers()
-        makeDatabaseCallsforReload(filterOption: selectedFilterValue, searchQuery: currentQuery)
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
