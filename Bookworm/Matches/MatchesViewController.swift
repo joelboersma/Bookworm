@@ -59,7 +59,7 @@ class MatchesTableViewCell: UITableViewCell {
     
 }
 
-class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, ReloadDelegate, MFMessageComposeViewControllerDelegate { 
+class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, ReloadDelegate, MFMessageComposeViewControllerDelegate, FilterViewControllerDelegate { 
     
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -109,33 +109,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         self.books.removeAll()
         self.wishListISBNs.removeAll()
         self.inventoryISBNs.removeAll()
-        
-        guard let userID = Auth.auth().currentUser?.uid else {
-            assertionFailure("Couldn't unwrap userID")
-            return
-        }
-        
-        self.ref.child("Users/\(userID)").observeSingleEvent(of: .value, with: { (snapshot) in
-            let userData = snapshot.value as? [String: String]
-            
-            let firstName = userData?["FirstName"] ?? ""
-            let lastName = userData?["LastName"] ?? ""
-            
-            self.currentUserName = firstName + " " + lastName
-        })
-        
-        self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
-            let results = snapshot.value as? [String : String]
-            let isbn = results?["ISBN"] ?? ""
-            self.wishListISBNs.append(isbn)
-        })
-        
-        self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
-            let results = snapshot.value as? [String : String]
-            let isbn = results?["ISBN"] ?? ""
-            self.inventoryISBNs.append(isbn)
-        })
-        
+        self.userWishlistInventoryCall()
         self.makeDatabaseCallsforReload(filterOption: filterValue)
         locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
     }
@@ -186,17 +160,34 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                     self.getDistance(location) { (response) in
                         let distance = response
                         let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, distance: distance, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
-                    
-                            
+                        
+                        
                         DispatchQueue.main.async {
                             self.books.append(databaseData)
+                            
+                            // Inventory
+                            // Wishlist
+                            // Both
+                            if (filterOption == 0){
+                                self.books = self.books.filter { (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
+                                    
+                                }
+                            }
+                            
+                            if (filterOption == 1) {
+                                self.books = self.books.filter { (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Seller")
+                                }
+                            }
+                            
+                            if (filterOption == 2) {
+                                self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
+                                    
+                                }
+                            }
                             // Sort by date and time.
                             self.books.sort(by: {$0.timeStamp > $1.timeStamp})
                             self.books = self.books.filter{$0.buyerSeller != self.currentUserName}
-
-                            self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
-                                
-                            }
+                            
                             self.matchesTableView.reloadData()
                             self.start()
                         }
@@ -217,7 +208,47 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         }
         filterVC.categorySegment0 = "Inventory"
         filterVC.categorySegment1 = "Wishlist"
+        filterVC.delegate = self
+        filterVC.selectedFilterValue = filterValue
         present(filterVC, animated: true, completion: nil)
+    }
+    
+    func filterVCDismissed(selectedFilterValue: Int) {
+        filterValue = selectedFilterValue
+        self.books.removeAll()
+        self.wishListISBNs.removeAll()
+        self.inventoryISBNs.removeAll()
+        userWishlistInventoryCall()
+        makeDatabaseCallsforReload(filterOption: selectedFilterValue)
+        locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
+    }
+    
+    func userWishlistInventoryCall(){
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return
+        }
+        
+        self.ref.child("Users/\(userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let userData = snapshot.value as? [String: String]
+            
+            let firstName = userData?["FirstName"] ?? ""
+            let lastName = userData?["LastName"] ?? ""
+            
+            self.currentUserName = firstName + " " + lastName
+        })
+        
+        self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
+            let results = snapshot.value as? [String : String]
+            let isbn = results?["ISBN"] ?? ""
+            self.wishListISBNs.append(isbn)
+        })
+        
+        self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
+            let results = snapshot.value as? [String : String]
+            let isbn = results?["ISBN"] ?? ""
+            self.inventoryISBNs.append(isbn)
+        })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -334,9 +365,9 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         self.currLocation = location
-//        self.books.removeAll()
-//        self.ref.child("Posts").removeAllObservers()
-//        self.makeDatabaseCallsforReload(filterOption: filterValue)
+        //        self.books.removeAll()
+        //        self.ref.child("Posts").removeAllObservers()
+        //        self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
