@@ -245,6 +245,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
         currentQuery = searchBar.text ?? ""
         currentQuery = currentQuery.lowercased()
         self.books.removeAll()
@@ -504,5 +505,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         self.activityIndicator.stopAnimating()
         self.view.alpha = 1
         self.view.isUserInteractionEnabled = true
+    }
+    
+    @IBAction func tapped(_ sender: Any) {
+        searchBar.resignFirstResponder()
     }
 }

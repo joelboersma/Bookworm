@@ -892,6 +892,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gDY-Qn-6Ll"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="mB4-Ug-MHJ" firstAttribute="top" secondItem="rgW-wo-6cA" secondAttribute="bottom" constant="8" symbolic="YES" id="4iJ-Db-ymg"/>
                             <constraint firstItem="gFB-mA-i2N" firstAttribute="bottom" secondItem="rgW-wo-6cA" secondAttribute="top" id="5Tb-Bz-pMV"/>
@@ -922,7 +923,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="2Nv-ms-zaF"/>
+                <tapGestureRecognizer id="2Nv-ms-zaF">
+                    <connections>
+                        <action selector="tapped:" destination="xnZ-Bt-MIs" id="GhI-GD-1ra"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1426.0869565217392" y="103.125"/>
         </scene>
