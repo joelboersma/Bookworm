@@ -53,7 +53,7 @@ class WishListListingViewController: UIViewController {
         bookAuthorLabel.text = "Authors: " + self.bookAuthors
         bookPublishDateLabel.text = "Publish Date: " + self.bookPublishDate
         bookCoverImage.image = UIImage(data: self.bookCoverData)
-        bookConditionLabel.text = "Condition: " + self.bookCondition
+        bookConditionLabel.text = "" 
         
     }
     

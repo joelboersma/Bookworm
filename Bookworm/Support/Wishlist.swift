@@ -15,10 +15,9 @@ class WishListBook {
     let bookCoverData: Data
     var edition: String? = ""
     let postID: String
-    var condition: String = ""
  
 
-    init(title: String, isbn: String, authors: [String], publishDate: String, bookCover: String, bookCoverData: Data, postID: String, condition: String) {
+    init(title: String, isbn: String, authors: [String], publishDate: String, bookCover: String, bookCoverData: Data, postID: String) {
         self.title = title
         self.isbn = isbn
         self.authors = authors
@@ -26,7 +25,7 @@ class WishListBook {
         self.bookCover = bookCover
         self.bookCoverData = bookCoverData
         self.postID = postID
-        self.condition = condition
+    
     }
 }
 

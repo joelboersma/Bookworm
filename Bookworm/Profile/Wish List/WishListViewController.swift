@@ -82,7 +82,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             
-            let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, postID: postID, condition: condition)
+            let book = WishListBook(title: title, isbn: isbn, authors: [authors], publishDate: publishDate, bookCover: cover, bookCoverData: bookCoverData, postID: postID)
             self.wishListBooks.append(book)
             self.wishListTableView.reloadData()
 //            self.start()
@@ -166,7 +166,6 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         wishListListingVC.bookPublishDate = book.publishDate
         wishListListingVC.bookPostID = book.postID
         wishListListingVC.bookCover = book.bookCover
-        wishListListingVC.bookCondition = book.condition
         
         present(wishListListingVC, animated: true, completion: nil)
     
