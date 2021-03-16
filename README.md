@@ -1,6 +1,9 @@
 # Bookworm
 Steve Give Us Jobs
 
+# Set Up
+Please modify the bundle identifier in Signing & Capabilities to your own unique bundle ID to test on a device.
+
 # Project Summary
 Bookworm
 
