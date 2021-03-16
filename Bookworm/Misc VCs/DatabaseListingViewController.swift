@@ -176,7 +176,7 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
                 }
                 
                 //add book isbn to user's wishlist
-                self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN, "Condition": self.bookCondition])
+                self.ref.child("Wishlists").child(userID).child(uniquePostID).setValue(["ISBN": self.bookISBN])
                 
                 
                 // Grab zipcode from user

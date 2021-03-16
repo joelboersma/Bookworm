@@ -55,7 +55,7 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
         loadWishList()
     }
     
-    func addBookToDataSource(bookInfo: NSDictionary, isbn: String, postID: String, condition: String){
+    func addBookToDataSource(bookInfo: NSDictionary, isbn: String, postID: String){
 //        self.wait()
 
         guard let title = bookInfo.value(forKey: "Title") as? String, let authors = bookInfo.value(forKey: "Author") as? String, let publishDate = bookInfo.value(forKey: "Date_Published") as? String else{
@@ -105,14 +105,14 @@ class WishListViewController: UIViewController, UITableViewDelegate, UITableView
                     print("post id couldn't be unwrapped")
                     return
                 }
-                if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"], let condition = isbnNode["Condition"]{
+                if let isbnNode = postID.value as? [String: String], let isbn = isbnNode["ISBN"]{
                     // look up isbn in Books node for book info -> fill in table view cell
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.ref.child("Books").child(isbn).child("Book_Information").observeSingleEvent(of: .value, with: { (snapshot) in
                             
                             if let bookInfo = snapshot.value as? NSDictionary {
                                 
-                                self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, postID: postIDKey, condition: condition)
+                                self.addBookToDataSource(bookInfo: bookInfo, isbn: isbn, postID: postIDKey)
                             } else{
                                 print("couldnt acess book information")
                             }
