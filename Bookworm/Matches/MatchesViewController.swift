@@ -61,6 +61,8 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var matchesTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var noResultsLabels: UIStackView!
+    
     var books: [BookCell] = []
     var ref = Database.database().reference()
     var storageRef = Storage.storage().reference()
@@ -340,14 +342,19 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         geocoder.geocodeAddressString(location) { (placemarks, error) in
             if error != nil {
                 print("Geocoder Address String failed with error")
-                return
+                completion("")
             }
-            if let placemark = placemarks?.first {
+            else if let placemark = placemarks?.first {
                 guard let cellLocation: CLLocation = placemark.location else { return }
                 let distanceInMeters = Measurement(value: cellLocation.distance(from: self.currLocation), unit: UnitLength.meters)
                 let distanceInMiles = distanceInMeters.converted(to: UnitLength.miles)
                 let distanceString = String(format: "%.1f", distanceInMiles.value) + " miles"
                 completion(distanceString)
+            }
+            else {
+                // this shouldn't happen but
+                assertionFailure("bad placemark, but no error")
+                completion("")
             }
         }
     }
@@ -384,12 +391,22 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     }
     
     func wait() {
+        self.matchesTableView.isHidden = false
+        self.noResultsLabels.isHidden = true
         self.activityIndicator.startAnimating()
         self.view.alpha = 0.2
         self.view.isUserInteractionEnabled = false
     }
     
     func start() {
+        if (self.books.count == 0) {
+            self.matchesTableView.isHidden = true
+            self.noResultsLabels.isHidden = false
+        }
+        else {
+            self.matchesTableView.isHidden = false
+            self.noResultsLabels.isHidden = true
+        }
         self.activityIndicator.stopAnimating()
         self.view.alpha = 1
         self.view.isUserInteractionEnabled = true

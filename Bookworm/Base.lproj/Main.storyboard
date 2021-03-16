@@ -530,6 +530,23 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="dRo-I4-EXP">
+                                <rect key="frame" x="75.666666666666686" y="396.66666666666669" width="239" height="51"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Results Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ol-DQ-lYe">
+                                        <rect key="frame" x="0.0" y="0.0" width="239" height="28.666666666666668"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try changing your search filters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63w-Ym-YBD">
+                                        <rect key="frame" x="0.0" y="30.666666666666629" width="239" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find Matches" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9o-9M-Sfs">
                                 <rect key="frame" x="108.00000000000001" y="58" width="174.33333333333337" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -559,9 +576,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="U5l-lc-ck2" firstAttribute="centerY" secondItem="OIq-sT-cU2" secondAttribute="centerY" id="91I-Ww-gnu"/>
+                            <constraint firstItem="dRo-I4-EXP" firstAttribute="centerX" secondItem="OIq-sT-cU2" secondAttribute="centerX" id="9wC-GG-1es"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="centerX" secondItem="c9e-hp-7lc" secondAttribute="centerX" id="HjY-6s-If6"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="bottom" secondItem="aMj-te-P0n" secondAttribute="bottom" id="JLo-AP-l4k"/>
                             <constraint firstItem="U5l-lc-ck2" firstAttribute="centerX" secondItem="OIq-sT-cU2" secondAttribute="centerX" id="JOV-vC-Fav"/>
+                            <constraint firstItem="dRo-I4-EXP" firstAttribute="centerY" secondItem="OIq-sT-cU2" secondAttribute="centerY" id="Mml-L7-gxn"/>
                             <constraint firstItem="C9o-9M-Sfs" firstAttribute="top" secondItem="aMj-te-P0n" secondAttribute="top" constant="14" id="Uul-jm-Xvh"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="centerX" secondItem="C9o-9M-Sfs" secondAttribute="centerX" id="YnY-eF-4hc"/>
                             <constraint firstItem="aMj-te-P0n" firstAttribute="trailing" secondItem="OCb-n7-wtP" secondAttribute="trailing" id="Z7q-XM-7Bj"/>
@@ -577,6 +596,7 @@
                         <outlet property="activityIndicator" destination="U5l-lc-ck2" id="wlq-EK-p1P"/>
                         <outlet property="filterButton" destination="c9e-hp-7lc" id="GG0-Bt-Kt9"/>
                         <outlet property="matchesTableView" destination="OCb-n7-wtP" id="riz-iu-g9Q"/>
+                        <outlet property="noResultsLabels" destination="dRo-I4-EXP" id="C0B-Qd-Ciz"/>
                         <outlet property="titleLabel" destination="C9o-9M-Sfs" id="Xqq-SY-pKx"/>
                     </connections>
                 </viewController>
@@ -852,9 +872,27 @@
                                 <rect key="frame" x="30" y="55" width="330" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="gIi-wh-C7a">
+                                <rect key="frame" x="75.666666666666686" y="396.66666666666669" width="239" height="51"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Results Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBj-SV-B03">
+                                        <rect key="frame" x="0.0" y="0.0" width="239" height="28.666666666666668"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try changing your search filters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QlE-dp-wFo">
+                                        <rect key="frame" x="0.0" y="30.666666666666629" width="239" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gDY-Qn-6Ll"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="mB4-Ug-MHJ" firstAttribute="top" secondItem="rgW-wo-6cA" secondAttribute="bottom" constant="8" symbolic="YES" id="4iJ-Db-ymg"/>
                             <constraint firstItem="gFB-mA-i2N" firstAttribute="bottom" secondItem="rgW-wo-6cA" secondAttribute="top" id="5Tb-Bz-pMV"/>
@@ -864,8 +902,10 @@
                             <constraint firstItem="gFB-mA-i2N" firstAttribute="top" secondItem="gDY-Qn-6Ll" secondAttribute="top" constant="11" id="CbX-JG-gTH"/>
                             <constraint firstItem="gDY-Qn-6Ll" firstAttribute="trailing" secondItem="mB4-Ug-MHJ" secondAttribute="trailing" id="DsM-s7-O2Y"/>
                             <constraint firstItem="mB4-Ug-MHJ" firstAttribute="leading" secondItem="gDY-Qn-6Ll" secondAttribute="leading" id="IOA-iZ-ZEa"/>
+                            <constraint firstItem="gIi-wh-C7a" firstAttribute="centerY" secondItem="SfU-iT-YS1" secondAttribute="centerY" id="JkU-FW-MxU"/>
                             <constraint firstItem="mB4-Ug-MHJ" firstAttribute="bottom" secondItem="gDY-Qn-6Ll" secondAttribute="bottom" id="X11-VN-Csp"/>
                             <constraint firstItem="mB4-Ug-MHJ" firstAttribute="centerX" secondItem="SfU-iT-YS1" secondAttribute="centerX" id="cyb-Es-lU2"/>
+                            <constraint firstItem="gIi-wh-C7a" firstAttribute="centerX" secondItem="SfU-iT-YS1" secondAttribute="centerX" id="hvO-Nd-iYc"/>
                             <constraint firstItem="mB4-Ug-MHJ" firstAttribute="centerX" secondItem="gFB-mA-i2N" secondAttribute="centerX" id="iYO-ku-p6f"/>
                             <constraint firstItem="iH5-xK-g8Q" firstAttribute="centerY" secondItem="SfU-iT-YS1" secondAttribute="centerY" id="jnp-Ac-rps"/>
                             <constraint firstItem="iH5-xK-g8Q" firstAttribute="centerX" secondItem="SfU-iT-YS1" secondAttribute="centerX" id="qll-sH-BLC"/>
@@ -877,12 +917,17 @@
                         <outlet property="activityIndicator" destination="iH5-xK-g8Q" id="eKB-Z9-r2u"/>
                         <outlet property="filterButton" destination="rgW-wo-6cA" id="Tpw-l5-zhS"/>
                         <outlet property="listingsTableView" destination="mB4-Ug-MHJ" id="95h-iD-5Us"/>
+                        <outlet property="noResultsLabels" destination="gIi-wh-C7a" id="XfH-Qf-1fq"/>
                         <outlet property="searchBar" destination="gFB-mA-i2N" id="ngy-kB-yTU"/>
                         <outlet property="tapGestureRecognizer" destination="2Nv-ms-zaF" id="gKx-qr-aQg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="2Nv-ms-zaF"/>
+                <tapGestureRecognizer id="2Nv-ms-zaF">
+                    <connections>
+                        <action selector="tapped:" destination="xnZ-Bt-MIs" id="GhI-GD-1ra"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1426.0869565217392" y="103.125"/>
         </scene>
