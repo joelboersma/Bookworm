@@ -161,23 +161,22 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                         DispatchQueue.main.async {
                             self.books.append(databaseData)
                             
+                            // Remove current user entries in Matches
+                            self.books = self.books.filter{$0.buyerSeller != self.currentUserName}
+                            
+                            // Default is both Inventory and Wishlist
+                            self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
+                            }
+                            
                             // Inventory
-                            // Wishlist
-                            // Both
                             if (filterOption == 0){
-                                self.books = self.books.filter { (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
-                                    
+                                self.books = self.books.filter { $0.userDescription == "Buyer"
                                 }
                             }
                             
+                            // Wishlist
                             if (filterOption == 1) {
-                                self.books = self.books.filter { (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Seller")
-                                }
-                            }
-                            
-                            if (filterOption == 2) {
-                                self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
-                                    
+                                self.books = self.books.filter {  $0.userDescription == "Seller"
                                 }
                             }
                             
@@ -192,7 +191,6 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                             
                             // Sort by date and time.
                             self.books.sort(by: {$0.timeStamp > $1.timeStamp})
-                            self.books = self.books.filter{$0.buyerSeller != self.currentUserName}
                             
                             self.matchesTableView.reloadData()
                             self.start()
