@@ -20,7 +20,7 @@ This platform facilitates a “yard sale”- for books. Each user will have a wi
 
 (handler: syamhaque)
 
-<img src="https://avatars.githubusercontent.com/u/32974225?s=400&u=baaf7fe021081d2878ce13e539b20eb080471774&v=4" width="100">
+<img src="https://avatars.githubusercontent.com/u/32974225?s=400&u=baaf7fe021081d2878ce13e539b20eb080471774&v=4" width="100"> I contributed the most in developing the magical moment for this project with developing the barcode and book cover scanners using AVFoundation and Vision/VisionKit. I also contributed to developing the UI through designing the Matches view in Figma. and implementing primarily the Matches and Post views along with their branches in Storyboard. After the layout was finalized and implemented for all the views that appear post login, I went back and made all the views to look as uniform as possible with the repositioning of objects and the text font/size, along with redesigning the table cells to make them scrollable. The last contribution I made to the UI was implementing sliders for the table cells, some examples include swiping left to right in the home view to easily contact the poster or swiping right to left on your own post to easily delete it (there are sliders in all views with table views). My final contribution comes with the implmentation of changing locations and filtering for distance. Using CoreLocation and the location manager, current location is found, and using Geocoder with zipcodes, address is found. Using MapKit along with Geocoder, the distance is found between users.
 
 ## Peter Kim
 
