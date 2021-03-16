@@ -10,10 +10,15 @@ import UIKit
 import Firebase
 import MessageUI
 
+enum UserDescripton {
+    case Buyer
+    case Seller
+}
+
 class MatchesEntryViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var contactButton: UIButton!
-    @IBOutlet weak var transactionLabel: UITextField!
+    @IBOutlet weak var transactionButton: UIButton!
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var bookTitleTextField: UILabel!
     @IBOutlet weak var authorTextField: UILabel!
@@ -37,12 +42,27 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
     var bookIndex: Int?
     var bookCondition: String = ""
     
+    var myUserDescription: UserDescripton = .Seller
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //format buttons + view
         contactButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
+        
+        switch userDescription {
+        case "Buyer":
+            myUserDescription = .Buyer
+            contactButton.setTitle("Contact Buyer", for: .normal)
+            transactionButton.setTitle("Sold to This Buyer", for: .normal)
+        case "Seller":
+            myUserDescription = .Seller
+            contactButton.setTitle("Contact Seller", for: .normal)
+            transactionButton.setTitle("Bought From This Seller", for: .normal)
+        default:
+            assertionFailure("bad user description")
+        }
         
         fillInBookInfo()
     }
@@ -93,11 +113,22 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
     }
     
     @IBAction func transactionButtonPressed(_ sender: Any) {
-        let alert = UIAlertController(title: "Was <BOOK_TITLE> bought/sold from/to <USERNAME>?", message: nil, preferredStyle: .alert)
+        var userAction: String
+        var removingFrom: String
+        switch myUserDescription {
+        case .Buyer:
+            removingFrom = "inventory"
+            userAction = "sold to"
+        case .Seller:
+            removingFrom = "wishlist"
+            userAction = "purchased from"
+        }
+        
+        let alert = UIAlertController(title: "Confirmation", message: "Was \"\(bookTitle)\" \(userAction) \(buyerSeller)?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "Yes, remove from wishlist/inventory", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes, keep in wishlist/inventory", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes, remove from \(removingFrom)", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes, keep in \(removingFrom)", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "No, keep in \(removingFrom)", style: .cancel, handler: nil))
 
         self.present(alert, animated: true)
     }
