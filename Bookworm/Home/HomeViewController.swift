@@ -23,14 +23,21 @@ class ListingsTableViewCell: UITableViewCell {
     
     var storageRef = Storage.storage().reference()
     
-    func fillInBookCell (book: BookCell, distance: String){
+    func fillInBookCell (book: BookCell){
         
         let image = UIImage(data: book.bookCoverData as Data)
         self.bookCoverImage.image = image
         
         self.bookTitleLabel.text = book.title
         self.locationLabel.text = book.location
-        self.distanceLabel.text = distance
+        
+        if book.distance != "" {
+            self.distanceLabel.text = "\(book.distance) away"
+        }
+        else {
+            self.distanceLabel.text = ""
+        }
+        
         self.buyerSellerLabel.text = "\(book.userDescription): \(book.buyerSeller)"
         self.postDateLabel.text = "Posted: " + book.postDate
         
@@ -60,7 +67,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var books: [BookCell] = []
-    var distances: [String] = []
     var currentQuery = ""
     let locationManager = CLLocationManager()
     var locationUpdateTimer = Timer()
@@ -105,11 +111,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     override func viewDidAppear(_ animated: Bool) {
         // For getting database data and reloadData for listingsTableView
         self.books.removeAll()
-        self.distances.removeAll()
         self.searchBar.text = ""
         currentQuery = ""
         self.ref.child("Posts").removeAllObservers()
         self.makeDatabaseCallsforReload(filterOption: filterValue, searchQuery: currentQuery)
+        locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
     }
     
     
@@ -155,42 +161,37 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     let lastName = userData?["LastName"] ?? ""
                     
                     let userName = firstName + " " + lastName
-                
                     
-                    let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
-                    
-                    DispatchQueue.main.async {
+                    self.getDistance(location) { (response) in
+                        let distance = response
                         
-                        self.books.append(databaseData)
+                        let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, distance: distance, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
                         
-                        // For listings
-                        if (filterOption == 0){
-                            self.books = self.books.filter { $0.userDescription != "Buyer" }
-                        }
-                        
-                        // For requests
-                        if (filterOption == 1) {
-                            self.books = self.books.filter { $0.userDescription != "Seller" }
-                        }
-                        
-                        if (!searchQuery.isEmpty){
-                            self.books = self.books.filter { $0.title.lowercased() == searchQuery }
-                        }
-                        
-                        // Default is both
-                        // Sort by date and time.
-                        self.books.sort(by: {$0.timeStamp > $1.timeStamp})
-                        self.books.forEach({_ in self.distances.append("")})
-                        for (index, book) in self.books.enumerated() {
-                            self.getDistance(book.location) { (distance) in
-                                self.distances[index] = distance
-                                self.listingsTableView.reloadData()
+                        DispatchQueue.main.async {
+                            
+                            self.books.append(databaseData)
+                            
+                            // For listings
+                            if (filterOption == 0){
+                                self.books = self.books.filter { $0.userDescription != "Buyer" }
                             }
+                            
+                            // For requests
+                            if (filterOption == 1) {
+                                self.books = self.books.filter { $0.userDescription != "Seller" }
+                            }
+                            
+                            if (!searchQuery.isEmpty){
+                                self.books = self.books.filter { $0.title.lowercased() == searchQuery }
+                            }
+                            
+                            // Default is both
+                            // Sort by date and time.
+                            self.books.sort(by: {$0.timeStamp > $1.timeStamp})
+                            self.listingsTableView.reloadData()
+                            self.start()
                         }
-                        self.listingsTableView.reloadData()
-                        self.start()
                     }
-                    
                 })
             }
             
@@ -200,7 +201,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     func reload(index: Int) {
         books.remove(at: index)
-        distances.remove(at: index)
         self.listingsTableView.reloadData()
     }
     
@@ -221,7 +221,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     func filterVCDismissed(selectedFilterValue: Int) {
         filterValue = selectedFilterValue
         self.books.removeAll()
-        self.distances.removeAll()
         self.ref.child("Posts").removeAllObservers()
         makeDatabaseCallsforReload(filterOption: selectedFilterValue, searchQuery: currentQuery)
     }
@@ -240,7 +239,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         currentQuery = searchBar.text ?? ""
         currentQuery = currentQuery.lowercased()
         self.books.removeAll()
-        self.distances.removeAll()
         self.ref.child("Posts").removeAllObservers()
         listingsTableView.reloadData()
         makeDatabaseCallsforReload(filterOption: filterValue, searchQuery: currentQuery)
@@ -266,8 +264,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             return UITableViewCell.init()
         }
         let book = books[indexPath.row]
-        let distance = distances[indexPath.row]
-        cell.fillInBookCell(book: book, distance: distance)
+        cell.fillInBookCell(book: book)
         //        cell.layer.cornerRadius = 10
         return cell
     }
@@ -299,12 +296,41 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let book = books[indexPath.row]
-        let contact = UIContextualAction(style: .normal, title: "Contact") { (action, view, completion) in
-            self.contactHandler(book)
-            self.listingsTableView.setEditing(false, animated: true)
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return UISwipeActionsConfiguration(actions: [])
         }
-        contact.backgroundColor = .systemGreen
-        return UISwipeActionsConfiguration(actions: [contact])
+        if userID != book.buyerSellerID {
+            let contact = UIContextualAction(style: .normal, title: "Contact") { (action, view, completion) in
+                self.contactHandler(book)
+                self.listingsTableView.setEditing(false, animated: true)
+            }
+            contact.backgroundColor = .systemGreen
+            return UISwipeActionsConfiguration(actions: [contact])
+        }
+        return UISwipeActionsConfiguration(actions: [])
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let book = books[indexPath.row]
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return UISwipeActionsConfiguration(actions: [])
+        }
+        if userID == book.buyerSellerID {
+            let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+                if book.userDescription == "Buyer" {
+                    self.deleteHandler(book, userID, indexPath.row, from: "Wishlists", userStatus: "Buyers")
+                }
+                else if book.userDescription == "Seller" {
+                    self.deleteHandler(book, userID, indexPath.row, from: "Inventories", userStatus: "Sellers")
+                }
+                self.listingsTableView.setEditing(false, animated: true)
+            }
+            delete.backgroundColor = .systemRed
+            return UISwipeActionsConfiguration(actions: [delete])
+        }
+        return UISwipeActionsConfiguration(actions: [])
     }
     
     func contactHandler(_ book: BookCell) {
@@ -331,6 +357,63 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func deleteHandler(_ book: BookCell, _ userID: String, _ bookIndex: Int?, from wishlistOrInventory: String, userStatus sellerOrBuyer: String) {
+        self.wait()
+        let postID = String(book.bookCover.dropLast(4) as Substring)
+        
+        //remove book image from storage
+        let imageRef = self.storageRef.child(book.bookCover)
+        imageRef.delete{ error in
+            if error != nil {
+              print("failed to delete image")
+            }
+            
+            //Remove book from Posts
+            self.ref.child("Posts/\(postID)").removeValue()
+            
+            //Remove book from Inventory or Wishlist
+            self.ref.child("\(wishlistOrInventory)/\(userID)/\(postID)").removeValue()
+            
+            //Remove post from User's Seller/Buyer Node
+            self.ref.child("Books/\(book.isbn)/\(sellerOrBuyer)/\(userID)/Posts/\(postID)").removeValue()
+            
+            //database- if user has no more posts of the book, remove the user entirely from the book
+            self.ref.child("Books/\(book.isbn)/\(sellerOrBuyer)/\(userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+
+                // Get user value
+                let numChildren = snapshot.childrenCount
+
+                if numChildren == 1 {
+                    self.ref.child("Books/\(book.isbn)/Buyers/\(userID)").removeValue()
+                }
+                //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+                self.ref.child("Books/\(book.isbn)").observeSingleEvent(of: .value, with: { (snapshot) in
+                  // Get user value
+                    let numChildren = snapshot.childrenCount
+
+                    if numChildren == 1 {
+                        self.ref.child("Books/\(book.isbn)").removeValue()
+                    }
+                    
+                    self.start()
+                    if let bookIndex = bookIndex {
+                        self.reload(index: bookIndex)
+                                            
+                    }
+                    
+                    self.dismiss(animated: true, completion: nil)
+
+                  }) { (error) in
+                    print(error.localizedDescription)
+                }
+                
+              }) { (error) in
+                print(error.localizedDescription)
+            }
+        
+        }
     }
     
     func getDistance(_ location: String, completion: @escaping(String) -> Void) {
@@ -371,9 +454,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         self.currLocation = location
-        //        self.books.removeAll()
-        //        self.distances.removeAll()
-        //        self.makeDatabaseCallsforReload(filterOption: filterValue)
+//        self.books.removeAll()
+//        self.ref.child("Posts").removeAllObservers()
+//        self.makeDatabaseCallsforReload(filterOption: filterValue, searchQuery: currentQuery)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

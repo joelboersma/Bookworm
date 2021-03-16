@@ -89,12 +89,15 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         self.userID = userID
         if userID == self.buyerSellerID {
             if self.userDescription == "Buyer"{
-                addToWishlistButton.setTitle("Remove from Wishlist", for: .normal)
+                addToWishlistButton.setTitle("Remove Request", for: .normal)
+                addToWishlistButton.backgroundColor = .systemRed
             } else if self.userDescription == "Seller"{
-                addToWishlistButton.setTitle("Remove from Inventory", for: .normal)
+                addToWishlistButton.setTitle("Remove Post", for: .normal)
+                addToWishlistButton.backgroundColor = .systemRed
             }
         } else {
             addToWishlistButton.setTitle("Add to Wishlist", for: .normal)
+            addToWishlistButton.backgroundColor = .label
         }
 
     }
@@ -129,9 +132,9 @@ class DatabaseListingViewController: UIViewController, MFMessageComposeViewContr
         switch addToWishlistButton.currentTitle{
             case "Add to Wishlist":
                 addToWishlist()
-            case "Remove from Wishlist":
+            case "Remove Request":
                 removeItem(from: "Wishlists", userStatus: "Buyers")
-            case "Remove from Inventory":
+            case "Remove Post":
                 removeItem(from: "Inventories", userStatus: "Sellers")
             default:
                 print("Invalid button title")

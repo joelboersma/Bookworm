@@ -15,7 +15,6 @@ class AddPostBookCell: UITableViewCell {
     @IBOutlet weak var bookCoverImage: UIImageView!
     @IBOutlet weak var bookTitleLabel: UILabel!
     @IBOutlet weak var bookAuthorsLabel: UILabel!
-    @IBOutlet weak var bookPublishDateLabel: UILabel!
     @IBOutlet weak var bookISBNLabel: UILabel!
     
     func fillInBookCell (book: Book){
@@ -33,13 +32,6 @@ class AddPostBookCell: UITableViewCell {
         
         //fill in book title
         self.bookTitleLabel.text = book.title
-        
-        //fill in book publish date if available
-        if let bookPublishDate = book.publishDate {
-            self.bookPublishDateLabel.text = "Publish Date: " + bookPublishDate
-        } else {
-            self.bookPublishDateLabel.text = ""
-        }
 
         //fill in book author
         self.bookAuthorsLabel.text = "Authors: " + book.authors.joined(separator: ", ")
