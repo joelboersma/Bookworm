@@ -10,7 +10,7 @@ import Firebase
 import CoreLocation
 
 
-class AddRequestListingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddRequestListingViewController: UIViewController {
     
     
     @IBOutlet weak var popupView: UIView!
@@ -36,22 +36,9 @@ class AddRequestListingViewController: UIViewController, UIPickerViewDelegate, U
     
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
-    
-    var bookConditionPickerData: [String] = [String]()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        // connect data
-        self.bookConditionPickerView.delegate = self
-        self.bookConditionPickerView.dataSource = self
-        
-        // put book conditions into array
-        bookConditionPickerData = ["Poor", "Fair", "Good", "Great", "New"]
-        
-        // if user doesn't touch UIPicker, default saved valuee is Poor
-        self.bookCondition = bookConditionPickerData[0] as String
         
         
         //format button + view
@@ -108,7 +95,7 @@ class AddRequestListingViewController: UIViewController, UIPickerViewDelegate, U
     
     func createNewListing(userID: String, uniquePostID: String, date: String, timestamp: String){
         // make push call to database
-        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": self.bookCondition, "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
+        self.ref.child("Posts").child(uniquePostID).setValue(["Title": self.bookTitle, "Author": self.bookAuthors.joined(separator: ", "), "Date_Published": self.bookPublishDate, "Edition": "", "ISBN": self.bookISBN, "Condition": "", "User": userID, "Date_Posted": date, "Location": self.bookLocation, "User_Description": "Buyer", "Photo_Cover": "\(uniquePostID).jpg", "Time_Stamp": timestamp])
     }
     
     func getCityFromPostalCode(postalCode: String, userID: String, uniquePostID: String, date: String, timestamp: String) {
@@ -207,7 +194,7 @@ class AddRequestListingViewController: UIViewController, UIPickerViewDelegate, U
                 self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("User_Information").setValue(["User_Name": userFullName, "User_Location": bookZipCode])
                     
                 // Append post info to "Buyers" node
-                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date, "Condition": self.bookCondition])
+                self.ref.child("Books").child(self.bookISBN).child("Buyers").child(userID).child("Posts").child(uniquePostID).setValue(["Post_Timestamp": date])
                 
                 }) { (error) in
                 print("Error adding request to \"Books\" node")
@@ -219,21 +206,6 @@ class AddRequestListingViewController: UIViewController, UIPickerViewDelegate, U
 
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return bookConditionPickerData.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return bookConditionPickerData[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent  component: Int) {
-        bookCondition = bookConditionPickerData[row] as String
-    }
     
     @IBAction func didPressX(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
