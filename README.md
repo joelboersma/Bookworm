@@ -38,7 +38,8 @@ Christina Luong
 Urvashi Mahto 
 
 (handler: urvashimahto16)
-<img style="float: right;" "https://avatars.githubusercontent.com/u/26194722?s=400&u=dc93bfb4b8509ee4845665520fa21ce46dedb021&v=4" width="100">
+<img style="float: right;" src="whatever.jpg">
+<img style="float: right;" src="https://avatars.githubusercontent.com/u/26194722?s=400&u=dc93bfb4b8509ee4845665520fa21ce46dedb021&v=4" width="100">
 
 In terms of frontend and UI, I worked on sketches in Figma with the rest of my team as well as the initial set up and linking of listings view (now home view), database listings pop up, and filter pop up and added placeholder information to table cells for testing purposes. In terms of backend, I implemented the contact seller/buyer UI message composer pop up which pulls the buyer/seller's phone number from our realtime database and populates a personalized message using the user's first name and post details. I attempted a partial implementation of matches view, but it wasn't robust and a different implementation made more sense based on the structure of our database. Lastly, I implemented the backend portion of the change location button in profile view, by updating users' ZipCode values in our realtime database as needed.
 
