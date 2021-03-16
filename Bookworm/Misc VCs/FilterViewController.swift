@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 protocol FilterViewControllerDelegate {
-    func filterVCDismissed(selectedFilterValue: Int)
+    func filterVCDismissed(selectedFilterValue: Int, selectedDistanceFilter: Int)
 }
 
 class FilterViewController: UIViewController {
@@ -27,13 +27,14 @@ class FilterViewController: UIViewController {
     var delegate: FilterViewControllerDelegate?
     
     var selectedFilterValue = 2
-
+    var selectedDistanceFilter = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         categoryFilter.selectedSegmentIndex = selectedFilterValue
-            
+        distanceSlider.value = Float(selectedDistanceFilter)
+        distanceLabel.text = "\(Int(distanceSlider.value))"
         //format buttons + view
         setFiltersButton.layer.cornerRadius = 5
         popupView.layer.cornerRadius = 10
@@ -41,8 +42,6 @@ class FilterViewController: UIViewController {
         categoryFilter.setTitle(categorySegment0, forSegmentAt: 0)
         categoryFilter.setTitle(categorySegment1, forSegmentAt: 1)
         categoryFilter.setTitle(categorySegment2, forSegmentAt: 2)
-        
-        distanceSlider.value = 5
     }
     
     @IBAction func setFiltersButtonPressed(_ sender: Any) {
@@ -70,8 +69,9 @@ class FilterViewController: UIViewController {
             selectedFilterValue = 2
             homeVC.filterValue = 2
         }
-        
-        self.delegate?.filterVCDismissed(selectedFilterValue: selectedFilterValue)
+        selectedDistanceFilter = Int(distanceSlider.value)
+        homeVC.filterValue = Int(distanceSlider.value)
+        self.delegate?.filterVCDismissed(selectedFilterValue: selectedFilterValue, selectedDistanceFilter: selectedDistanceFilter)
         
         // Dismiss view controller
         self.dismiss(animated: true, completion: nil)

@@ -80,6 +80,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     // 1 = Wishlists
     // Default: 2 = Both
     var filterValue = 2
+    var distanceFilter = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,11 +110,11 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         self.wishListISBNs.removeAll()
         self.inventoryISBNs.removeAll()
         self.userWishlistInventoryCall()
-        self.makeDatabaseCallsforReload(filterOption: filterValue)
+        self.makeDatabaseCallsforReload(filterOption: filterValue, distanceFilterOption: distanceFilter)
         locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
     }
     
-    func makeDatabaseCallsforReload(filterOption: Int) {
+    func makeDatabaseCallsforReload(filterOption: Int, distanceFilterOption: Int) {
         self.wait()
         
         self.ref.child("Posts").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
@@ -183,6 +184,16 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                                     
                                 }
                             }
+                            
+                            self.books = self.books.filter{
+                                var routeDistance = $0.distance
+                                if routeDistance.contains(".") {
+                                    routeDistance = routeDistance.components(separatedBy: CharacterSet.init(charactersIn: "0123456789.").inverted).joined()
+                                    return Int(Double(routeDistance) ?? 0.0) <= distanceFilterOption
+                                }
+                                return Int(routeDistance.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) ?? 0 <= distanceFilterOption
+                            }
+                            
                             // Sort by date and time.
                             self.books.sort(by: {$0.timeStamp > $1.timeStamp})
                             self.books = self.books.filter{$0.buyerSeller != self.currentUserName}
@@ -209,16 +220,18 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         filterVC.categorySegment1 = "Wishlist"
         filterVC.delegate = self
         filterVC.selectedFilterValue = filterValue
+        filterVC.selectedDistanceFilter = distanceFilter
         present(filterVC, animated: true, completion: nil)
     }
     
-    func filterVCDismissed(selectedFilterValue: Int) {
+    func filterVCDismissed(selectedFilterValue: Int, selectedDistanceFilter: Int) {
         filterValue = selectedFilterValue
+        distanceFilter = selectedDistanceFilter
         self.books.removeAll()
         self.wishListISBNs.removeAll()
         self.inventoryISBNs.removeAll()
         userWishlistInventoryCall()
-        makeDatabaseCallsforReload(filterOption: selectedFilterValue)
+        makeDatabaseCallsforReload(filterOption: filterValue, distanceFilterOption: distanceFilter)
         locationUpdateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.locationUpdate), userInfo: nil, repeats: true)
     }
     
