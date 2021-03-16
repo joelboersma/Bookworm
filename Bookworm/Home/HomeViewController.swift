@@ -56,14 +56,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     @IBOutlet weak var listingsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var filterButton: UIButton!
+    @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var books: [BookCell] = []
     var distances: [String] = []
+    var currentQuery = ""
     let locationManager = CLLocationManager()
     var locationUpdateTimer = Timer()
     var currLocation: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
     var ref = Database.database().reference()
+    var storageRef = Storage.storage().reference()
     
     // 0 = Listing
     // 1 = Requests
@@ -73,10 +76,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationController?.isNavigationBarHidden = true
         
-        self.searchBar.delegate = self
+        searchBar.delegate = self
         listingsTableView.dataSource = self
         listingsTableView.delegate = self
         
@@ -86,7 +89,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
-
+        
         // For use in foreground.
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -103,16 +106,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         // For getting database data and reloadData for listingsTableView
         self.books.removeAll()
         self.distances.removeAll()
+        self.searchBar.text = ""
+        currentQuery = ""
         self.ref.child("Posts").removeAllObservers()
-        self.makeDatabaseCallsforReload(filterOption: filterValue)
+        self.makeDatabaseCallsforReload(filterOption: filterValue, searchQuery: currentQuery)
     }
     
     
-    func makeDatabaseCallsforReload(filterOption: Int) {
-        let storageRef = Storage.storage().reference()
+    func makeDatabaseCallsforReload(filterOption: Int, searchQuery: String) {
         
         self.wait()
-        
         self.ref.child("Posts").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
             let user = results?["User"] ?? ""
@@ -131,7 +134,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             let bookCover = results?["Photo_Cover"] ?? ""
             
             // get book image reference from Firebase Storage
-            let bookCoverRef = storageRef.child(bookCover)
+            let bookCoverRef = self.storageRef.child(bookCover)
             
             // download URL of reference, then get contents of URL and set imageView to UIImage
             bookCoverRef.downloadURL { url, error in
@@ -169,6 +172,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                             self.books = self.books.filter { $0.userDescription != "Seller" }
                         }
                         
+                        if (!searchQuery.isEmpty){
+                            
+                            self.books = self.books.filter { $0.title.lowercased() == searchQuery }
+                        }
+                        
                         // Default is both
                         // Sort by date and time.
                         self.books.sort(by: {$0.timeStamp > $1.timeStamp})
@@ -187,7 +195,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             }
             
         })
-                
+        
     }
     
     func reload(index: Int) {
@@ -209,20 +217,43 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         
         present(filterVC, animated: true, completion: nil)
     }
-        
+    
     func filterVCDismissed(selectedFilterValue: Int) {
         filterValue = selectedFilterValue
         self.books.removeAll()
         self.distances.removeAll()
         self.ref.child("Posts").removeAllObservers()
-        makeDatabaseCallsforReload(filterOption: selectedFilterValue)
+        makeDatabaseCallsforReload(filterOption: selectedFilterValue, searchQuery: currentQuery)
     }
     
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        self.tapGestureRecognizer.isEnabled = true
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        self.tapGestureRecognizer.isEnabled = false
+        return true
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder() // hides the keyboard.
-        // do Things For Searching
+        currentQuery = searchBar.text ?? ""
+        currentQuery = currentQuery.lowercased()
+        self.books.removeAll()
+        self.distances.removeAll()
+        self.ref.child("Posts").removeAllObservers()
+        listingsTableView.reloadData()
+        makeDatabaseCallsforReload(filterOption: filterValue, searchQuery: currentQuery)
+        
+        view.endEditing(true)
     }
+    
+    // table view scrolling
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        // Hide keyboard
+        view.endEditing(true)
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return books.count
@@ -237,7 +268,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         let book = books[indexPath.row]
         let distance = distances[indexPath.row]
         cell.fillInBookCell(book: book, distance: distance)
-//        cell.layer.cornerRadius = 10
+        //        cell.layer.cornerRadius = 10
         return cell
     }
     
@@ -285,7 +316,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
         }else{
             controller.body = "Hello " + book.buyerSeller + ", I am interested in your listing for " + book.title + " on Book Worm."
         }
-
+        
         self.ref.child("Users/\(book.buyerSellerID)").observeSingleEvent(of: .value, with: { (snapshot) in
             let buyerSellerData = snapshot.value as? [String: String]
             let buyerSellerContact = buyerSellerData?["PhoneNumber"] ?? ""
@@ -293,7 +324,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             if MFMessageComposeViewController.canSendText() {
                 self.present(controller, animated: true, completion: nil)
             }
-          }) { (error) in
+        }) { (error) in
             print(error.localizedDescription)
         }
     }
@@ -312,22 +343,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
             if let placemark = placemarks?.first {
                 guard let cellLocation: CLLocationCoordinate2D = placemark.location?.coordinate else { return }
                 let request = MKDirections.Request()
-
+                
                 // source and destination are the relevant MKMapItems
                 let source = MKPlacemark(coordinate: self.currLocation)
                 let destination = MKPlacemark(coordinate: cellLocation)
                 request.source = MKMapItem(placemark: source)
                 request.destination = MKMapItem(placemark: destination)
-
+                
                 // Specify the transportation type
                 request.transportType = MKDirectionsTransportType.automobile;
-
+                
                 // If open to getting more than one route,
                 // requestsAlternateRoutes = true; else requestsAlternateRoutes = false;
                 request.requestsAlternateRoutes = true
-
+                
                 let directions = MKDirections(request: request)
-
+                
                 directions.calculate { (response, error) in
                     if let response = response, let route = response.routes.first {
                         completion(MKDistanceFormatter().string(fromDistance: route.distance))
@@ -340,9 +371,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         self.currLocation = location
-//        self.books.removeAll()
-//        self.distances.removeAll()
-//        self.makeDatabaseCallsforReload(filterOption: filterValue)
+        //        self.books.removeAll()
+        //        self.distances.removeAll()
+        //        self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

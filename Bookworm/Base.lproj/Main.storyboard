@@ -858,9 +858,11 @@
                         <outlet property="filterButton" destination="rgW-wo-6cA" id="Tpw-l5-zhS"/>
                         <outlet property="listingsTableView" destination="mB4-Ug-MHJ" id="95h-iD-5Us"/>
                         <outlet property="searchBar" destination="gFB-mA-i2N" id="ngy-kB-yTU"/>
+                        <outlet property="tapGestureRecognizer" destination="2Nv-ms-zaF" id="gKx-qr-aQg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTf-f7-bIn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="2Nv-ms-zaF"/>
             </objects>
             <point key="canvasLocation" x="1426.0869565217392" y="103.125"/>
         </scene>
