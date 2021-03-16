@@ -2,40 +2,40 @@
 Steve Give Us Jobs
 
 # Set Up
-Please modify the bundle identifier in Signing & Capabilities to your own unique bundle ID to test on a device.
+If testing on an external device, please modify the bundle identifier in Signing & Capabilities to your own unique bundle ID.
 
 # Project Summary
-Bookworm
+## Bookworm
 
 This platform facilitates a “yard sale”- for books. Each user will have a wish list that contains books they are searching for, and an inventory list that contains books they have but no longer want. Books can be added to either list by entering ISBN number, book condition (new, used, poor) and, optionally, a picture. The items on each user’s wish list/inventory list will be featured as listings on a general database, which will be able for all users to view. The app will also have a “matches” page, which displays all listings that correspond to the user’s personal wish list and inventory. Filters will be added to allow user to filter these listings by distance, condition, etc. Upon selecting a listing, users will be able to get into contact and arrange the book transaction!
 
 # Team Members
-Joel Boersma 
+## Joel Boersma 
 
 (handler: joelboersma)
 
-<img src="https://avatars.githubusercontent.com/u/44932998?s=400&u=e3f021c85674d7d01b437d9bae66f8fbe41761d5&v=4" width="100">
+<img align="left" src="https://avatars.githubusercontent.com/u/44932998?s=400&u=e3f021c85674d7d01b437d9bae66f8fbe41761d5&v=4" width="100"> My largest contribution to this project was `OLAPI.swift`, which interfaces with the [Open Library API](https://openlibrary.org/developers/api). This is the source of all our book information on Post and Request pages, as well as for our two scanners. Utilizing their search API, I worked on the search funcionality on the Post and Request pages, at first only fetching results when the search button is pressed, and then fetching results each time the search bar text is changed. I worked on color-coding items on the Home and Matches pages based on whether whether the item is a listing or a request. I also made some changes for `MatchesEntryViewController` so that it can be dual-purpose for both buying and selling. Boilerplate repository setup, creating the launch screen, minor UI changes, and optimizations round out my project contributions.
 
-Syam Haque 
+## Syam Haque 
 
 (handler: syamhaque)
 
 <img src="https://avatars.githubusercontent.com/u/32974225?s=400&u=baaf7fe021081d2878ce13e539b20eb080471774&v=4" width="100">
 
-Peter Kim
+## Peter Kim
 
 (handler: pdekim)
 
 <img src="https://avatars.githubusercontent.com/u/31204165?s=400&u=58ce474fdfed3527a70a413994fd6b317c6f6aa2&v=4" width="100">
 
 
-Christina Luong 
+## Christina Luong 
 
 (handler: cyluong)
 
 <img src="https://avatars.githubusercontent.com/u/50270872?s=400&u=e1524778cdcdd603a5a6ebd5bf620da6bbf8a976&v=4" width="100">
 
-Urvashi Mahto 
+## Urvashi Mahto 
 
 (handler: urvashimahto16)
 
