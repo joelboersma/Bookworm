@@ -29,9 +29,16 @@ class MatchesTableViewCell: UITableViewCell {
         self.bookTitleLabel.text = book.title
         self.locationLabel.text = book.location
         
+        self.userNameLabel.text = "\(book.userDescription): \(book.buyerSeller)"
+        self.dateLabel.text = "Posted: " + book.postDate
+        
         //display condition label if user is selling
         if book.userDescription == "Buyer"{
-            self.conditionLabel.text = ""
+            if book.condition == ""{
+                self.conditionLabel.text = "Condition: N/A"
+            } else{
+                self.conditionLabel.text = "Condition: \(book.condition)"
+            }
             self.buyerSellerColorView.backgroundColor = .systemOrange
         } else{
             self.conditionLabel.text = "Condition: \(book.condition)"
@@ -39,7 +46,7 @@ class MatchesTableViewCell: UITableViewCell {
         }
         
     }
-
+    
 }
 
 class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -47,9 +54,19 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var matchesTableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let locationManager = CLLocationManager()
     var books: [BookCell] = []
     var ref = Database.database().reference()
+    var storageRef = Storage.storage().reference()
+    
+    var wishListISBNs: [String] = []
+    var inventoryISBNs: [String] = []
+    
+    // 0 = Inventory
+    // 1 = Wishlists
+    // Default: 2 = Both
+    var filterValue = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +76,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         filterButton.layer.cornerRadius = 5
         
         self.navigationController?.isNavigationBarHidden = true
-
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -74,11 +91,31 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     override func viewDidAppear(_ animated: Bool) {
         // For getting database data and reloadData for listingsTableView
         self.books.removeAll()
-        self.makeDatabaseCallsforReload()//filterOption: filterValue)
+        self.wishListISBNs.removeAll()
+        self.inventoryISBNs.removeAll()
+        
+        guard let userID = Auth.auth().currentUser?.uid else {
+            assertionFailure("Couldn't unwrap userID")
+            return
+        }
+        
+        self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
+            let results = snapshot.value as? [String : String]
+            let isbn = results?["ISBN"] ?? ""
+            self.wishListISBNs.append(isbn)
+        })
+        
+        self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
+            let results = snapshot.value as? [String : String]
+            let isbn = results?["ISBN"] ?? ""
+            self.inventoryISBNs.append(isbn)
+        })
+        
+        self.makeDatabaseCallsforReload(filterOption: filterValue)
     }
-
-    func makeDatabaseCallsforReload() {
-        let storageRef = Storage.storage().reference()
+    
+    func makeDatabaseCallsforReload(filterOption: Int) {
+        self.wait()
         
         self.ref.child("Posts").queryOrdered(byChild: "Date_Posted").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
@@ -98,7 +135,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
             let bookCover = results?["Photo_Cover"] ?? ""
             
             // get book image reference from Firebase Storage
-            let bookCoverRef = storageRef.child(bookCover)
+            let bookCoverRef = self.storageRef.child(bookCover)
             
             // download URL of reference, then get contents of URL and set imageView to UIImage
             bookCoverRef.downloadURL { url, error in
@@ -122,56 +159,14 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
                     
-                    DispatchQueue.global(qos: .userInitiated).async {
-                        
-                        guard let userID = Auth.auth().currentUser?.uid else {
-                            assertionFailure("Couldn't unwrap userID")
-                            return
-                        }
-                        
-                        var wishListISBNs: [String] = []
-                        var inventoryISBNs:  [String] = []
-                        
-                        let semaphore = DispatchSemaphore(value: 0)
-                        
-                        self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
-                            let results = snapshot.value as? [String : String]
-                            let isbn = results?["ISBN"] ?? ""
-                            wishListISBNs.append(isbn)
-                            print("wishListISBNs: \(wishListISBNs)")
-                            semaphore.signal()
-                        })
-
-                        self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
-                            let results = snapshot.value as? [String : String]
-                            let isbn = results?["ISBN"] ?? ""
-                            inventoryISBNs.append(isbn)
-                            print("inventoryISBNs: \(inventoryISBNs)")
-                            semaphore.signal()
-                        })
-
-                        semaphore.wait()
-                        semaphore.wait()
-                        
-                        print("wishListISBNs")
-                        print(wishListISBNs)
-                        print("inventoryISBNs")
-                        print(inventoryISBNs)
-                        
-                        
-                        //hardcoded for now
-//                        wishListISBNs.append("9781472263667")
-//                        wishListISBNs.append("9780984782857")
-//                        inventoryISBNs.append("9780141182704")
-                        
-                        DispatchQueue.main.async {
-                            self.books.append(databaseData)
-                            // Sort by date and time.
-                            self.books.sort(by: {$0.timeStamp > $1.timeStamp})
-                            self.books = self.books.filter { (wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")}
-                            self.matchesTableView.reloadData()
-                        }
-                        
+                    
+                    DispatchQueue.main.async {
+                        self.books.append(databaseData)
+                        // Sort by date and time.
+                        self.books.sort(by: {$0.timeStamp > $1.timeStamp})
+                        self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")}
+                        self.matchesTableView.reloadData()
+                        self.start()
                     }
                     
                 })
@@ -180,10 +175,10 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         })
         
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-//        print("latitude: \(location.latitude) longitude: \(location.longitude)")
+        guard let _: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        //        print("latitude: \(location.latitude) longitude: \(location.longitude)")
     }
     
     @IBAction func filterButtonPressed() {
@@ -210,20 +205,43 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         }
         let book = books[indexPath.row]
         cell.fillInBookCell(book: book)
-//        cell.layer.cornerRadius = 10
+        //        cell.layer.cornerRadius = 10
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let book = books[indexPath.row]
-        // empty dblistingVC for now
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "matchesEntryVC")
         guard let matchesEntryVC = vc as? MatchesEntryViewController else {
             assertionFailure("couldn't find vc")
             return
         }
-        //pass data over to matchesentryvc
+        
+        matchesEntryVC.bookTitle = book.title
+        matchesEntryVC.userDescription = book.userDescription
+        matchesEntryVC.buyerSellerID = book.buyerSellerID
+        matchesEntryVC.buyerSeller = book.buyerSeller
+        matchesEntryVC.bookAuthor = book.author
+        matchesEntryVC.bookEdition = book.edition
+        matchesEntryVC.bookISBN = book.isbn
+        matchesEntryVC.bookPublishDate = book.publishDate
+        matchesEntryVC.bookCoverImage = book.bookCover
+        matchesEntryVC.bookIndex = indexPath.row
+        //matchesEntryVC.delegate = self
+        
         present(matchesEntryVC, animated: true, completion: nil)
+    }
+    
+    func wait() {
+        self.activityIndicator.startAnimating()
+        self.view.alpha = 0.2
+        self.view.isUserInteractionEnabled = false
+    }
+    
+    func start() {
+        self.activityIndicator.stopAnimating()
+        self.view.alpha = 1
+        self.view.isUserInteractionEnabled = true
     }
 }

@@ -155,6 +155,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                     let lastName = userData?["LastName"] ?? ""
                     
                     let userName = firstName + " " + lastName
+                
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
                     
@@ -173,7 +174,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
                         }
                         
                         if (!searchQuery.isEmpty){
-                            
                             self.books = self.books.filter { $0.title.lowercased() == searchQuery }
                         }
                         

@@ -537,12 +537,21 @@
                                     <action selector="filterButtonPressed" destination="yjg-uV-lp3" eventType="touchUpInside" id="3QY-7s-WFZ"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="U5l-lc-ck2">
+                                <rect key="frame" x="170" y="397" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="1rQ-uW-mre"/>
+                                    <constraint firstAttribute="height" constant="50" id="AWK-e9-MQT"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aMj-te-P0n"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="U5l-lc-ck2" firstAttribute="centerY" secondItem="OIq-sT-cU2" secondAttribute="centerY" id="91I-Ww-gnu"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="centerX" secondItem="c9e-hp-7lc" secondAttribute="centerX" id="HjY-6s-If6"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="bottom" secondItem="aMj-te-P0n" secondAttribute="bottom" id="JLo-AP-l4k"/>
+                            <constraint firstItem="U5l-lc-ck2" firstAttribute="centerX" secondItem="OIq-sT-cU2" secondAttribute="centerX" id="JOV-vC-Fav"/>
                             <constraint firstItem="C9o-9M-Sfs" firstAttribute="top" secondItem="aMj-te-P0n" secondAttribute="top" constant="14" id="Uul-jm-Xvh"/>
                             <constraint firstItem="OCb-n7-wtP" firstAttribute="centerX" secondItem="C9o-9M-Sfs" secondAttribute="centerX" id="YnY-eF-4hc"/>
                             <constraint firstItem="aMj-te-P0n" firstAttribute="trailing" secondItem="OCb-n7-wtP" secondAttribute="trailing" id="Z7q-XM-7Bj"/>
@@ -555,6 +564,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Matches" image="link" catalog="system" id="Ffv-Yp-RsV"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="U5l-lc-ck2" id="wlq-EK-p1P"/>
                         <outlet property="filterButton" destination="c9e-hp-7lc" id="GG0-Bt-Kt9"/>
                         <outlet property="matchesTableView" destination="OCb-n7-wtP" id="riz-iu-g9Q"/>
                         <outlet property="titleLabel" destination="C9o-9M-Sfs" id="Xqq-SY-pKx"/>
@@ -1586,13 +1596,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Luu-TZ-t7W">
-                                                <rect key="frame" x="3" y="0.0" width="324" height="31"/>
+                                                <rect key="frame" x="3" y="0.0" width="313" height="31"/>
                                                 <connections>
                                                     <action selector="distanceSliderValueChanged:" destination="3H6-0t-fi6" eventType="valueChanged" id="wRE-3r-Ams"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmC-72-nIu">
-                                                <rect key="frame" x="330" y="0.0" width="0.0" height="30"/>
+                                                <rect key="frame" x="319" y="0.0" width="11" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1953,8 +1963,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="authorTextField" destination="UJ0-sY-nbg" id="gZf-Z3-hjp"/>
+                        <outlet property="bookImageView" destination="lss-Nf-nZR" id="ITY-21-RlR"/>
+                        <outlet property="bookTitleTextField" destination="b7D-yI-xP8" id="Eoi-1Z-NWZ"/>
                         <outlet property="contactButton" destination="rEA-LM-Nok" id="T2e-eW-fd2"/>
+                        <outlet property="isbnTextField" destination="cEe-iB-rtQ" id="i39-7x-4el"/>
                         <outlet property="popupView" destination="fb0-Qe-kTN" id="hXQ-Bu-oVf"/>
+                        <outlet property="publishingDateTextField" destination="NA6-AH-fdP" id="e0m-9P-HOw"/>
                         <outlet property="transactionLabel" destination="BgU-kR-RvP" id="OFc-0R-q2y"/>
                     </connections>
                 </viewController>
@@ -2065,7 +2080,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zyk-SJ-wG4">
-                                <rect key="frame" x="0.0" y="149" width="390" height="563"/>
+                                <rect key="frame" x="0.0" y="149" width="390" height="568"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addPostBookCell" rowHeight="97" id="utb-Yx-6Zi" customClass="AddPostBookCell" customModule="Bookworm" customModuleProvider="target">
@@ -2178,7 +2193,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmG-6g-neh">
-                                <rect key="frame" x="0.0" y="712" width="390" height="49"/>
+                                <rect key="frame" x="0.0" y="717" width="390" height="44"/>
                                 <items>
                                     <barButtonItem title="Scan Barcode" id="K69-Bz-032">
                                         <connections>
@@ -2194,7 +2209,7 @@
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan Here!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQA-SX-SjR">
-                                <rect key="frame" x="30" y="624.66666666666663" width="330" height="62.333333333333371"/>
+                                <rect key="frame" x="30" y="629.66666666666663" width="330" height="62.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="52"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
