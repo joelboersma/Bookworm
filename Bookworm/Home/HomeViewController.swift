@@ -61,6 +61,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var noResultsLabels: UIStackView!
     
     var books: [BookCell] = []
     var currentQuery = ""
@@ -463,12 +464,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
     }
     
     func wait() {
+        self.listingsTableView.isHidden = false
+        self.noResultsLabels.isHidden = true
         self.activityIndicator.startAnimating()
         self.view.alpha = 0.2
         self.view.isUserInteractionEnabled = false
     }
     
     func start() {
+        if (self.books.count == 0) {
+            self.listingsTableView.isHidden = true
+            self.noResultsLabels.isHidden = false
+        }
+        else {
+            self.listingsTableView.isHidden = false
+            self.noResultsLabels.isHidden = true
+        }
         self.activityIndicator.stopAnimating()
         self.view.alpha = 1
         self.view.isUserInteractionEnabled = true

@@ -61,6 +61,8 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var matchesTableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var noResultsLabels: UIStackView!
+    
     var books: [BookCell] = []
     var ref = Database.database().reference()
     var storageRef = Storage.storage().reference()
@@ -384,12 +386,22 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     }
     
     func wait() {
+        self.matchesTableView.isHidden = false
+        self.noResultsLabels.isHidden = true
         self.activityIndicator.startAnimating()
         self.view.alpha = 0.2
         self.view.isUserInteractionEnabled = false
     }
     
     func start() {
+        if (self.books.count == 0) {
+            self.matchesTableView.isHidden = true
+            self.noResultsLabels.isHidden = false
+        }
+        else {
+            self.matchesTableView.isHidden = false
+            self.noResultsLabels.isHidden = true
+        }
         self.activityIndicator.stopAnimating()
         self.view.alpha = 1
         self.view.isUserInteractionEnabled = true
