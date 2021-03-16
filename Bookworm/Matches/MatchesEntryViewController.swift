@@ -25,6 +25,7 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
     @IBOutlet weak var publishingDateTextField: UILabel!
     @IBOutlet weak var bookImageView: UIImageView!
     @IBOutlet weak var isbnTextField: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var storageRef = Storage.storage().reference()
     var ref = Database.database().reference()
@@ -43,6 +44,8 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
     var bookCondition: String = ""
     
     var myUserDescription: UserDescripton = .Seller
+    
+    var delegate: ReloadDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,10 +129,89 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
         
         let alert = UIAlertController(title: "Confirmation", message: "Was \"\(bookTitle)\" \(userAction) \(buyerSeller)?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "Yes, remove from \(removingFrom)", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes, keep in \(removingFrom)", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes, remove from \(removingFrom)", style: .default, handler: removeFromInventoryOrWishlist))
+        alert.addAction(UIAlertAction(title: "Yes, but keep in \(removingFrom)", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "No, keep in \(removingFrom)", style: .cancel, handler: nil))
 
         self.present(alert, animated: true)
+    }
+    
+    func removeFromInventoryOrWishlist(_ action: UIAlertAction) {
+        var removingFrom: String
+        switch myUserDescription {
+        case .Buyer:
+            removeItem(from: "Inventory", userStatus: "Sellers")
+        case .Seller:
+            removeItem(from: "Wishlist", userStatus: "Buyers")
+        }
+    }
+    
+    // copied/pasted from DataBaseListingVC
+    func removeItem(from wishlistOrInventory: String, userStatus sellerOrBuyer: String) {
+        self.wait()
+        let postID = String(self.bookCoverImage.dropLast(4) as Substring)
+        
+        //remove book image from storage
+        let imageRef = self.storageRef.child(self.bookCoverImage)
+        imageRef.delete{ error in
+            if error != nil {
+              print("failed to delete image")
+            }
+            
+            //Remove book from Posts
+            self.ref.child("Posts/\(postID)").removeValue()
+            
+            //Remove book from Inventory or Wishlist
+            self.ref.child("\(wishlistOrInventory)/\(self.userID)/\(postID)").removeValue()
+            
+            //Remove post from User's Seller/Buyer Node
+            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)/Posts/\(postID)").removeValue()
+            
+            //database- if user has no more posts of the book, remove the user entirely from the book
+            self.ref.child("Books/\(self.bookISBN)/\(sellerOrBuyer)/\(self.userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+
+                // Get user value
+                let numChildren = snapshot.childrenCount
+
+                if numChildren == 1 {
+                    self.ref.child("Books/\(self.bookISBN)/Buyers/\(self.userID)").removeValue()
+                }
+                //if there are no longer sellers or buyers  of the book, remove the book entirely from the database
+                self.ref.child("Books/\(self.bookISBN)").observeSingleEvent(of: .value, with: { (snapshot) in
+                  // Get user value
+                    let numChildren = snapshot.childrenCount
+
+                    if numChildren == 1 {
+                        self.ref.child("Books/\(self.bookISBN)").removeValue()
+                    }
+                    
+                    self.start()
+                    if let bookIndex = self.bookIndex {
+                        self.delegate?.reload(index: bookIndex)
+                    }
+                    
+                    self.dismiss(animated: true, completion: nil)
+
+                  }) { (error) in
+                    print(error.localizedDescription)
+                }
+                
+              }) { (error) in
+                print(error.localizedDescription)
+            }
+        
+        }
+    }
+    
+    func wait() {
+        self.activityIndicator.startAnimating()
+        self.view.alpha = 0.2
+        self.view.isUserInteractionEnabled = false
+    }
+    
+    func start() {
+        self.activityIndicator.stopAnimating()
+        self.view.alpha = 1
+        self.view.isUserInteractionEnabled = true
     }
 }

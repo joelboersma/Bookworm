@@ -49,7 +49,7 @@ class MatchesTableViewCell: UITableViewCell {
     
 }
 
-class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, ReloadDelegate {
     
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -230,9 +230,14 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
         matchesEntryVC.bookPublishDate = book.publishDate
         matchesEntryVC.bookCoverImage = book.bookCover
         matchesEntryVC.bookIndex = indexPath.row
-        //matchesEntryVC.delegate = self
+        matchesEntryVC.delegate = self
         
         present(matchesEntryVC, animated: true, completion: nil)
+    }
+    
+    func reload(index: Int) {
+        books.remove(at: index)
+        self.matchesTableView.reloadData()
     }
     
     func wait() {

@@ -1953,16 +1953,26 @@
                                     <constraint firstItem="b7D-yI-xP8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fb0-Qe-kTN" secondAttribute="leading" id="ys4-Zt-bxh"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="ggM-BX-kex">
+                                <rect key="frame" x="170" y="397" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="13D-oJ-nFj"/>
+                                    <constraint firstAttribute="height" constant="50" id="IGS-Bx-gnS"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="meI-Sl-e9k"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ggM-BX-kex" firstAttribute="centerX" secondItem="pml-z8-jTR" secondAttribute="centerX" id="Hsh-Vz-Iwg"/>
                             <constraint firstItem="fb0-Qe-kTN" firstAttribute="centerY" secondItem="pml-z8-jTR" secondAttribute="centerY" id="IbN-Qk-3d8"/>
                             <constraint firstItem="fb0-Qe-kTN" firstAttribute="leading" secondItem="meI-Sl-e9k" secondAttribute="leading" constant="20" id="Pdp-mo-cqP"/>
                             <constraint firstItem="fb0-Qe-kTN" firstAttribute="centerX" secondItem="pml-z8-jTR" secondAttribute="centerX" id="jOh-E1-RWA"/>
+                            <constraint firstItem="ggM-BX-kex" firstAttribute="centerY" secondItem="pml-z8-jTR" secondAttribute="centerY" id="zBS-E0-yen"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="ggM-BX-kex" id="72M-uz-rpB"/>
                         <outlet property="authorTextField" destination="UJ0-sY-nbg" id="gZf-Z3-hjp"/>
                         <outlet property="bookImageView" destination="lss-Nf-nZR" id="ITY-21-RlR"/>
                         <outlet property="bookTitleTextField" destination="b7D-yI-xP8" id="Eoi-1Z-NWZ"/>
