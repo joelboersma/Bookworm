@@ -127,17 +127,21 @@ class MatchesEntryViewController: UIViewController, MFMessageComposeViewControll
             userAction = "purchased from"
         }
         
-        let alert = UIAlertController(title: "Confirmation", message: "Was \"\(bookTitle)\" \(userAction) \(buyerSeller)?", preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "Yes, remove from \(removingFrom)", style: .default, handler: removeFromInventoryOrWishlist))
-        alert.addAction(UIAlertAction(title: "Yes, but keep in \(removingFrom)", style: .default, handler: nil))
+//        let alert = UIAlertController(title: "Confirmation", message: "Was \"\(bookTitle)\" \(userAction) \(buyerSeller)?", preferredStyle: .alert)
+//
+//        alert.addAction(UIAlertAction(title: "Yes, remove from \(removingFrom)", style: .default, handler: removeFromInventoryOrWishlist))
+//        alert.addAction(UIAlertAction(title: "Yes, but keep in \(removingFrom)", style: .default, handler: nil))
+//        alert.addAction(UIAlertAction(title: "No, keep in \(removingFrom)", style: .cancel, handler: nil))
+        
+        let alert = UIAlertController(title: "Confirmation", message: "Would you like to remove \"\(bookTitle)\" from your \(removingFrom)?", preferredStyle: .alert)
+        
         alert.addAction(UIAlertAction(title: "No, keep in \(removingFrom)", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes, remove from \(removingFrom)", style: .destructive, handler: removeFromInventoryOrWishlist))
 
         self.present(alert, animated: true)
     }
     
     func removeFromInventoryOrWishlist(_ action: UIAlertAction) {
-        var removingFrom: String
         switch myUserDescription {
         case .Buyer:
             removeItem(from: "Inventory", userStatus: "Sellers")
