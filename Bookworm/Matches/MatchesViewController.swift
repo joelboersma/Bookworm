@@ -158,16 +158,18 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                     let userName = firstName + " " + lastName
                     
                     let databaseData = BookCell(title: title, isbn: isbn, edition: edition, publishDate: datePublished, author: author, condition: condition, location: location, buyerSellerID: user, buyerSeller: userName, postDate: datePosted, timeStamp: timeStamp, bookCover: bookCover, userDescription: userDescription, bookCoverData: bookCoverData)
-                    
-                    
-                    DispatchQueue.main.async {
-                        self.books.append(databaseData)
-                        // Sort by date and time.
-                        self.books.sort(by: {$0.timeStamp > $1.timeStamp})
-                        self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")}
-                        self.matchesTableView.reloadData()
-                        self.start()
-                    }
+                
+                        
+                        DispatchQueue.main.async {
+                            self.books.append(databaseData)
+                            // Sort by date and time.
+                            self.books.sort(by: {$0.timeStamp > $1.timeStamp})
+                            self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
+                                
+                            }
+                            self.matchesTableView.reloadData()
+                            self.start()
+                        }
                     
                 })
             }
