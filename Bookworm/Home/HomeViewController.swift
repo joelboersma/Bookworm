@@ -438,27 +438,27 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITableViewDele
 //                let distanceInMeters = Measurement(value: cellLocation.distance(from: self.currLocation), unit: UnitLength.meters)
 //                let distanceInMiles = distanceInMeters.converted(to: UnitLength.miles)
 //                let distanceString = String(format: "%.1f", distanceInMiles.value) + " miles"
-                    let request = MKDirections.Request()
+                let request = MKDirections.Request()
                 // source and destination are the relevant MKMapItems
-                    let source = MKPlacemark(coordinate: self.currLocation)
-                    let destination = MKPlacemark(coordinate: cellLocation)
-                    request.source = MKMapItem(placemark: source)
-                    request.destination = MKMapItem(placemark: destination)
+                let source = MKPlacemark(coordinate: self.currLocation)
+                let destination = MKPlacemark(coordinate: cellLocation)
+                request.source = MKMapItem(placemark: source)
+                request.destination = MKMapItem(placemark: destination)
 
-                    // Specify the transportation type
-                    request.transportType = MKDirectionsTransportType.automobile;
+                // Specify the transportation type
+                request.transportType = MKDirectionsTransportType.automobile;
 
-                    // If open to getting more than one route,
-                    // requestsAlternateRoutes = true; else requestsAlternateRoutes = false;
-                    request.requestsAlternateRoutes = true
+                // If open to getting more than one route,
+                // requestsAlternateRoutes = true; else requestsAlternateRoutes = false;
+                request.requestsAlternateRoutes = true
 
-                    let directions = MKDirections(request: request)
+                let directions = MKDirections(request: request)
 
-                    directions.calculate { (response, error) in
-                        if let response = response, let route = response.routes.first {
-                            completion(MKDistanceFormatter().string(fromDistance: route.distance))
-                        }
+                directions.calculate { (response, error) in
+                    if let response = response, let route = response.routes.first {
+                        completion(MKDistanceFormatter().string(fromDistance: route.distance))
                     }
+                }
 //                completion(distanceString)
             }
             else {
