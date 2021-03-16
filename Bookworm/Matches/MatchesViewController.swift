@@ -51,6 +51,9 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     var books: [BookCell] = []
     var ref = Database.database().reference()
     
+    var wishListISBNs: [String]? = nil
+    var inventoryISBNs: [String]? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -129,35 +132,38 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                             return
                         }
                         
-                        var wishListISBNs: [String] = []
-                        var inventoryISBNs:  [String] = []
-                        
                         let semaphore = DispatchSemaphore(value: 0)
                         
-                        self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
-                            let results = snapshot.value as? [String : String]
-                            let isbn = results?["ISBN"] ?? ""
-                            wishListISBNs.append(isbn)
-                            print("wishListISBNs: \(wishListISBNs)")
+                        if (self.wishListISBNs == nil) {
+                            self.wishListISBNs = []
+                            self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
+                                let results = snapshot.value as? [String : String]
+                                let isbn = results?["ISBN"] ?? ""
+                                self.wishListISBNs?.append(isbn)
+                                print("wishListISBNs: \(self.wishListISBNs)")
+                                semaphore.signal()
+                            })
+                        }
+                        else {
                             semaphore.signal()
-                        })
-
-                        self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
-                            let results = snapshot.value as? [String : String]
-                            let isbn = results?["ISBN"] ?? ""
-                            inventoryISBNs.append(isbn)
-                            print("inventoryISBNs: \(inventoryISBNs)")
+                        }
+                        
+                        if (self.inventoryISBNs == nil) {
+                            self.inventoryISBNs = []
+                            self.ref.child("Inventories/\(userID)").observe(.childAdded, with: { (snapshot) in
+                                let results = snapshot.value as? [String : String]
+                                let isbn = results?["ISBN"] ?? ""
+                                self.inventoryISBNs?.append(isbn)
+                                print("inventoryISBNs: \(self.inventoryISBNs)")
+                                semaphore.signal()
+                            })
+                        }
+                        else {
                             semaphore.signal()
-                        })
-
+                        }
+                        
                         semaphore.wait()
                         semaphore.wait()
-                        
-                        print("wishListISBNs")
-                        print(wishListISBNs)
-                        print("inventoryISBNs")
-                        print(inventoryISBNs)
-                        
                         
                         //hardcoded for now
 //                        wishListISBNs.append("9781472263667")
@@ -168,7 +174,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                             self.books.append(databaseData)
                             // Sort by date and time.
                             self.books.sort(by: {$0.timeStamp > $1.timeStamp})
-                            self.books = self.books.filter { (wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")}
+                            self.books = self.books.filter { (self.wishListISBNs?.contains($0.isbn) ?? true && $0.userDescription == "Seller") || (self.inventoryISBNs?.contains($0.isbn) ?? true && $0.userDescription == "Buyer")}
                             self.matchesTableView.reloadData()
                         }
                         
