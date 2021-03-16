@@ -2,7 +2,7 @@
 Steve Give Us Jobs
 
 # Set Up
-Please modify the bundle identifier in Signing & Capabilities to your own unique bundle ID to test on a device.
+If testing on an external device, please modify the bundle identifier in Signing & Capabilities to your own unique bundle ID.
 
 # Project Summary
 Bookworm
@@ -14,7 +14,7 @@ Joel Boersma
 
 (handler: joelboersma)
 
-<img src="https://avatars.githubusercontent.com/u/44932998?s=400&u=e3f021c85674d7d01b437d9bae66f8fbe41761d5&v=4" width="100">
+<img align="left" src="https://avatars.githubusercontent.com/u/44932998?s=400&u=e3f021c85674d7d01b437d9bae66f8fbe41761d5&v=4" width="100"> My largest contribution to this project was `OLAPI.swift`, which interfaces with the [Open Library API](https://openlibrary.org/developers/api). This is the source of all our book information on Post and Request pages, as well as for our two scanners. Utilizing their search API, I worked on the search funcionality on the Post and Request pages, at first only fetching results when the search button is pressed, and then fetching results each time the search bar text is changed. I worked on color-coding items on the Home and Matches pages based on whether whether the item is a listing or a request. I also made some changes for `MatchesEntryViewController` so that it can be dual-purpose for both buying and selling. Boilerplate repository setup, creating the launch screen, minor UI changes, and optimizations round out my project contributions.
 
 Syam Haque 
 
