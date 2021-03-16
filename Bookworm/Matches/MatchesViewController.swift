@@ -59,6 +59,7 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
     var books: [BookCell] = []
     var ref = Database.database().reference()
     var storageRef = Storage.storage().reference()
+    var currentUserName = ""
     
     var wishListISBNs: [String] = []
     var inventoryISBNs: [String] = []
@@ -98,6 +99,15 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
             assertionFailure("Couldn't unwrap userID")
             return
         }
+        
+        self.ref.child("Users/\(userID)").observeSingleEvent(of: .value, with: { (snapshot) in
+            let userData = snapshot.value as? [String: String]
+            
+            let firstName = userData?["FirstName"] ?? ""
+            let lastName = userData?["LastName"] ?? ""
+            
+            self.currentUserName = firstName + " " + lastName
+        })
         
         self.ref.child("Wishlists/\(userID)").observe(.childAdded, with: { (snapshot) in
             let results = snapshot.value as? [String : String]
@@ -164,6 +174,8 @@ class MatchesViewController: UIViewController, CLLocationManagerDelegate, UITabl
                             self.books.append(databaseData)
                             // Sort by date and time.
                             self.books.sort(by: {$0.timeStamp > $1.timeStamp})
+                            self.books = self.books.filter{$0.buyerSeller != self.currentUserName}
+
                             self.books = self.books.filter { (self.wishListISBNs.contains($0.isbn) && $0.userDescription == "Seller") || (self.inventoryISBNs.contains($0.isbn) && $0.userDescription == "Buyer")
                                 
                             }
