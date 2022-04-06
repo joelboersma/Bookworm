@@ -51,6 +51,3 @@ Figma Link: https://www.figma.com/file/5MVhFopjyrgpRBxOYQlR8y/Bookworm-UI?node-i
 # Link to Trello Board
 https://trello.com/invite/b/YcSdVfA2/6a48414a16ed7fb23fc1401451262411/bookworm
 
-# Github Classroom Project
-https://github.com/ECS189E/project-w21-steve-give-us-jobs
-
